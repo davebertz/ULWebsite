@@ -84,7 +84,7 @@ function IntelligenceEmotionnelleResults(props)  {
             
             
         },
-        [webcamRef,props, timerSec  ]
+        [webcamRef,props ]
     );
 
 
