@@ -3,32 +3,30 @@ import { withRouter } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-
+//Exercice de vocabulaire en temps limité
 
 function TimerWord(props)  {
     
     const classes = useStyles();
     const [cheated, setCheated] = useState(0)
-
-    //Task 4
     const [wordWritten, setWordWritten] = useState('')
     const [timerSec, setTimerSec] = useState(30)
     const [listWord, setListWord] = useState('')
     const [endingWord, setEndingWord] = useState(true)
-    const [hasStarted, setHasStarted] = useState(false)
 
 
+    //Fonction de décrémentation du timer (une fois que l'utilisateur à appuyer sur démarrer)
     useEffect(() => {
         var once = true
         const intervalId = setInterval(() => {
-            if(timerSec>0 && props.startTimer){
+            if(timerSec>0 && props.startTimer){ //c'est le props.startTimer issu du composant p
                 setTimerSec(timerSec - 1);
-            }else if (timerSec===0 && once ){
+            }else if (timerSec===0 && once ){ //Le once permet de n'avoir la notification audio qu'une seule fois et non toutes les secondes
                 once = false
                 var audio = new Audio(require("../../../../audio/timeup.mp3"))
                 audio.play()
             }
-        }, 1000);
+        }, 1000); // 1000 correspond au temps entre chaque appel (en millisecondes)
 
         return () => {
             clearInterval(intervalId);
@@ -38,20 +36,20 @@ function TimerWord(props)  {
 
 
 
-    //Task 4
     function handleChangeWord(e){
         setWordWritten(e.target.value)
     }
 
     const startTimer=()=>{
-        setHasStarted(true)
-        props.callbackStart()
+        props.callbackStart() 
+        //On appelle une fonction du composant parent pour mettre à jour la variable de début de timer
+        //On est obligé de faire ça pour éviter des problèmes de scope (variable non mise à jour)
     }
 
 
     const handleSubmitWordList= (event) =>{
         event.preventDefault();
-        
+        //On vérifie que le mot existe dans notre liste de vocabulaire et que l'utilisateur ne l'a pas déjà rentré
         if(props.answer.includes(wordWritten) && !listWord.includes(wordWritten+", ")){
             setListWord(listWord => [...listWord,wordWritten+", " ])
             if(timerSec === 0){
@@ -62,11 +60,12 @@ function TimerWord(props)  {
                     setCheated(2)
                 }
             }
+            //Si l'utilisateur n'a jamais appuyé sur démarrer, on estime qu'il a triché
             if(props.startTimer === false){
                 setCheated(2)
             }
         }
-        setWordWritten('')
+        setWordWritten('')//reset du champs d'input 
     }    
 
     function handleSubmitWordListEnd(){
@@ -87,7 +86,7 @@ return (
                     Réponse : <br/>
                     <input className={classes.button} type="text" name="wordInput"  value={wordWritten} onChange={e=> handleChangeWord(e)}/>
                 </label><br/><br/>
-                {!hasStarted ? <Button className={classes.buttonStart} onClick={startTimer} variant="contained" color="primary" name="wordInput" value="Démarrer" >Démarrer </Button>:null}
+                {!props.startTimer ? <Button className={classes.buttonStart} onClick={startTimer} variant="contained" color="primary" name="wordInput" value="Démarrer" >Démarrer </Button>:null}
                 <Button className={classes.button} variant="contained" color="primary" name="wordInput" type="submit" value="Ajouter mot" >Ajouter mot </Button>
                
                 <p>Compte à rebours : <b>{timerSec}</b> secondes restantes</p>

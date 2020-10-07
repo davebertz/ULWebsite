@@ -13,31 +13,35 @@ import TimerWord from "./Tasks/TimerWord";
 import MemoryQuestion from "./Tasks/MemoryQuestion";
 import Definition from "./Tasks/Definition";
 import {sendEmotionalIntelligenceResults} from '../../../Utils'
-import WheelOfFortune from "./Tasks/WheelOfFortune";
+import WheelOfFortune from "./Tasks/FortuneWheel/FortuneWheelTask";
 import VerticalProgress from "../../VerticalProgressBar";
 
+//Seconde page de l'expérience Intelligence EMotionnelle, c'est la page contenant tous les exercices.
+//Les questions et les réponses de chaque série sont passés en paramètres de navigation (props.location)
 
+//Le fonctionnement global est d'avoir une liste d'exercice à compléter (testOrder). On affiche le composant associé 
+// à chaque exercice selon l'avancement de l'utilisateur dans la série d'exercices (experienceStep).
 
 function IntelligenceEmotionnelleTasks(props)  {
     
 
     const classes = useStyles();
     const history = useHistory();
-    const [experienceStep, setExperienceStep]= useState('beginning');
-    const [experienceStepCount, setExperienceStepCount]= useState(0);
-    const [cheat, setCheat] = useState([])
-    const [tasksResults, setTaskResults] = useState([])
-    const [startTimer, setStartTimer] = useState(false)
-    const [memoryCheat, setMemoryCheat] = useState(0)
-    const [secondTest, setSecondTest] = useState(false)
-    const [testOrder, setTestOrder]=useState()
+    const [testOrder, setTestOrder]=useState() //Liste des étapes (exercices) de la série
+    const [experienceStep, setExperienceStep]= useState('beginning'); //Etape actuelle 
+    const [experienceStepCount, setExperienceStepCount]= useState(0); //Compteur d'étape
+    const [cheat, setCheat] = useState([]) //Coefficient de triche de l'utilisateur à chaque exercice
+    const [tasksResults, setTaskResults] = useState([]) //réponses de l'utilisateur à chaque exercice
+
     const [progressBarExampleValue, setprogressBarExampleValue]=useState(0)
     const [progressBarValue, setprogressBarValue]=useState(0)
-    const progressExampleValues = [5,16,24,43,66,78,98,100]
+    const progressExampleValues = [5,16,24,43,66,78,98,100] //Valeurs d'exemples pour l'étape "beginning"
+
+    const [startTimer, setStartTimer] = useState(false) // paramètre utilisé pour démarrer le timer dans l'exercice de vocabulaire
+    const [memoryCheat, setMemoryCheat] = useState(0) //Paramètre utilisé pour détecter la triche dans l'exercice Memory
     
 
-    useEffect(() => {
-        console.log(props)  
+    useEffect(() => { 
         var index = 0
         setStartTimer(false)
         if(props === undefined || props.location.user === undefined){
@@ -49,9 +53,10 @@ function IntelligenceEmotionnelleTasks(props)  {
             setTestOrder(['beginning','headOrTail','numericalSequences','fortuneWheel','CanadianQuestion','timerWord',
                             'memoryQuestion','definition'])
         }else{
-            setSecondTest(true)
             var questions = ['beginning','numericalSequences','definition','CanadianQuestion','memoryQuestion','headOrTail','fortuneWheel','timerWord']
             setTestOrder(questions)
+            //on passe l'étape "beginning" (index 0) qui correspond à l'étape d'explication car l'utilisateur à déjà été mis au courant
+            //des règles.
             setExperienceStep(questions[1])
             setExperienceStepCount(1)
         }
@@ -71,8 +76,9 @@ function IntelligenceEmotionnelleTasks(props)  {
     },[props, history ])
 
 
+    //Fonction que l'on donne à tous les composants exercices en paramètres qu'ils pourront appeler pour renvoyer le résultat (et la triche)
     const addResult=(result, score, hasCheated)=>{
-        if(experienceStep==='memoryQuestion'){
+        if(experienceStep==='memoryQuestion'){//Cas particulier car triche gérée par le composant parent pour celui ci
             setCheat(cheat=>[...cheat, {[experienceStep] : memoryCheat}])
         }else{
             setCheat(cheat=>[...cheat, {[experienceStep] : hasCheated}])
@@ -88,11 +94,13 @@ function IntelligenceEmotionnelleTasks(props)  {
     }
 
 
+    //Fonction appelée soit par le bouton "question suivante" ou alors dans "addResult", càd quand l'utilisateur à valider les
+    //résultats depuis le bouton du composant fils
     const movingForward= () => {
 
         //On vérifie si la série et l'expérience sont terminées 
         if(experienceStepCount+1 === testOrder.length){
-            if(secondTest){
+            if(props.location.givenSanction !== undefined){ //On regarde si c'est la première ou la seconde série
                 sendEmotionalIntelligenceResults(props.location.user.username,props.location.actualSerie["Questions"], tasksResults, cheat, true, props.location.givenSanction )
                 history.push({pathname:"/experience/intelligenceemotionnellefeedback",
                                 user : props.location.user.username,
@@ -100,7 +108,9 @@ function IntelligenceEmotionnelleTasks(props)  {
                 })
             }else{
                 sendEmotionalIntelligenceResults(props.location.user.username, props.location.actualSerie["Questions"], tasksResults, cheat, false, null )
-                console.log("sent")
+
+                //Si la première série d'exercice est terminée, on passe à la page result avec en paramètre la seconde série d'exercice
+                //qui sera elle-même transmise à intelligenceemotionelletask pour la seconde série.
                 history.push({pathname:"/experience/intelligenceemotionnelleresults",
                             user : props.location.user,
                             actualSerie: props.location.nextSerie})
@@ -112,31 +122,33 @@ function IntelligenceEmotionnelleTasks(props)  {
         setExperienceStepCount(experienceStepCount+1)
     }
 
+
+    //Fonction permettant de revenir à la question précédente, appelée par le bouton précédent de ce composant.
     const movingBackward= () => {
         if(experienceStep === "memoryQuestion"){ //on détecte la triche pour la tâche MemoryQuestion
             setMemoryCheat(1)
-            setExperienceStep('timerWord')
         }  
         setStartTimer(false)
         setExperienceStep(testOrder[experienceStepCount-1])
         setExperienceStepCount(experienceStepCount-1)
     }
 
+    //Fonction qui renvoit l'exercice à afficher selon l'étape (avec la barre de progression)
     function getExperienceDiv(){
         var taskComponent = null
-        if(experienceStep==="headOrTail"){              /* Task number 1 */
+        if(experienceStep==="headOrTail"){              
             taskComponent = <HeadOrtail sendDataToParent={addResult}> </HeadOrtail>
-        }else if(experienceStep==="numericalSequences"){        /* Task number 2  */
+        }else if(experienceStep==="numericalSequences"){        
             taskComponent = <NumericalSequence series={props.location.actualSerie["Questions"]["numerical"]} answer={props.location.actualSerie["Answers"]["numerical"]} sendDataToParent={addResult}> </NumericalSequence>
-        }else if(experienceStep==="CanadianQuestion"){        /* Task number 3 */
+        }else if(experienceStep==="CanadianQuestion"){       
             taskComponent =  <CanadianQuestion question={props.location.actualSerie["Questions"]["canadaCulture"]} answer={props.location.actualSerie["Answers"]["canadaCulture"]} sendDataToParent={addResult}></CanadianQuestion>
-        }else if(experienceStep==="timerWord"){        /* Task number 4 */
+        }else if(experienceStep==="timerWord"){        
             taskComponent = <TimerWord letter={props.location.actualSerie["Questions"]["letter"]} answer={props.location.actualSerie["Answers"]["letter"]} callbackStart={goTimer} startTimer={startTimer} sendDataToParent={addResult}></TimerWord>
-        }else if(experienceStep==="memoryQuestion"){        /* Task number 5 */
+        }else if(experienceStep==="memoryQuestion"){        
             taskComponent = <MemoryQuestion  question = {props.location.actualSerie["Questions"]["memory"]} answer={props.location.actualSerie["Answers"]["memory"]} sendDataToParent={addResult}></MemoryQuestion>
-        }else if(experienceStep==="definition"){        /* Task number 6 */
+        }else if(experienceStep==="definition"){
             taskComponent = <Definition  word={props.location.actualSerie["Questions"]["definition"]} answer={props.location.actualSerie["Answers"]["definition"]} sendDataToParent={addResult}></Definition>
-        }else if(experienceStep==="fortuneWheel"){        /* Task number 7 */
+        }else if(experienceStep==="fortuneWheel"){        
             taskComponent = <WheelOfFortune   sendDataToParent={addResult}></WheelOfFortune>
         }
 
@@ -187,7 +199,7 @@ return (
             
 
         </div>
-        {/* Buttons */}
+        {/* Buttons précédent et suivant*/}
         { (experienceStep !== 'beginning') && (experienceStep !== 'ended') ?
         <div>
                 {getExperienceDiv()}

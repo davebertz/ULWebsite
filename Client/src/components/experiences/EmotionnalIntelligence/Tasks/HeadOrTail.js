@@ -3,13 +3,12 @@ import { withRouter } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-
+//Exercice du lancer de pièce
 
 function HeadOrTail(props)  {
 
     const classes = useStyles();
 
-    //Task 1
     const [totalHoT, setTotalHoT] = useState(0)
     const [counterHoTThrows, setCounterHoTThrows] = useState(0)
     const [coinValue, setCoinValue] = useState('')
@@ -28,8 +27,6 @@ function HeadOrTail(props)  {
         props.sendDataToParent( totalHoT, totalHoT/10, hasCheated)
     }
 
-
-    //Task 1
     const headOrTailThrow=()=>{
 
         const rand = Math.floor(Math.random() * Math.floor(2))

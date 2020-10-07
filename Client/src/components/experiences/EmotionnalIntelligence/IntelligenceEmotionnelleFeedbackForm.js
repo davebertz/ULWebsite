@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import {sendIEFeedback} from "../../../Utils"
 import Button from '@material-ui/core/Button';
+
+
+//Page contenant l'annonce de la fin de l'expérience et du réel but de celle-ci.
+//Cette page contient également le formulaire de retour d'expérience de l'utilisateur.
 
 function FeedbackForm(props)  {
     
@@ -16,10 +20,6 @@ function FeedbackForm(props)  {
     const [otherSanction, setOtherSanction] = useState('')
     const [showForm, setShowForm] = useState(false)
 
-
-    useEffect(() => {
-
-    },[])        
     
     function handleChangeGlobalFeeling(e){
         setGlobalFeeling(e.target.value)

@@ -3,9 +3,12 @@ import { withRouter } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+//Exercice sur les suite numériques
 
 function NumericalSequences(props)  {
     
+    //Condition de triche : si l'utilisateur active la fonction onBlur, cela signifie que notre page à perdu le focus
+    // (changement d'onglet, changement de fenêtre)
     const onBlur = () => {
         setCheated(1)
     };
@@ -28,10 +31,8 @@ function NumericalSequences(props)  {
     },[])
 
 
-
-    //Task 2
     function handleChangeMissing1(e){
-        setMissingNumber1(e.target.value.replace(/\D/,''))       
+        setMissingNumber1(e.target.value.replace(/\D/,''))    //Seuls les chiffres sont acceptés   
     }
     function handleChangeMissing2(e){
         setMissingNumber2(e.target.value.replace(/\D/,''))

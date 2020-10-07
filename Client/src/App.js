@@ -12,14 +12,13 @@ import IntelligenceEmotionnelleResults from './components/experiences/Emotionnal
 import FeedbackForm from './components/experiences/EmotionnalIntelligence/IntelligenceEmotionnelleFeedbackForm'
 import './App.css';
 
+
 //Navigations Tabs
 const sections = [
   { title: 'Accueil', url: '/' },
   { title: 'Experiences', url: '/experiences' },
   { title: 'Informations', url: '/informations' },
 ];
-
-
   
 function App() {
   return (
@@ -27,7 +26,7 @@ function App() {
       <div className='App'>
         <Header className="header"  title="UL Experiences" sections={sections}/>   
         <div className='container'>
-          {/* All routes definitions with a redirect if url doesn't exist */}
+          {/* Définition de toutes les routes avec un redirect si URL inconnu*/}
             <Switch>
               <Route exact path='/' component={Home} /> 
               <Route

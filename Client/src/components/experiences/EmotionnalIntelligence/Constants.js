@@ -1,6 +1,6 @@
 
 
-//Tricherie
+//Liste des données constantes utilisées tout du long de l'expérience de tricherie.
 export const feelings = ['visage neutre', 'joie', 'tristesse', 'colère', 'surprise', 'peur', 'dégoût','honte', 'mépris', 'satisfaction']
 
 export const questionNumerical = [['0 1 3 4 12 13 __ 40 120 121','0 4 18 48 100 ___ 294 448'],['2 2 4 12 _ 240','50 300 _ 150 200 75 400']]

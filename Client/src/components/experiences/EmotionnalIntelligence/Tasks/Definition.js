@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import stringSimilarity from 'string-similarity'
 
-
+//Exercice de rédifinition d'un mot par ses propres termes
 
 function Definition(props)  {
 
@@ -19,11 +19,17 @@ function Definition(props)  {
     const handleSubmitDefinition= (event) =>{
         event.preventDefault();
         
-        //Pour 
+        //La méthode de tricherie de cette exercice consiste à comparer la réponse de l'utilisateur avec 
+        //les premières définitions google afin de savoir si il a fait un copier coller 
         var hasUserPlagiarized = isDefinitionSimilar(definition, props.answer)
         props.sendDataToParent(definition, 20, hasUserPlagiarized)
     }
 
+
+
+    //La librairie stringSimilarity renvoie un coefficient de similarité entre un string et tous les autres 
+    //strings donnés en paramètres dans un tableau. On a défini des valeurs seuils pour estimer la triche de l'utilisateur
+    //après plusieurs tests. Au délà de 0.85 de similarité, une grande majorité du texte à été copié collé
     const isDefinitionSimilar=(userDefinition, wordDefinitions)=>{
         var res = stringSimilarity.findBestMatch(userDefinition,wordDefinitions)
         var hasCheated = 0

@@ -3,21 +3,21 @@ import { withRouter } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-
+//Exercice d'exercice de question de culture générale sur le Québec/Canada
 
 function CanadianQuestion(props)  {
     
+    //Condition de triche : si l'utilisateur active la fonction onBlur, cela signifie que notre page à perdu le focus
+    // (changement d'onglet, changement de fenêtre)
     const onBlur = () => {
         setCheated(1)
     };
 
     const classes = useStyles();
     const [cheated, setCheated] = useState(0)
-
-    //Task 3
     const [canadianQuestionAnswer, setCanadianQuestionAnswer] = useState('')
 
-
+    
     useEffect(() => {
         // Check if user is going to another tab / switching focus 
         window.addEventListener('blur', onBlur);
@@ -28,8 +28,6 @@ function CanadianQuestion(props)  {
     },[])
 
 
-
-    //Task 3
     function handleChange(e){
         setCanadianQuestionAnswer(e.target.value)
     }
@@ -38,15 +36,14 @@ function CanadianQuestion(props)  {
         event.preventDefault();
 
         var score = 0
-        if(props.answer.indexOf(canadianQuestionAnswer) > -1 ) { //On regarde si la réponse de l'utilisateur est présent dans notre catalogue de réponse
+        //On regarde si la réponse de l'utilisateur est présent dans notre catalogue de réponse
+        if(props.answer.indexOf(canadianQuestionAnswer) > -1 ) { 
             score = 25
         }
-
+        //on renvoit le résultat au composant parent qui se charge d'ajouter les résultats.
         props.sendDataToParent( canadianQuestionAnswer,score, cheated)
     }    
     
-
-
 
 return (
     <div className={classes.root}>

@@ -10,26 +10,24 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import { useHistory } from "react-router-dom";
 
-
+//Composant d'affichage des expériences
 
 export default function ExperiencesCard(props) {
   const classes = useStyles();
   const history = useHistory();
   const { post } = props;
 
-
+  //Création d'un username lors de l'accès à une expérience.
+  //TODO : changer l'emplacement de cette fonction qui ne devrait pas être ici (changement de besoin)
+  //Passer par une variable globale ou alors redux
   const changePage= (event) => {
-
-    //Création d'un username lors de l'accès à une expérience 
-
-    var result           = '';
+      var result           = '';
       var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
       var charactersLength = characters.length;
       for ( var i = 0; i < 8; i++ ) {
          result += characters.charAt(Math.floor(Math.random() * charactersLength));
       }
 
-    
     history.push({
       pathname: post.url,
       user: {username : result},

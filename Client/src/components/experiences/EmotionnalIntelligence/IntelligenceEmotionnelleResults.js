@@ -7,12 +7,15 @@ import Webcam from 'react-webcam';
 import {sendReactionScreenshots} from '../../../Utils'
 
 
+//Cette page correspond à la page résultat, appelée après la première série uniquement.
+//Après la première série, cette page annoncera la détection de triche (et poursuite de l'expérience avec série 2)
+//A partir du moment où l'utilisateur voit l'annonce, une photo de l'utilisateur est prise toutes les demies-secondes.
+
 function IntelligenceEmotionnelleResults(props)  {
     
 
     const classes = useStyles();
     const history = useHistory();
-    const [timerSec, setTimerSec] = useState(0)
     const [resultStage, setResultStage] = useState('results')
     const [sanction, setSanction] = useState('')
     const sanctions = ['avertissement', "suite score nul", 'restart']
@@ -25,21 +28,19 @@ function IntelligenceEmotionnelleResults(props)  {
         var timer = 0
         const intervalId = setInterval(() => {
             timer = timer +1
-            setTimerSec(timerSec+1);
             if ( timer === 1){
-                var audio = new Audio(require("../../../audio/buzzer.mp3"))
+                var audio = new Audio(require("../../../audio/buzzer.mp3"))//Doux bruit n'est-ce pas ?
                 setResultStage('triche')
                 audio.play()
             }
             if( timer < 10){
-                capture(timer/2)
+                capture(timer/2)//Prise de photo toutes les demies-secondes
             }
 
         }, 500);
 
-        setSanction(getRandomSanction())
+        setSanction(getRandomSanction())//Choisit aléatoirement une sanction parmi les trois
 
-        // Check if user is going to another tab / switching focus 
         return () => {
             clearInterval(intervalId);
         };

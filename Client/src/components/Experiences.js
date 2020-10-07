@@ -2,6 +2,10 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import ExperiencesCard from './ExperiencesCard';
 
+
+//Onglet principal du site, il regroupe toutes les expériences disponibles sous forme d'encartés cliquables.
+//C'est ici qu'on liste les expériences et les informations associées (lien pour navigation, image, description, durée ...)
+
 const experiences = [
   { title: 'La silhouette de Kayahara', description:"Cette expérience reprend le principe de l'illusion d'optique de la danseuse en rotation de Nobuyuki Kayahara. Il vous sera demandé de regarder une courte vidéo afin de définir le sens de rotation (horaire/anti-horaire) d'une silhouette. ",
    image:require("../images/kayahara_spinner.gif"),timeExpected : '20 minutes', imageTitle:"spinnerKayahara", url: 'experience/kayahara' },
@@ -9,8 +13,6 @@ const experiences = [
 
 
 ];
-
-
 
 export default class Home extends React.Component {
 

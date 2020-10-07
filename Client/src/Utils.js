@@ -1,3 +1,6 @@
+// Ce fichier contient les fonctions permettant de faire des appels à notre API
+
+
 //Header for API Call
 const headers = new Headers();
 headers.append('Content-Type', 'application/json');
@@ -5,7 +8,7 @@ headers.append('Accept', 'application/json');
 headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');      
 headers.append('GET', 'POST', 'OPTIONS');
 
-
+// --------------------------Kayahara------------------------------
 export const sendIntermittentResults=(username, videoname, intermittentPress)=>{
     fetch('http://127.0.0.1:5000/KayaharaResults/', {
       //mode: 'no-cors',
@@ -44,6 +47,10 @@ export const sendContinuousResults=(username,videoname,keyPressValues)=>{
     });
   }
 
+
+// --------------------------Intelligence Emotionnelle------------------------------
+
+//Méthode pour appeler l'ajout en base de données des captures d'écrans de l'utilisateur imitant des expressions faciales.
 export const sendFeelingsScreenshots=(username,feeling, screenshotSource)=>{
     fetch('http://127.0.0.1:5000/IEFeelingsScreenshots/', {
       //mode: 'no-cors',
@@ -63,60 +70,7 @@ export const sendFeelingsScreenshots=(username,feeling, screenshotSource)=>{
     });
   }
 
-export const createNewUser= async (pseudo, mail)=>{
-  return await fetch('http://127.0.0.1:5000/Users/', {
-    //mode: 'no-cors',
-    method: 'POST',
-    headers: headers,
-    body:JSON.stringify({username :pseudo })
-  })
-  .then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else if (response.status === 409){
-        alert('Erreur : Il existe déjà un utilisateur avec ce pseudonyme. Merci d\'en indiquer un nouveau') ;
-        throw new Error('User already exist');
-    } else {
-        throw new Error('Something went wrong');
-    }
-  })
-  .then((responseJson) => {
-    return responseJson
-  })
-  .catch((error) => {
-    console.log(error)
-  });
-}
-
-export const loginUsername= async(username, code)=>{
-  return await fetch('http://127.0.0.1:5000/Users/'+username+'/'+code, {
-    //mode: 'no-cors',
-    method: 'GET',
-    headers: headers,
-  })
-  .then((response) => {
-    if (response.ok) {
-      return response.json();
-    }  else if (response.status === 404){
-        alert('Erreur : Aucun utilisateur n\'existe pour ce pseudonyme') ;
-        throw new Error('User doesn\'t exist');
-        
-    } else if (response.status === 401){
-      alert('Le nom d\'utilisateur ou le code est incorrect') ;
-      throw new Error('Unauthorized');
-  }else {
-        throw new Error('Something went wrong');
-    }
-  })
-  .then((responseJson) => {
-    return responseJson
-  })
-  .catch((error) => {
-    console.log(error)
-  });
-}
-
-
+//Méthode pour appeler l'ajout en base de données des résultats et de la triche de l'utilisateur pour les séries d'exercices
 export const sendEmotionalIntelligenceResults=(username, taskQuestion,taskResult,taskCheat, secondTrial,sanctionGiven)=>{
   fetch('http://127.0.0.1:5000/IEResults/', {
       //mode: 'no-cors',
@@ -136,6 +90,8 @@ export const sendEmotionalIntelligenceResults=(username, taskQuestion,taskResult
     });
 }
 
+//Méthode pour appeler l'ajout en base de données des captures d'écrans de l'utilisateur prise à son insu 
+//lors de la révélation de la détection de triche
 export const sendReactionScreenshots=(username,seconds , imageSrc )=>{
   fetch('http://127.0.0.1:5000/IEReactionsScreenshots/', {
     //mode: 'no-cors',
@@ -155,6 +111,7 @@ export const sendReactionScreenshots=(username,seconds , imageSrc )=>{
   });
  }
 
+ //Méthode pour appeler l'ajout en base de données des réponses de l'utilisateur au formulaire de retour sur expérience
  export const sendIEFeedback=(username,sanctionGiven,fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction )=>{
   fetch('http://127.0.0.1:5000/IEFeedback/', {
     //mode: 'no-cors',

@@ -11,6 +11,11 @@ import {feelings, questionNumerical, answerNumerical, questionCanadaCulture,
 import { useHistory } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 
+//Ceci est le premier écran de l'expérience d'Intelligence Emotionnelle.
+//On y invite l'utilisateur à se imiter des émotions et se prendre en photo.
+//C'est également dans ce fichier que l'on choisit aléatoirement les questions pour la suite du test.
+//On y associe également les réponses
+
 function IntelligenceEmotionnelleScreen(props)  {
 
     useEffect(() => {
@@ -28,7 +33,7 @@ function IntelligenceEmotionnelleScreen(props)  {
     const [compteurScreenshots, setCompteur]=useState(1)
     const [currentFeeling,setCurrentFeeling]=useState(feelings[compteurScreenshots-1])
 
-
+    //TODO : déplacer cette fonction plus en amont dans le scénario nominal
     const defineQuestions=()=>{
         /*On crée un dictionnaire avec les questions et les réponses aléatoirement piochées. 
         Certaines tâches ne changent pas selon la série et ne sont donc pas concernées.
@@ -129,14 +134,13 @@ function IntelligenceEmotionnelleScreen(props)  {
     );
 
     const startExpe= () => {
-        if(props === undefined || props.location.user === undefined){
-            history.push("/experience")
-        }
-
         setExperienceStarted(true)
         setScreenshotSession(true)
     }
 
+
+    //On appelle la fonction permettant d'envoyer les résultats à écrire en BD (grâce à un appel à l'API)
+    //Ensuite on passe à la suite de l'expérience en renseignant les questions réponses pour les 2 séries
     const sendResult=()=>{
         for (var i=0; i<tileData.length; i++){
             sendFeelingsScreenshots(props.location.user.username, tileData[i]['title'],tileData[i]['img'] )

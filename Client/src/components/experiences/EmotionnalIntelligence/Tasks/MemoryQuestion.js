@@ -3,13 +3,11 @@ import { withRouter } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-
+//Exercice de la question de mémoire par rapport à la question des suites numériques
 
 function MemoryQuestion(props)  {
     
     const classes = useStyles();
-
-    //Task 5
     const [memoryNumber, setMemoryNumber] = useState('')
 
 
