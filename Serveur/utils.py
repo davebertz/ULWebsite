@@ -33,7 +33,7 @@ def sendEmailToJV(dest, filename):
     mailserver.ehlo()
     mailserver.starttls()
     mailserver.ehlo()
-    mailserver.login('ulexperiences@gmail.com', 'jvoisin*!8462')#Ne pas oublier de flouter le mdp lors de l'ajout à GitHub
+    mailserver.login('ulexperiences@gmail.com', 'jvoisin*!8462')
     mailserver.sendmail('ulexperiences@gmail.com', dest, msg.as_string())
     mailserver.quit()
 
