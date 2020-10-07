@@ -33,7 +33,7 @@ function IntelligenceEmotionnelleResults(props)  {
                 setResultStage('triche')
                 audio.play()
             }
-            if( timer < 10){
+            if( timer < 12){
                 capture(timer/2)//Prise de photo toutes les demies-secondes
             }
 

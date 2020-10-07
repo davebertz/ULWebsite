@@ -10,29 +10,28 @@ function TimerWord(props)  {
     const classes = useStyles();
     const [cheated, setCheated] = useState(0)
     const [wordWritten, setWordWritten] = useState('')
-    const [timerSec, setTimerSec] = useState(30)
     const [listWord, setListWord] = useState('')
     const [endingWord, setEndingWord] = useState(true)
 
-
-    //Fonction de décrémentation du timer (une fois que l'utilisateur à appuyer sur démarrer)
+    // initialize timeLeft with the seconds prop
+    const [timeLeft, setTimeLeft] = useState(30);
+      
     useEffect(() => {
-        var once = true
+        // exit early when we reach 0
+        if (!timeLeft) return;
+    
         const intervalId = setInterval(() => {
-            if(timerSec>0 && props.startTimer){ //c'est le props.startTimer issu du composant p
-                setTimerSec(timerSec - 1);
-            }else if (timerSec===0 && once ){ //Le once permet de n'avoir la notification audio qu'une seule fois et non toutes les secondes
-                once = false
+            if(timeLeft>0 && props.startTimer){ //c'est le props.startTimer issu du composant parent
+                setTimeLeft(timeLeft - 1);
+            }
+            if (timeLeft===1 ){ //Il y a un petit décalage dans le son, on le fait donc commencer plus tôt 
                 var audio = new Audio(require("../../../../audio/timeup.mp3"))
                 audio.play()
             }
-        }, 1000); // 1000 correspond au temps entre chaque appel (en millisecondes)
-
-        return () => {
-            clearInterval(intervalId);
-        };
-
-    },[timerSec, props])
+        }, 1000);
+    
+        return () => clearInterval(intervalId);
+    }, [timeLeft, props.startTimer]);
 
 
 
@@ -52,7 +51,7 @@ function TimerWord(props)  {
         //On vérifie que le mot existe dans notre liste de vocabulaire et que l'utilisateur ne l'a pas déjà rentré
         if(props.answer.includes(wordWritten) && !listWord.includes(wordWritten+", ")){
             setListWord(listWord => [...listWord,wordWritten+", " ])
-            if(timerSec === 0){
+            if(timeLeft === 0){
                 if(endingWord){//If user is finishing his current word
                     setCheated(1)
                     setEndingWord(false)
@@ -89,7 +88,7 @@ return (
                 {!props.startTimer ? <Button className={classes.buttonStart} onClick={startTimer} variant="contained" color="primary" name="wordInput" value="Démarrer" >Démarrer </Button>:null}
                 <Button className={classes.button} variant="contained" color="primary" name="wordInput" type="submit" value="Ajouter mot" >Ajouter mot </Button>
                
-                <p>Compte à rebours : <b>{timerSec}</b> secondes restantes</p>
+                <p>Compte à rebours : <b>{timeLeft}</b> secondes restantes</p>
             </form>
             
             
