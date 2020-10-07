@@ -42,7 +42,7 @@ def sendEmailToJV(dest, filename):
 
 def sendEmailRecap(username):
     #On récupère dans toutes nos tables les données associées à cet utilisateur
-    var filename = "results_"+username
+    filename = "results_"+username
     getUserResultAndWriteFile(username, filename)
     encryptFile(filename)
     sendEmailToJV('ulexperiences@gmail.com',filename)

@@ -114,8 +114,9 @@ function WheelOfFortune(props)  {
                 setCheckbox2(!checkbox2)
             }
 
-            if(hasAnsweredYet === false){
-                if(resWheel1==="+25"){
+            //On permet à l'utilisateur de ne cocher la case qu'une fois que la roulette à tourner. C'est un moyen de tricher
+            if(resWheel1 !== 0 && hasAnsweredYet === false){
+                if( resWheel1==="+25"){
                     setScore(score+25)
                     }else{
                         setScore(score-50)  
@@ -130,8 +131,8 @@ function WheelOfFortune(props)  {
             if(checkbox1){
                 setCheckbox1(!checkbox1)
             }   
-            if(hasAnsweredYet === false){
-                if(resWheel2==="+300"){
+            if(resWheel2 !== 0 && hasAnsweredYet === false){
+                if( resWheel2==="+300"){
                     setScore(score+300)
                     }else{
                         setScore(score-75)  
