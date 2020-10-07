@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restx import Api, Resource, fields
 from database_utils import addIEFeelingsScreenshot,addIEReactionsScreenshot, addKahayaraResult, addIEResults, addIEFeedback
+from utils import sendEmailRecap
 from flask_cors import CORS
 from datetime import datetime
 
@@ -122,8 +123,11 @@ class IEFeedbacksDAO(object):
         self.counter = 0
 
     
+# L'appel de cette fonction signifie que l'utilisateur à totalement terminé l'expérience. Nous en profitons donc pour récupérer 
+# toutes les données et des les envoyer par message à Julien Voisin (sous la forme d'un fichier crypté)
     def create(self, data):
         res = addIEFeedback(data['username'],data['sanctionGiven'],data['feedbackGlobalFeeling'],data['feedbackCheatingFeeling'],data['feedbackFairSanction'],data['feedbackOtherSanction'])
+        sendEmailRecap(data['username'])
         if res == 409:
             api.abort(409, "a Problem occured")
         else :

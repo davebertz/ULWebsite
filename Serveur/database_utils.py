@@ -34,6 +34,8 @@ def addKahayaraResult( username, videoname,videotype, inputs, dateExperience):
         connection.close()
         return returnValue
 
+#-------------------IntelligenceEmotionnelle---------------
+
 def addIEFeelingsScreenshot( username, feeling,source, dateExperience):
     connection = getConnection()
     returnValue = username, feeling, source, dateExperience
@@ -48,7 +50,6 @@ def addIEFeelingsScreenshot( username, feeling,source, dateExperience):
         connection.close()
         return returnValue
 
-#-------------------IntelligenceEmotionnelle---------------
 def addIEReactionsScreenshot( username, timer,source, dateExperience):
     connection = getConnection()
     returnValue = username, timer, source, dateExperience
@@ -75,6 +76,7 @@ def addIEResults(username, taskQuestions, taskResult,taskCheat, secondTrial, san
         connection.close()
         return returnValue
 
+
 def addIEFeedback(username, sanctionGiven, fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction):
     connection = getConnection()
     returnValue = username, sanctionGiven, fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction
@@ -87,3 +89,34 @@ def addIEFeedback(username, sanctionGiven, fbGlobalFeeling, fbCheatingFeeling, f
     finally:
         connection.close()
         return returnValue
+
+
+# -------------------------Data Retrieve for Email ------------------------
+def getUserResultAndWriteFile(username, filename):
+    #On récupère les données de chaque table pour cet utilisateur puis on écrit tout dans un fichier.
+    connection = getConnection()
+    with open(filename, "w") as file:
+        try:   
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * from ei_feelings_screenshots where username = %s", 
+                                (username)) 
+                result = cursor.fetchall()
+                file.write(json.dumps(result,indent=4, sort_keys=True, default=str))
+
+                cursor.execute("SELECT * from ei_reactions_screenshots where username = %s", 
+                        (username)) 
+                result = cursor.fetchall()
+                file.write(json.dumps(result,indent=4, sort_keys=True, default=str))
+
+                cursor.execute("SELECT * from ei_results where username = %s", 
+                        (username)) 
+                result = cursor.fetchall()
+                file.write(json.dumps(result,indent=4, sort_keys=True, default=str))
+
+                cursor.execute("SELECT * from ei_feedback where username = %s", 
+                        (username)) 
+                result = cursor.fetchall()
+                file.write(json.dumps(result,indent=4, sort_keys=True, default=str))
+        finally:
+            connection.close()
+

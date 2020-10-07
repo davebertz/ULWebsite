@@ -46,7 +46,9 @@ Une fois le serveur lancé, vous pourrez retrouver le Swagger de l’API à l’
  http://127.0.0.1:5000/
 
 
-
+Vous aurez également besoin pour faire fonctionner les mails crypté d'avoir un fichier key.key dans le dossier Serveur. 
+Ce fichier étant plus sensible il ne sera pas communiqué publiquement. Merci de m'envoyer à mail à jules.civel@gmail.com pour que
+je vous envoie ce fichier.
 
 ### Installation BDD
 
