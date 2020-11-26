@@ -34,9 +34,9 @@ def addKahayaraResult( username, videoname,videotype, inputs, dateExperience):
         connection.close()
         return returnValue
 
-#-------------------IntelligenceEmotionnelle---------------
+#-------------------Emotions et performances (EP)---------------
 
-def addIEFeelingsScreenshot( username, feeling,source, dateExperience):
+def addEPFeelingsScreenshot( username, feeling,source, dateExperience):
     connection = getConnection()
     returnValue = username, feeling, source, dateExperience
     emotion_detected = detect_emotion(source, feeling) #Détection d'émotions
@@ -50,7 +50,7 @@ def addIEFeelingsScreenshot( username, feeling,source, dateExperience):
         connection.close()
         return returnValue
 
-def addIEReactionsScreenshot( username, timer,source, dateExperience):
+def addEPReactionsScreenshot( username, timer,source, dateExperience):
     connection = getConnection()
     returnValue = username, timer, source, dateExperience
     emotion_detected = detect_emotion(source) #Détection d'émotions
@@ -63,7 +63,7 @@ def addIEReactionsScreenshot( username, timer,source, dateExperience):
         connection.close()
         return returnValue
 
-def addIEResults(username, taskQuestions, taskResult,taskCheat, secondTrial, sanctionGiven,  dateExperience):
+def addEPResults(username, taskQuestions, taskResult,taskCheat, secondTrial, sanctionGiven,  dateExperience):
     connection = getConnection()
     returnValue = username, taskQuestions, taskResult,taskCheat, secondTrial, sanctionGiven,  dateExperience
     try:   
@@ -77,7 +77,7 @@ def addIEResults(username, taskQuestions, taskResult,taskCheat, secondTrial, san
         return returnValue
 
 
-def addIEFeedback(username, sanctionGiven, fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction):
+def addEPFeedback(username, sanctionGiven, fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction):
     connection = getConnection()
     returnValue = username, sanctionGiven, fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction
     try:   

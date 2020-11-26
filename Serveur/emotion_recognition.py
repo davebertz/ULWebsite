@@ -12,7 +12,7 @@ from collections import OrderedDict
 
 # Les émotions reconnues par le réseau sont les suivantes :
 # angry, disgust, fear, happy, sad, surprise, neutral
-# Les émotions demandées par l'expérience Intelligence Emotionnelle sont :
+# Les émotions demandées par l'expérience Emotions et performances sont :
 # ['visage neutre', 'joie', 'tristesse', 'colère', 'surprise', 'peur', 'dégoût','honte', 'mépris', 'satisfaction'] 
 # (seul les 3 derniers ne sont pas reconnus par le réseau) -> possibilité de fine-tuner le réseau une fois qu'on aura un grand volume de données ?
 

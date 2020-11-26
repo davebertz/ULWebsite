@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restx import Api, Resource, fields
-from database_utils import addIEFeelingsScreenshot,addIEReactionsScreenshot, addKahayaraResult, addIEResults, addIEFeedback
+from database_utils import addEPFeelingsScreenshot,addEPReactionsScreenshot, addKahayaraResult, addEPResults, addEPFeedback
 from utils import sendEmailRecap
 from flask_cors import CORS
 from datetime import datetime
@@ -23,11 +23,11 @@ api = Api(app, version='1.0', title='LavalExperiencesAPI',
 ##Kayahara
 nsKayaharaResults = api.namespace('KayaharaResults', description='Kayahara experience results from user')
 
-##Intelligence Emotionnelle
-nsIEFeelingsScreenshots = api.namespace('IEFeelingsScreenshots', description='Feeling screenshots from user')
-nsIEResults = api.namespace('IEResults', description='User result and feedback from Emotional Intelligence experience')
-nsIEReactionsScreenshots = api.namespace('IEReactionsScreenshots', description='Reactions screenshots from user')
-nsIEFeedback = api.namespace('IEFeedback', description='User feedback')
+##Emotions et Performances
+nsEPFeelingsScreenshots = api.namespace('EPFeelingsScreenshots', description='Feeling screenshots from user')
+nsEPResults = api.namespace('EPResults', description='User result and feedback from Emotions and Performances experience')
+nsEPReactionsScreenshots = api.namespace('EPReactionsScreenshots', description='Reactions screenshots from user')
+nsEPFeedback = api.namespace('EPFeedback', description='User feedback')
 
 
 kahayaraResult = api.model('KayaharaResult', {
@@ -37,17 +37,17 @@ kahayaraResult = api.model('KayaharaResult', {
     'input': fields.String(required=True, description='The user input'),
     'dateExperience' : fields.DateTime(required=True, description='The date which the user took the experience')
 })
-IEFeelingsScreenshots = api.model('IEFeelingScreenshots', {
+EPFeelingsScreenshots = api.model('EPFeelingScreenshots', {
     'username': fields.String(required=True, description='The user username'),
     'feeling': fields.String(required=True, description='The feeling associated with the screenshot'),
     'source': fields.String(required=True, description='The source of the image'),
 })
-IEReactionsScreenshots = api.model('IEReactionScreenshots', {
+EPReactionsScreenshots = api.model('EPReactionScreenshots', {
     'username': fields.String(required=True, description='The user username'),
     'secondsAfterReveal ': fields.String(required=True, description='The timer (in seconds) when the screenshot was taken'),
     'source': fields.String(required=True, description='The source of the image'),
 })
-IEResults = api.model('IEResults', {
+EPResults = api.model('EPResults', {
     'username': fields.String(required=True, description='The user username'),
     'taskQuestions': fields.String(required=True, description='The user results at tasks'),
     'taskAnswers': fields.String(required=True, description='The user results at tasks'),
@@ -56,7 +56,7 @@ IEResults = api.model('IEResults', {
     'sanctionGiven': fields.String(required=True, description='The random sanction that was given to him'),
 })
 
-IEFeedback = api.model('IEFeedback', {
+EPFeedback = api.model('EPFeedback', {
     'username': fields.String(required=True, description='The user username'),
     'sanctionGiven': fields.String(required=True, description='The random sanction that was given to him'),
     'feedbackGlobalFeeling': fields.String(required=True, description='The user global feeling about this experience'),
@@ -77,47 +77,47 @@ class KaharayaDAO(object):
         else :
             return res
 
-class IEFeelingsScreenshotsDAO(object):
+class EPFeelingsScreenshotsDAO(object):
     
     def __init__(self):
         self.counter = 0
 
     def create(self, data):
-        res = addIEFeelingsScreenshot(data['username'],data['feeling'], data['source'], datetime.today().strftime('%Y-%m-%d-%H:%M:%S'))
+        res = addEPFeelingsScreenshot(data['username'],data['feeling'], data['source'], datetime.today().strftime('%Y-%m-%d-%H:%M:%S'))
         if res == 409:
             api.abort(409, "a Problem occured")
         else :
             print(res)
             return res
 
-class IEReactionsScreenshotsDAO(object):
+class EPReactionsScreenshotsDAO(object):
     
     def __init__(self):
         self.counter = 0
 
     def create(self, data):
-        res = addIEReactionsScreenshot(data['username'],data['secondAfterReveal'], data['source'], datetime.today().strftime('%Y-%m-%d-%H:%M:%S'))
+        res = addEPReactionsScreenshot(data['username'],data['secondAfterReveal'], data['source'], datetime.today().strftime('%Y-%m-%d-%H:%M:%S'))
         if res == 409:
             api.abort(409, "a Problem occured")
         else :
             print(res)
             return res
 
-class IEResultsDAO(object):
+class EPResultsDAO(object):
     
     def __init__(self):
         self.counter = 0
 
     
     def create(self, data):
-        res = addIEResults(data['username'],data['taskQuestions'],data['taskAnswers'], data['taskCheats'],data['secondTrial'],data['sanctionGiven'],datetime.today().strftime('%Y-%m-%d-%H:%M:%S'))
+        res = addEPResults(data['username'],data['taskQuestions'],data['taskAnswers'], data['taskCheats'],data['secondTrial'],data['sanctionGiven'],datetime.today().strftime('%Y-%m-%d-%H:%M:%S'))
         if res == 409:
             api.abort(409, "a Problem occured")
         else :
             print(res)
             return res
 
-class IEFeedbacksDAO(object):
+class EPFeedbacksDAO(object):
     
     def __init__(self):
         self.counter = 0
@@ -126,7 +126,7 @@ class IEFeedbacksDAO(object):
 # L'appel de cette fonction signifie que l'utilisateur à totalement terminé l'expérience. Nous en profitons donc pour récupérer 
 # toutes les données et des les envoyer par message à Julien Voisin (sous la forme d'un fichier crypté)
     def create(self, data):
-        res = addIEFeedback(data['username'],data['sanctionGiven'],data['feedbackGlobalFeeling'],data['feedbackCheatingFeeling'],data['feedbackFairSanction'],data['feedbackOtherSanction'])
+        res = addEPFeedback(data['username'],data['sanctionGiven'],data['feedbackGlobalFeeling'],data['feedbackCheatingFeeling'],data['feedbackFairSanction'],data['feedbackOtherSanction'])
         sendEmailRecap(data['username'])
         if res == 409:
             api.abort(409, "a Problem occured")
@@ -137,43 +137,43 @@ class IEFeedbacksDAO(object):
 
 
 DAOKayahara =  KaharayaDAO()
-DAOFeelings = IEFeelingsScreenshotsDAO()
-DAOEmotionnalIntelligence = IEResultsDAO()
-DAOReactions = IEReactionsScreenshotsDAO()
-DAOFeedbacks = IEFeedbacksDAO()
+DAOFeelingsEP = EPFeelingsScreenshotsDAO()
+DAOEmotionsPerformances = EPResultsDAO()
+DAOReactionsEP = EPReactionsScreenshotsDAO()
+DAOFeedbacksEP = EPFeedbacksDAO()
 
 
-@nsIEResults.route('/')
-class IEResults(Resource):
-    @nsIEResults.doc('add_ie_results')
-    @nsIEResults.expect(IEResults)
-    @nsIEResults.marshal_with(IEResults, code=201)
+@nsEPResults.route('/')
+class EPResults(Resource):
+    @nsEPResults.doc('add_ie_results')
+    @nsEPResults.expect(EPResults)
+    @nsEPResults.marshal_with(EPResults, code=201)
     def post(self):
-        return DAOEmotionnalIntelligence.create(api.payload), 201
+        return DAOEmotionsPerformances.create(api.payload), 201
 
-@nsIEFeelingsScreenshots.route('/')
+@nsEPFeelingsScreenshots.route('/')
 class FeelingsScreenshots(Resource):
-    @nsIEFeelingsScreenshots.doc('add_ie_feeling_screenshot')
-    @nsIEFeelingsScreenshots.expect(IEFeelingsScreenshots)
-    @nsIEFeelingsScreenshots.marshal_with(IEFeelingsScreenshots, code=201)
+    @nsEPFeelingsScreenshots.doc('add_ie_feeling_screenshot')
+    @nsEPFeelingsScreenshots.expect(EPFeelingsScreenshots)
+    @nsEPFeelingsScreenshots.marshal_with(EPFeelingsScreenshots, code=201)
     def post(self):
-        return DAOFeelings.create(api.payload), 201
+        return DAOFeelingsEP.create(api.payload), 201
 
-@nsIEReactionsScreenshots.route('/')
+@nsEPReactionsScreenshots.route('/')
 class ReactionsScreenshots(Resource):
-    @nsIEReactionsScreenshots.doc('add_ie_reaction_screenshot')
-    @nsIEFeelingsScreenshots.expect(IEReactionsScreenshots)
-    @nsIEReactionsScreenshots.marshal_with(IEReactionsScreenshots, code=201)
+    @nsEPReactionsScreenshots.doc('add_ie_reaction_screenshot')
+    @nsEPFeelingsScreenshots.expect(EPReactionsScreenshots)
+    @nsEPReactionsScreenshots.marshal_with(EPReactionsScreenshots, code=201)
     def post(self):
-        return DAOReactions.create(api.payload), 201
+        return DAOReactionsEP.create(api.payload), 201
 
-@nsIEFeedback.route('/')
+@nsEPFeedback.route('/')
 class Feedback(Resource):
-    @nsIEFeedback.doc('add_ie_feedback')
-    @nsIEFeedback.expect(IEFeedback)
-    @nsIEFeedback.marshal_with(IEFeedback, code=201)
+    @nsEPFeedback.doc('add_ie_feedback')
+    @nsEPFeedback.expect(EPFeedback)
+    @nsEPFeedback.marshal_with(EPFeedback, code=201)
     def post(self):
-        return DAOFeedbacks.create(api.payload), 201
+        return DAOFeedbacksEP.create(api.payload), 201
 
 
 @nsKayaharaResults.route('/')
