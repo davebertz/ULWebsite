@@ -52,7 +52,7 @@ export const sendContinuousResults=(username,videoname,keyPressValues)=>{
 
 //Méthode pour appeler l'ajout en base de données des captures d'écrans de l'utilisateur imitant des expressions faciales.
 export const sendFeelingsScreenshots=(username,feeling, screenshotSource)=>{
-    fetch('http://127.0.0.1:5000/IEFeelingsScreenshots/', {
+    fetch('http://127.0.0.1:5000/EPFeelingsScreenshots/', {
       //mode: 'no-cors',
       method: 'POST',
       headers: headers,
@@ -71,8 +71,8 @@ export const sendFeelingsScreenshots=(username,feeling, screenshotSource)=>{
   }
 
 //Méthode pour appeler l'ajout en base de données des résultats et de la triche de l'utilisateur pour les séries d'exercices
-export const sendEmotionalIntelligenceResults=(username, taskQuestion,taskResult,taskCheat, secondTrial,sanctionGiven)=>{
-  fetch('http://127.0.0.1:5000/IEResults/', {
+export const sendEmotionsPerformancesResults=(username, taskQuestion,taskResult,taskCheat, secondTrial,sanctionGiven)=>{
+  fetch('http://127.0.0.1:5000/EPResults/', {
       //mode: 'no-cors',
       method: 'POST',
       headers: headers,
@@ -93,7 +93,7 @@ export const sendEmotionalIntelligenceResults=(username, taskQuestion,taskResult
 //Méthode pour appeler l'ajout en base de données des captures d'écrans de l'utilisateur prise à son insu 
 //lors de la révélation de la détection de triche
 export const sendReactionScreenshots=(username,seconds , imageSrc )=>{
-  fetch('http://127.0.0.1:5000/IEReactionsScreenshots/', {
+  fetch('http://127.0.0.1:5000/EPReactionsScreenshots/', {
     //mode: 'no-cors',
     method: 'POST',
     headers: headers,
@@ -112,8 +112,8 @@ export const sendReactionScreenshots=(username,seconds , imageSrc )=>{
  }
 
  //Méthode pour appeler l'ajout en base de données des réponses de l'utilisateur au formulaire de retour sur expérience
- export const sendIEFeedback=(username,sanctionGiven,fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction )=>{
-  fetch('http://127.0.0.1:5000/IEFeedback/', {
+ export const sendEPFeedback=(username,sanctionGiven,fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction )=>{
+  fetch('http://127.0.0.1:5000/EPFeedback/', {
     //mode: 'no-cors',
     method: 'POST',
     headers: headers,

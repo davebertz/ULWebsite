@@ -6,10 +6,10 @@ import Home from './components/Home'
 import Experiences from './components/Experiences'
 import Informations from './components/Informations'
 import Kayahara from './components/experiences/Kayahara/Kayahara'
-import IntelligenceEmotionnelleScreen from './components/experiences/EmotionnalIntelligence/IntelligenceEmotionnelleScreen'
-import IntelligenceEmotionnelleTasks from './components/experiences/EmotionnalIntelligence/IntelligenceEmotionnelleTasks'
-import IntelligenceEmotionnelleResults from './components/experiences/EmotionnalIntelligence/IntelligenceEmotionnelleResults'
-import FeedbackForm from './components/experiences/EmotionnalIntelligence/IntelligenceEmotionnelleFeedbackForm'
+import EmotionsPerformancesScreen from './components/experiences/EmotionsPerformances/EPScreen'
+import EmotionsPerformancesTasks from './components/experiences/EmotionsPerformances/EPTasks'
+import EmotionsPerformancesResults from './components/experiences/EmotionsPerformances/EPResults'
+import FeedbackForm from './components/experiences/EmotionsPerformances/EPFeedbackForm'
 import './App.css';
 
 
@@ -52,28 +52,28 @@ function App() {
                   </Fragment>}/>
               <Route
                 exact
-                path='/experience/intelligenceemotionnellescreen'
+                path='/experience/EmotionsPerformancesscreen'
                 render={(props)=>
                   <Fragment>                
-                    <IntelligenceEmotionnelleScreen/>                  
+                    <EmotionsPerformancesScreen/>                  
                   </Fragment>}/>
               <Route
                 exact
-                path='/experience/intelligenceemotionnelle'
+                path='/experience/EmotionsPerformances'
                 render={(props)=>
                   <Fragment>                
-                    <IntelligenceEmotionnelleTasks/>                  
+                    <EmotionsPerformancesTasks/>                  
                   </Fragment>}/>
               <Route
                 exact
-                path='/experience/intelligenceemotionnelleresults'
+                path='/experience/EmotionsPerformancesresults'
                 render={(props)=>
                   <Fragment>                
-                    <IntelligenceEmotionnelleResults/>                  
+                    <EmotionsPerformancesResults/>                  
                   </Fragment>}/>
               <Route
                 exact
-                path='/experience/intelligenceemotionnellefeedback'
+                path='/experience/EmotionsPerformancesfeedback'
                 render={(props)=>
                   <Fragment>                
                     <FeedbackForm/>                  
