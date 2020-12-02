@@ -5,7 +5,7 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { makeStyles } from '@material-ui/core/styles';
-import {sendFeelingsScreenshots} from "../../../Utils"
+import {sendFeelingsScreenshots, sendUsernameEmail} from "../../../Utils"
 import {feelings, questionNumerical, answerNumerical, questionCanadaCulture,
     answercanadaCulture,questionLetter,tWords,fWords,questionMemory, questionDefinition,googleDefinitionForApagogie,googleDefinitionForLallation } from "./Constants"
 import { useHistory } from "react-router-dom";
@@ -28,6 +28,8 @@ function EmotionsPerformancesScreen(props)  {
     const classes = useStyles();
     const history = useHistory();
     const [tileData, setTileData]=useState([])
+    const [userEmail, setUserEmail]=useState('')
+    const [userEmailValidation, setUserEmailValidation]=useState(true)
     const [experienceStarted,setExperienceStarted]=useState(false)
     const [screenshotSession,setScreenshotSession]=useState(false)
     const [compteurScreenshots, setCompteur]=useState(1)
@@ -138,13 +140,25 @@ function EmotionsPerformancesScreen(props)  {
         setScreenshotSession(true)
     }
 
+    function handleUserEmail(e){
+        setUserEmail(e.target.value) 
+        const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        if(regex.test(e.target.value)){
+            setUserEmailValidation(false)
+        }else{
+            setUserEmailValidation(true)
+        }
+    }
+
 
     //On appelle la fonction permettant d'envoyer les résultats à écrire en BD (grâce à un appel à l'API)
+    //On appelle également la fonction permettant d'ajouter en BD le username et son email
     //Ensuite on passe à la suite de l'expérience en renseignant les questions réponses pour les 2 séries
     const sendResult=()=>{
         for (var i=0; i<tileData.length; i++){
             sendFeelingsScreenshots(props.location.user.username, tileData[i]['title'],tileData[i]['img'] )
         }
+        sendUsernameEmail(props.location.user.username,userEmail )
         var series = defineQuestions()
         history.push({pathname:"/experience/EmotionsPerformances",
             user : props.location.user,
@@ -162,10 +176,13 @@ return (
             afin de prendre une photo de vous exprimant plusieures expressions faciales. 
             Merci de ne pas exagérer vos émotions et de les rendre le plus réaliste possible.<br/>
             Si vous ne possédez pas de webcam sur cet ordinateur ou si vous n’êtes pas disposés à nous en donner l’accès, l'expérience ne sera pas possible.
-            Merci tout de même pour votre intérêt.<br/><br/>
-            Une fois que vous êtes prêts, appuyez sur Démarrer.
+            Merci tout de même pour votre intérêt.<br/><br/><br/>
+            Pouvez-vous également joindre votre adresse électronique pour que nous puissions vous recontacter ultérieurement.<br/><br/>
+            
+            <input type="text" placeholder="Email..." name="userEmail"  value={userEmail} onChange={e=> handleUserEmail(e)}/>
+            <br/>
         </p> :null }
-        { experienceStarted === false ? <Button variant="contained" color="primary" className={classes.startButton} onClick={startExpe}> Démarrer</Button> : null}
+        { experienceStarted === false ? <Button variant="contained" disabled={userEmailValidation} color="primary" className={classes.startButton} onClick={startExpe}> Démarrer</Button> : null}
 
         
         { screenshotSession === true ? 

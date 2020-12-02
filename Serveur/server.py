@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restx import Api, Resource, fields
-from database_utils import addEPFeelingsScreenshot,addEPReactionsScreenshot, addKahayaraResult, addEPResults, addEPFeedback
+from database_utils import addUser, addEPFeelingsScreenshot,addEPReactionsScreenshot, addKahayaraResult, addEPResults, addEPFeedback
 from utils import sendEmailRecap
 from flask_cors import CORS
 from datetime import datetime
@@ -20,6 +20,9 @@ api = Api(app, version='1.0', title='LavalExperiencesAPI',
     description='A simple API for experience website',
 )
 
+##Users
+nsUsers = api.namespace("Users", description='randomly created username + email ')
+
 ##Kayahara
 nsKayaharaResults = api.namespace('KayaharaResults', description='Kayahara experience results from user')
 
@@ -29,6 +32,11 @@ nsEPResults = api.namespace('EPResults', description='User result and feedback f
 nsEPReactionsScreenshots = api.namespace('EPReactionsScreenshots', description='Reactions screenshots from user')
 nsEPFeedback = api.namespace('EPFeedback', description='User feedback')
 
+
+users = api.model('Users', {
+    'username': fields.String(required=True, description='The user username'),
+    'email': fields.String(required=True, description='The user email adress'),
+})
 
 kahayaraResult = api.model('KayaharaResult', {
     'username': fields.String(required=True, description='The user username'),
@@ -64,6 +72,21 @@ EPFeedback = api.model('EPFeedback', {
     'feedbackFairSanction': fields.String(required=True, description='Did the user thought that the sanction was appropriate'),
     'feedbackOtherSanction': fields.String(required=True, description='What other sanction could the user have thought of'),
 })
+
+
+class UsersDAO(object):
+    
+    def __init__(self):
+        self.counter = 0
+
+    def create(self, data):
+        res = addUser(data['username'],data['email'])
+        if res == 409:
+            api.abort(409, "a Problem occured")
+        else :
+            return res
+
+
 
 class KaharayaDAO(object):
     
@@ -135,13 +158,21 @@ class EPFeedbacksDAO(object):
             return res
 
 
-
+DAOUsers = UsersDAO()
 DAOKayahara =  KaharayaDAO()
 DAOFeelingsEP = EPFeelingsScreenshotsDAO()
 DAOEmotionsPerformances = EPResultsDAO()
 DAOReactionsEP = EPReactionsScreenshotsDAO()
 DAOFeedbacksEP = EPFeedbacksDAO()
 
+
+@nsUsers.route('/')
+class Users(Resource):
+    @nsUsers.doc('add_user')
+    @nsUsers.expect(users)
+    @nsUsers.marshal_with(users, code=201)
+    def post(self):
+        return DAOUsers.create(api.payload), 201
 
 @nsEPResults.route('/')
 class EPResults(Resource):

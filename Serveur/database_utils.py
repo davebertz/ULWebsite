@@ -20,6 +20,22 @@ def getConnection():
     print ("connect successful")
     return connection
 
+
+    
+# ----------------------Users---------------------------
+def addUser( username, email):
+    connection = getConnection()
+    returnValue = username, email
+    try:   
+        with connection.cursor() as cursor:
+                    
+            cursor.execute("INSERT INTO users (username, email) VALUES (%s,%s);", (username, email) )
+            connection.commit()    
+            
+    finally:
+        connection.close()
+        return returnValue
+
 # ----------------------Kayahara---------------------------
 def addKahayaraResult( username, videoname,videotype, inputs, dateExperience):
     connection = getConnection()

@@ -48,7 +48,7 @@ export const sendContinuousResults=(username,videoname,keyPressValues)=>{
   }
 
 
-// --------------------------Intelligence Emotionnelle------------------------------
+// --------------------------Emotion et Performances------------------------------
 
 //Méthode pour appeler l'ajout en base de données des captures d'écrans de l'utilisateur imitant des expressions faciales.
 export const sendFeelingsScreenshots=(username,feeling, screenshotSource)=>{
@@ -57,6 +57,25 @@ export const sendFeelingsScreenshots=(username,feeling, screenshotSource)=>{
       method: 'POST',
       headers: headers,
       body:JSON.stringify({username :username, feeling: feeling, source:screenshotSource })
+    })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+          throw new Error('Something went wrong');
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+  }
+
+  export const sendUsernameEmail=(username,email)=>{
+    fetch('http://127.0.0.1:5000/Users/', {
+      //mode: 'no-cors',
+      method: 'POST',
+      headers: headers,
+      body:JSON.stringify({username :username, email: email})
     })
     .then((response) => {
       if (response.ok) {
