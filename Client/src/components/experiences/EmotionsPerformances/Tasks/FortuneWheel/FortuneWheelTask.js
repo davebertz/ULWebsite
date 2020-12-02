@@ -145,56 +145,61 @@ function WheelOfFortune(props)  {
 return (
 
     <div className={classes.root}>
-        <div className={classes.root}>
-            <div > 
+            <div className={classes.hotContainer}> 
                 <p> Avez-vous le goût du risque ? <br/>
-                    Vous avez pour cet exercice un choix à faire. Voici deux roulettes vous permettant d'augmenter votre score, 
-                    l'une est risquée et l'autre plus raisonnable. Choisissez votre roulette en cochant la case au-dessus et faire tourner les roues.
+                    Voici face à vous 2 roulettes de casino, l'une risquée et l'autre plus raisonnable. Le but du jeu ici est de faire un choix
+                    entre ces deux roulettes, attention cependant, le résultat de la roulette sélectionnée impactera votre score.<br/>
                     Vous avez 4 essais pour augmenter au maximum votre résultat.
 
+                    <br/><br/>
+
+                    - Cochez la case correspondant à la roulette que vous souhaitez choisir<br/>
+                    - Faites tourner les roulettes en appuyant sur le bouton 'Faites vos jeux'<br/>
+                    - Recommencer les étapes 1 et 2 jusqu'à atteindre 4 essais<br/>
+                    - Passez à l'exercice suivant avec le bouton "Valider résultats"<br/>
+
                 </p>
-                <div className={classes.wheelsContainer}>
-                    <div>
-                        <input
-                            type="checkbox"
-                            checked={checkbox1}
-                            onChange={changeCheckbox1}
-                            style={{marginRight:'40px'}}
-                        />
-                        <input
-                            type="checkbox"
-                            checked={checkbox2}
-                            onChange={changeCheckbox2}
-                            style={{marginLeft:'40px'}} 
-                        />
-                    </div>
-                    <div className={classes.wheels}>
-                        <div style={{marginRight:'20px'}}>
-                            <ReactWheel
-                                segments={segments}
-                                onComplete={onSpinComplete1}
-                                ref={wheelRef}
-                                
-                            />
-                        </div>
-                        <div style={{marginLeft:'20px'}}>
-                            <ReactWheel
-                                segments={segments2}
-                                onComplete={onSpinComplete2}
-                                ref={wheelRef2}
-                            />
-                        </div>
-                    </div>
-                    <p> Votre score actuel : {score}</p>
-                   
-                    <div className={classes.spinButton}>
-                        <Button variant="contained" color="primary" onClick={onSpinClick}>
+                <div className={classes.horizontalContainer}>
+                    <div className={classes.spinButtonVertical}>
+                        <p> Votre score actuel : {score}</p>
+                        <Button variant="contained" color="secondary" onClick={onSpinClick}>
                             Faites vos jeux !   
                         </Button>
                     </div>
+                    <div className={classes.wheelsContainer}>
+                        <div className={classes.wheels}>
+                            <input
+                                type="checkbox"
+                                checked={checkbox1}
+                                onChange={changeCheckbox1}
+                                style={{marginRight:'40px'}}
+                            />
+                            <div style={{marginRight:'40px'}}>
+                                <ReactWheel
+                                    segments={segments}
+                                    onComplete={onSpinComplete1}
+                                    ref={wheelRef}                                    
+                                />
+                            </div>                            
+                        </div>
+                        <div className={classes.wheels}>
+                            <input
+                                type="checkbox"
+                                checked={checkbox2}
+                                onChange={changeCheckbox2}
+                                style={{marginLeft:'20px'}} 
+                            />
+                            <div style={{marginLeft:'20px'}}>
+                                <ReactWheel
+                                    segments={segments2}
+                                    onComplete={onSpinComplete2}
+                                    ref={wheelRef2}
+                                />
+                            </div>
+                        </div>
+                    </div>   
                 </div>
             </div>
-        </div>
         <div className={classes.submitButton}>
             <Button variant="contained" color="primary" onClick={handleClick}> Valider résultats </Button>
         </div>
@@ -207,9 +212,19 @@ const useStyles = makeStyles({
 
     wheels:{
         display:'flex',
-        flexDirection:'row',
+        flexDirection:'column',
         alignItems:'center',
         justifyContent:'center'
+    },
+    hotContainer:{
+        justifyContent:'center',
+        alignItems:'center',
+        padding : 10,
+    },
+    horizontalContainer:{
+        flexDirection:'row',
+        display:'flex',
+        flex:1,
     },
     centered:{
 
@@ -229,10 +244,22 @@ const useStyles = makeStyles({
     },
     wheelsContainer:{
         display:'flex',
-        flexDirection:'column'
+        flexDirection:"row",
+        flex:2,
+        justifyContent:'center',
+        alignItems:'center',
     },
-    spinButton:{
-        marginBottom:'5px'
+    spinButtonVertical:{
+        flexDirection:'column',
+        display:'flex',
+        flex:2,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor : '#FFE4E1',
+        padding:15,
+        border : 'solid',
+        borderColor : "#FFC0CB",
+        borderRadius: 25
     }
 })
 

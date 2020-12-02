@@ -34,7 +34,6 @@ def detect_emotion(image_as_txt, feeling=None):
     # Passage nécessaire de parsing des float en str afin de rendre le Dict sérialisable en JSON pour l'insérer dans les 
     # requêtes SQL
     jsonable_result = {}
-    print(result)
     for key, value in result[0]['emotions'].items(): 
         jsonable_result[key]  =str(value)
 

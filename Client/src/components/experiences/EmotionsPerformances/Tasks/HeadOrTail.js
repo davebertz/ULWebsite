@@ -45,18 +45,22 @@ function HeadOrTail(props)  {
 
 return (
     <div className={classes.root}>
-        <div className={classes.root}>
             <div className={classes.hotContainer}> 
                 <p>
-                    Pour ce premier exercice, vous allez pouvoir lancer une pièce en appuyant sur le bouton "Lancer la pièce". 
-                    Si le résultat est pile, vous gagnez 25 points, si le résultat est face, vous gagnez 5 points.<br/>
-                    Faites 7 lancers puis passez à l'exercice suivant.
+                    La chance est-elle avec vous ? <br/>
+                    Pour ce premier exercice, vous allez pouvoir lancer une pièce plusieurs fois. 
+                    Si le résultat est pile, vous gagnez 25 points, si le résultat est face, vous gagnez 5 points. 
+                    Le but est d'avoir le meilleur score en 7 lancers.<br/><br/>
+
+                    - Lancez la pièce en appuyant sur le bouton "Lancer la pièce"<br/>
+                    - Une fois le score mis à jour, relancez la pièce jusqu'à atteindre 7 lancers<br/>
+                    - Passez à l'exercice suivant avec le bouton "Valider résultats"<br/>
                 </p> 
                 <div className={classes.coinHorizontal}>
                     <div className={classes.coinVertical}>
-                        <p><b>{coinValue}</b></p>
-                        <p> Total argent :   {totalHoT}  points </p>
-                        <Button className={classes.button} variant="contained" color="primary"  onClick={headOrTailThrow}> Lancer la pièce !</Button>
+                        <p>Résultat : <b>{coinValue}</b></p>
+                        <p> Score total :   <b>{totalHoT}</b>  points </p>
+                        <Button className={classes.button} variant="contained" color="secondary"  onClick={headOrTailThrow}> Lancer la pièce !</Button>
                         
                     </div>
                     <div className={classes.gifHot}>
@@ -68,7 +72,7 @@ return (
                 </div>
             </div>
             
-        </div>
+
         <div className={classes.submitButton}>
             <Button variant="contained" color="primary" onClick={handleClick}> Valider résultats </Button>
         </div>
@@ -97,7 +101,12 @@ const useStyles = makeStyles({
         display:'flex',
         flex:2,
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        backgroundColor : '#FFE4E1',
+        padding:15,
+        border : 'solid',
+        borderColor : "#FFC0CB",
+        borderRadius: 25
     },
     gifHot:{
         display:'flex',

@@ -236,6 +236,7 @@ const useStyles = makeStyles({
         flexDirection:"column",
         marginTop:"-4%",
         justifyContent:'flex-end',
+        fontSize : 'large',
     },
 
     centered:{
@@ -259,6 +260,11 @@ const useStyles = makeStyles({
     task:{
         display:'flex',
         flex:6,
+        backgroundColor : '#DCDCDC',
+        padding:15,
+        border : 'solid',
+        borderColor : "#C0C0C0",
+        borderRadius: 25
     },
     progressBar:{
         marginLeft:"4%",
