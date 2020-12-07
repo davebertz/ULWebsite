@@ -79,19 +79,24 @@ return (
         <div className={classes.centered}>
             <p>Ecrivez un maximum de mots commençant par la lettre "{props.letter}" en moins de 30 secondes. Vous recevrez un signal sonore à la fin du temps imparti.</p>
              
-            <p> Mots commençant par "{props.letter}" déjà trouvés : {listWord}</p>
-            <form  className={classes.form} onSubmit={handleSubmitWordList}>
-                <label>
-                    Réponse : <br/>
-                    <input className={classes.button} type="text" name="wordInput"  value={wordWritten} onChange={e=> handleChangeWord(e)}/>
-                </label><br/><br/>
-                {!props.startTimer ? <Button className={classes.buttonStart} onClick={startTimer} variant="contained" color="primary" name="wordInput" value="Démarrer" >Démarrer </Button>:null}
-                <Button className={classes.button} variant="contained" color="primary" name="wordInput" type="submit" value="Ajouter mot" >Ajouter mot </Button>
-               
-                <p>Compte à rebours : <b>{timeLeft}</b> secondes restantes</p>
-            </form>
+             <div className={classes.horizontalContainer}>
+                <div className={classes.verticalContainer}>
+                <form  className={classes.form} onSubmit={handleSubmitWordList}>
+                    <label>
+                        Réponse : <br/>
+                        <input className={classes.button} type="text" name="wordInput"  value={wordWritten} onChange={e=> handleChangeWord(e)}/>
+                    </label><br/><br/>
+                    </form>
+                    {!props.startTimer ? <Button className={classes.buttonStart} onClick={startTimer} variant="contained" color="primary" name="wordInput" value="Démarrer" >Démarrer </Button>:null}
+                    <Button className={classes.button} variant="contained" color="primary" name="wordInput" type="submit" value="Ajouter mot" >Ajouter mot </Button>
+                    </div>
+                    <div className={classes.wordsFound}>
+                        <p> Mots commençant par "{props.letter}" déjà trouvés : {listWord}</p>
+                    </div>
+                
+            </div>
             
-            
+            <p>Compte à rebours : <b>{timeLeft}</b> secondes restantes</p>
             <div className={classes.submitButton}>
                     <Button variant="contained" color="primary" onClick={handleSubmitWordListEnd}> Valider résultats </Button>
             </div>
@@ -124,7 +129,30 @@ const useStyles = makeStyles({
     },
     buttonStart:{
         marginBottom:10
-    }
+    },
+    verticalContainer:{
+        flexDirection:'column',
+        display:'flex',
+        flex:2,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor : '#FFE4E1',
+        padding:15,
+        border : 'solid',
+        borderColor : "#FFC0CB",
+        borderRadius: 25
+    },
+    horizontalContainer:{
+        flexDirection:'row',
+        display:'flex',
+        flex:1,
+    },
+    wordsFound:{
+        display:'flex',
+        flex:2,
+        justifyContent:'center',
+        alignItems:'center',
+    },
 })
 
  
