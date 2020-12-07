@@ -70,12 +70,12 @@ export const sendFeelingsScreenshots=(username,feeling, screenshotSource)=>{
     });
   }
 
-  export const sendUsernameEmail=(username,email)=>{
+  export const sendUserInfos=(username,email, gender, age, ULStudent, interStudent, schoolProgram)=>{
     fetch('http://127.0.0.1:5000/Users/', {
       //mode: 'no-cors',
       method: 'POST',
       headers: headers,
-      body:JSON.stringify({username :username, email: email})
+      body:JSON.stringify({username :username, email: email, gender: gender, age:age, ULStudent:ULStudent, interStudent:interStudent, schoolProgram:schoolProgram})
     })
     .then((response) => {
       if (response.ok) {

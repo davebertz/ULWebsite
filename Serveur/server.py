@@ -80,7 +80,7 @@ class UsersDAO(object):
         self.counter = 0
 
     def create(self, data):
-        res = addUser(data['username'],data['email'])
+        res = addUser(data['username'],data['email'],data['gender'],data['age'],data['ULStudent'],data['interStudent'],data['schoolProgram'])
         if res == 409:
             api.abort(409, "a Problem occured")
         else :

@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import {sendEPFeedback} from "../../../Utils"
 import Button from '@material-ui/core/Button';
+import ReactPlayer from 'react-player'
 
 
 //Page contenant l'annonce de la fin de l'expérience et du réel but de celle-ci.
@@ -86,6 +87,7 @@ return (
     :null}
     {showForm === true ?
         <div>
+            <ReactPlayer playing={true} controls={true} url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
             <p>Nous allons maintenant recueillir votre ressenti à travers un petit questionnaire.
             </p> 
             <form onSubmit={handleSubmit}>

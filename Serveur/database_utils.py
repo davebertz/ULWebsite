@@ -23,13 +23,13 @@ def getConnection():
 
     
 # ----------------------Users---------------------------
-def addUser( username, email):
+def addUser( username,email, gender, age, ULStudent, interStudent, schoolProgram):
     connection = getConnection()
     returnValue = username, email
     try:   
         with connection.cursor() as cursor:
                     
-            cursor.execute("INSERT INTO users (username, email) VALUES (%s,%s);", (username, email) )
+            cursor.execute("INSERT INTO users (username, email, age,gender,UL_student,school_program, international_student) VALUES (%s,%s,%s,%s,%s,%s,%s);", (username,email,age, gender,  ULStudent, interStudent, schoolProgram) )
             connection.commit()    
             
     finally:

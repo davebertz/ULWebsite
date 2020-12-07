@@ -5,7 +5,7 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { makeStyles } from '@material-ui/core/styles';
-import {sendFeelingsScreenshots, sendUsernameEmail} from "../../../Utils"
+import {sendFeelingsScreenshots, sendUserInfos} from "../../../Utils"
 import {feelings, questionNumerical, answerNumerical, questionCanadaCulture,
     answercanadaCulture,questionLetter,tWords,fWords,questionMemory, questionDefinition,googleDefinitionForApagogie,googleDefinitionForLallation } from "./Constants"
 import { useHistory } from "react-router-dom";
@@ -28,8 +28,14 @@ function EmotionsPerformancesScreen(props)  {
     const classes = useStyles();
     const history = useHistory();
     const [tileData, setTileData]=useState([])
+    const [errorMessage, setErrorMessage]= useState('')
     const [userEmail, setUserEmail]=useState('')
-    const [userEmailValidation, setUserEmailValidation]=useState(true)
+    const [userAge, setUserAge]= useState('')
+    const [userGender, setUserGender]= useState('')
+    const [userSchoolProgram, setUserSchoolProgram]= useState('')
+    const [userInterStudent, setUserInterStudent]= useState('')
+    const [userULStudent, setUserULStudent]= useState('')
+    const [userFormValidation, setuserFormValidation]=useState(true)
     const [experienceStarted,setExperienceStarted]=useState(false)
     const [screenshotSession,setScreenshotSession]=useState(false)
     const [compteurScreenshots, setCompteur]=useState(1)
@@ -136,20 +142,73 @@ function EmotionsPerformancesScreen(props)  {
     );
 
     const startExpe= () => {
-        setExperienceStarted(true)
-        setScreenshotSession(true)
+        if(validateForm()){
+            setExperienceStarted(true)
+            setScreenshotSession(true)
+            sendUserInfos(props.location.user.username,userEmail, userGender, userAge, userULStudent, userInterStudent, userSchoolProgram )
+        }
+       
+    }
+
+
+    function validateForm(){
+        var isValid=true
+
+        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        if(!regex.test(userEmail)){
+            isValid = false
+            setErrorMessage("Merci de rentrer un format d'adresse mail valide")
+        }
+        if(userGender === ''){
+            isValid = false
+            setErrorMessage("Merci de remplir tous les champs")
+        }
+        if(userAge === ''){
+            isValid = false
+            setErrorMessage("Merci de remplir tous les champs")
+        }
+        if(userULStudent === ''){
+            isValid = false
+            setErrorMessage("Merci de remplir tous les champs")
+        }
+        if(userInterStudent === ''){
+            isValid = false
+            setErrorMessage("Merci de remplir tous les champs")
+        }
+        if(userSchoolProgram === ''){
+            isValid = false
+            setErrorMessage("Merci de remplir tous les champs")
+        }
+       
+        
+        return isValid
+
     }
 
     function handleUserEmail(e){
-        setUserEmail(e.target.value) 
-        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        if(regex.test(e.target.value)){
-            setUserEmailValidation(false)
-        }else{
-            setUserEmailValidation(true)
-        }
+        setUserEmail(e.target.value)
+        
+    }
+    function handleChangeAge(e){
+        setUserAge(e.target.value.replace(/\D/,''))    //Seuls les chiffres sont acceptés  
     }
 
+    function handleChangeGender(e){
+        setUserGender(e.target.value)     
+    }
+
+    function handleChangeULStudent(e){
+        setUserULStudent(e.target.value) 
+    }
+
+    function handleChangeInternationalStudent(e){
+        setUserInterStudent(e.target.value) 
+    }
+
+    function handleUserSchoolProgram(e){
+        setUserSchoolProgram(e.target.value)
+    }
+    
 
     //On appelle la fonction permettant d'envoyer les résultats à écrire en BD (grâce à un appel à l'API)
     //On appelle également la fonction permettant d'ajouter en BD le username et son email
@@ -158,31 +217,77 @@ function EmotionsPerformancesScreen(props)  {
         for (var i=0; i<tileData.length; i++){
             sendFeelingsScreenshots(props.location.user.username, tileData[i]['title'],tileData[i]['img'] )
         }
-        sendUsernameEmail(props.location.user.username,userEmail )
+        
         var series = defineQuestions()
         history.push({pathname:"/experience/EmotionsPerformances",
             user : props.location.user,
             actualSerie : series[0],
             nextSerie : series[1]
             })
+         
     }
     
 
 return (
     <div className={classes.root}>   
-        { experienceStarted === false ? <p>
-            Bienvenue dans l'expérience portant sur la logique et les émotions.<br/> 
+        { experienceStarted === false ? <div>
+            <p>
+            Bienvenue dans l'expérience portant sur la logique et les émotions. Attention, ce test peut vous faire vivre des émotions négatives.<br/> 
             Nous allons dans un premier temps vous demandez d'accéder à votre webcam 
             afin de prendre une photo de vous exprimant plusieures expressions faciales. 
             Merci de ne pas exagérer vos émotions et de les rendre le plus réaliste possible.<br/>
             Si vous ne possédez pas de webcam sur cet ordinateur ou si vous n’êtes pas disposés à nous en donner l’accès, l'expérience ne sera pas possible.
             Merci tout de même pour votre intérêt.<br/><br/><br/>
-            Pouvez-vous également joindre votre adresse électronique pour que nous puissions vous recontacter ultérieurement.<br/><br/>
-            
-            <input type="text" placeholder="Email..." name="userEmail"  value={userEmail} onChange={e=> handleUserEmail(e)}/>
+            Nous allons maintenant vous demander de renseigner quelques informations démographiques utiles pour les statistiques
+            des personnes testées. Un mail avec l'accès au test vous sera ensuite envoyé.<br/><br/></p>
+            <div>
+                <form>
+                    <label>
+                        Email :<br/>
+                        <input type="text" placeholder="Email" name="userEmail"  value={userEmail} onChange={e=> handleUserEmail(e)}/>
+                    </label><br/>
+                    <label>
+                        Age :<br/>
+                        <input type="text" placeholder="Age" name="userAge"  value={userAge} onChange={e=> handleChangeAge(e)}/>
+                    </label>    <br/>
+                    <label>
+                        Genre :<br/>
+                        <select name="userGender"  value={userGender} onChange={e=> handleChangeGender(e)}>
+                            <option value=""></option>
+                            <option value="male">Homme</option>
+                            <option value="female">Femme</option>
+                        </select>
+                    </label><br/>
+                    <label>
+                        Etudiez-vous à l'université Laval :<br/>
+                        <select name="userULStudent"  value={userULStudent} onChange={e=> handleChangeULStudent(e)}>
+                            <option value=""></option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>            
+                    </label><br/>
+                    <label>
+                        Dans quelle fac et quel programme étudiez-vous ? :<br/>
+                        <input type="text" placeholder="Programme Scolaire" name="userSchoolProgram"  value={userSchoolProgram} onChange={e=> handleUserSchoolProgram(e)}/>
+                    </label><br/>
+                    <label>
+                        Etes-vous un élève international :<br/>
+                        <select name="userInterStudent"  value={userInterStudent} onChange={e=> handleChangeInternationalStudent(e)}>
+                            <option value=""></option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>            
+                    </label><br/>
+                </form>
+            </div>
             <br/>
-        </p> :null }
-        { experienceStarted === false ? <Button variant="contained" disabled={userEmailValidation} color="primary" className={classes.startButton} onClick={startExpe}> Démarrer</Button> : null}
+        </div> :null }
+        { experienceStarted === false ? <div>
+            <p style={{ color: 'red' }}>{errorMessage}</p>
+            <Button variant="contained"  color="primary" className={classes.startButton} onClick={startExpe}> Démarrer</Button> 
+            
+            </div>
+            : null}
 
         
         { screenshotSession === true ? 
