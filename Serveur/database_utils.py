@@ -1,4 +1,5 @@
 import pymysql.cursors 
+import unidecode
 import json
 from emotion_recognition import detect_emotion
 
@@ -82,6 +83,18 @@ def addEPReactionsScreenshot( username, timer,source, dateExperience):
 def addEPResults(username, taskQuestions, taskResult,taskCheat, secondTrial, sanctionGiven,  dateExperience):
     connection = getConnection()
     returnValue = username, taskQuestions, taskResult,taskCheat, secondTrial, sanctionGiven,  dateExperience
+
+    #Petit bloc de refacto pour enlever les accents en BD pour éviter les /u009 au lieu de é
+    print("-------------------------------------------------------------")
+    print(taskResult)
+    taskQuestions["canadaCulture"] = [unidecode.unidecode(x) for x in taskQuestions["canadaCulture"]]
+    if(secondTrial):
+        taskResult[2] = {"CanadianQuestion" : [unidecode.unidecode(x) for x in taskResult[2]['CanadianQuestion']]}
+    else:
+        taskResult[3] = {"CanadianQuestion" : [unidecode.unidecode(x) for x in taskResult[3]['CanadianQuestion']]}
+    
+
+    print(taskResult)
     try:   
         with connection.cursor() as cursor:
             cursor.execute("INSERT INTO ei_results (username, task_questions, task_answers, task_cheats, second_trial, sanction_given, date) VALUES (%s,%s,%s,%s,%s,%s,%s);", 
@@ -92,7 +105,7 @@ def addEPResults(username, taskQuestions, taskResult,taskCheat, secondTrial, san
         connection.close()
         return returnValue
 
-
+#todo : tout changer les feedbacks
 def addEPFeedback(username, sanctionGiven, fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction):
     connection = getConnection()
     returnValue = username, sanctionGiven, fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction

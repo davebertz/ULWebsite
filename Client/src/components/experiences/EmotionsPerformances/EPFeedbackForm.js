@@ -55,7 +55,7 @@ return (
         <p>
             <b>L'expérience est terminée !</b>
             <br/>
-            Tout d’abord, <b>CETTE EXPÉREPNCE NE PORTAIT PAS SUR LES ÉMOTIONS ET L’INTELLIGENCE. </b> 
+            Tout d’abord, <b>CETTE EXPÉRIENCE NE PORTAIT PAS SUR LES ÉMOTIONS ET L’INTELLIGENCE. </b> 
             Bien que nous ayons été transparents sur ce qui vous attendait comme tâches dans l’expérience, 
             nous n'avons pas dévoilé l’objet réel de l’expérience.<br/><br/>
 

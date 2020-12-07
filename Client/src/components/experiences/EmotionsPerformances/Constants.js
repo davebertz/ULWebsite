@@ -6,8 +6,35 @@ export const feelings = ['visage neutre', 'joie', 'tristesse', 'colère', 'surpr
 export const questionNumerical = [['0 1 3 4 12 13 __ 40 120 121','0 4 18 48 100 ___ 294 448'],['2 2 4 12 _ 240','50 300 _ 150 200 75 400']]
 export const answerNumerical=[['39','180'],['48','100']]
 
-export const questionCanadaCulture = ['Quelle est la province canadienne la moins peuplée?','Combien y a-t-il de régions administratives au Québec ?']
-export const answercanadaCulture=[['Île-du-Prince-Édouard', "ile du prince edouard", "île du prince edouard"],['17',"dix-sept","dix sept"]]
+
+export const questionCanadaCulture = ['Quelle est la province canadienne la moins peuplée?',
+'Combien y a-t-il de régions administratives au Québec?',
+'Quelle est la capitale du Canada?',
+'Quelles sont les dates de la Deuxième guerre mondiale?',
+'Les jeux Olympiques ont lieu au combien d’années?',
+'Combien y-a-t-il eu des tomes des livres Harry Potter?',
+'En quelle année a été fondée la ville de Québec?',
+'Quelle série télé avait le slogan « Attrapez-les tous/Gotta catch em’ all »?',
+'Quel est le nom du mathématicien reconnu pour ses théorèmes sur les triangles?',
+'Quelle est la plus grosse planète de notre système solaire?',
+'Que signifie PIB?',
+'Qui a découvert la radioactivité?',
+'Quel est le plus vaste océan au monde?',
+'Qui est le père de Luke Skywalker?']
+export const answercanadaCulture=[['Île-du-Prince-Édouard', "ile du prince edouard", "île du prince edouard"],
+['17',"dix-sept","dix sept"],
+['Ottawa'],
+['1935 1945','39 45', '1939-1945','39-45'],
+["2","2 ans","deux ans","deux","2ans"],
+["7","sept"],
+['1608'],
+['Pokémon','Pokemon','pokémon','pokemon'],
+['Pythagore',"pythagore"],
+['Jupiter',],
+['Produit intérieur brut',"produit interieur brut"],
+["Pierre et Marie Curie","pierre curie marie curie","marie et pierre curie","marie pierre curie", "marie curie pierre curie"],
+["océan pacifique", "pacifique","ocean pacifique"],
+["Dark vador","darth vador","anakin skywalker"]]
 
 export const questionLetter = ['f','t']
 

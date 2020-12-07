@@ -35,7 +35,6 @@ function EmotionsPerformancesScreen(props)  {
     const [userSchoolProgram, setUserSchoolProgram]= useState('')
     const [userInterStudent, setUserInterStudent]= useState('')
     const [userULStudent, setUserULStudent]= useState('')
-    const [userFormValidation, setuserFormValidation]=useState(true)
     const [experienceStarted,setExperienceStarted]=useState(false)
     const [screenshotSession,setScreenshotSession]=useState(false)
     const [compteurScreenshots, setCompteur]=useState(1)
@@ -48,13 +47,13 @@ function EmotionsPerformancesScreen(props)  {
         Voici l'architecture du dictionnaire de chacune des deux séries. 
         */
         const firstSerie={"Questions":
-                            {"numerical": null,"canadaCulture":null, "letter":null,"memory":null, "definition":null}, 
+                            {"numerical": null,"canadaCulture":[], "letter":null,"memory":null, "definition":null}, 
                           'Answers':
-                            {"numerical":null,"canadaCulture":null,'letter':null,"memory":null, "definition":null}}
+                            {"numerical":null,"canadaCulture":[],'letter':null,"memory":null, "definition":null}}
         const secondSerie={"Questions":
-                            {"numerical": null,"canadaCulture":null, "letter":null,"memory":null, "definition":null}, 
+                            {"numerical": null,"canadaCulture":[], "letter":null,"memory":null, "definition":null}, 
                           'Answers':
-                            {"numerical":null,"canadaCulture":null,'letter':null,"memory":null, "definition":null}}
+                            {"numerical":null,"canadaCulture":[],'letter':null,"memory":null, "definition":null}}
 
         var rand = Math.floor(Math.random() * Math.floor(2))
         var randNumerical = rand        
@@ -63,15 +62,28 @@ function EmotionsPerformancesScreen(props)  {
         secondSerie["Questions"]["numerical"] = questionNumerical[(rand+1)%2]
         secondSerie["Answers"]["numerical"] = answerNumerical[(rand+1)%2]
 
-        rand = Math.floor(Math.random() * Math.floor(2))
-        firstSerie["Questions"]["canadaCulture"] = questionCanadaCulture[rand]
-        firstSerie["Answers"]["canadaCulture"] = answercanadaCulture[rand]
-        secondSerie["Questions"]["canadaCulture"] = questionCanadaCulture[(rand+1)%2]
-        secondSerie["Answers"]["canadaCulture"] = answercanadaCulture[(rand+1)%2]
+        var rand2 = [];
+        while(rand2.length < 6){
+            var r = Math.floor(Math.random() * 13) + 1;
+            if(rand2.indexOf(r) === -1) rand2.push(r);
+        }
+        firstSerie["Questions"]["canadaCulture"][0] = questionCanadaCulture[rand2[0]]
+        firstSerie["Answers"]["canadaCulture"][0] = answercanadaCulture[rand2[0]]
+        firstSerie["Questions"]["canadaCulture"][1] = questionCanadaCulture[rand2[1]]
+        firstSerie["Answers"]["canadaCulture"][1] = answercanadaCulture[rand2[1]]
+        firstSerie["Questions"]["canadaCulture"][2] = questionCanadaCulture[rand2[2]]
+        firstSerie["Answers"]["canadaCulture"][2] = answercanadaCulture[rand2[2]]
 
-        rand = Math.floor(Math.random() * Math.floor(2))
-        firstSerie["Questions"]["letter"] = questionLetter[rand]
-        secondSerie["Questions"]["letter"] = questionLetter[(rand+1)%2]
+        secondSerie["Questions"]["canadaCulture"][0] = questionCanadaCulture[rand2[3]]
+        secondSerie["Answers"]["canadaCulture"][0] = answercanadaCulture[rand2[3]]
+        secondSerie["Questions"]["canadaCulture"][1] = questionCanadaCulture[rand2[4]]
+        secondSerie["Answers"]["canadaCulture"][1] = answercanadaCulture[rand2[4]]
+        secondSerie["Questions"]["canadaCulture"][2] = questionCanadaCulture[rand2[5]]
+        secondSerie["Answers"]["canadaCulture"][2] = answercanadaCulture[rand2[5]]
+
+        var rand3 = Math.floor(Math.random() * Math.floor(2))
+        firstSerie["Questions"]["letter"] = questionLetter[rand3]
+        secondSerie["Questions"]["letter"] = questionLetter[(rand3+1)%2]
 
         if(firstSerie["Questions"]["letter"] === 't'){
             firstSerie["Answers"]["letter"] = tWords
@@ -81,13 +93,13 @@ function EmotionsPerformancesScreen(props)  {
             secondSerie["Answers"]["letter"] = tWords
         }
 
-        rand = Math.floor(Math.random() * Math.floor(2))
-        firstSerie["Questions"]["memory"] = questionMemory[rand]
-        secondSerie["Questions"]["memory"] = questionMemory[(rand+1)%2]
+        var rand4 = Math.floor(Math.random() * Math.floor(2))
+        firstSerie["Questions"]["memory"] = questionMemory[rand4]
+        secondSerie["Questions"]["memory"] = questionMemory[(rand4+1)%2]
 
         //Cette question dépend également de la question choisie pour les suites numériques. Il y a donc 4 possibilités de réponses
         if(randNumerical === 0){ //On vérifie la série choisie pour la question sur les suites numériques en regardant la première réponse
-            if(rand===0){ 
+            if(rand4===0){ 
                 firstSerie["Answers"]["memory"] = '4' //Le deuxième nombre de la deuxième suite numérique (question mémory 1) de la suite choisie pour cette série (question numerical 1) est 4
                 secondSerie["Answers"]["memory"] = '240'
             }else {
@@ -95,7 +107,7 @@ function EmotionsPerformancesScreen(props)  {
                 secondSerie["Answers"]["memory"] = '300'
             }
         }else{
-            if(rand===0){ 
+            if(rand4===0){ 
                 firstSerie["Answers"]["memory"] = '300'
                 secondSerie["Answers"]["memory"] = '121'
             }else {
@@ -143,10 +155,10 @@ function EmotionsPerformancesScreen(props)  {
 
     const startExpe= () => {
         if(validateForm()){
-            setExperienceStarted(true)
-            setScreenshotSession(true)
-            sendUserInfos(props.location.user.username,userEmail, userGender, userAge, userULStudent, userInterStudent, userSchoolProgram )
-        }
+             setExperienceStarted(true)
+             setScreenshotSession(true)
+             sendUserInfos(props.location.user.username,userEmail, userGender, userAge, userULStudent, userInterStudent, userSchoolProgram )
+         }
        
     }
 

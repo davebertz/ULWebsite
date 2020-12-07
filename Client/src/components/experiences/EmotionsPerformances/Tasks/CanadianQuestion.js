@@ -15,7 +15,9 @@ function CanadianQuestion(props)  {
 
     const classes = useStyles();
     const [cheated, setCheated] = useState(0)
-    const [canadianQuestionAnswer, setCanadianQuestionAnswer] = useState('')
+    const [canadianQuestionAnswer1, setCanadianQuestionAnswer1] = useState('')
+    const [canadianQuestionAnswer2, setCanadianQuestionAnswer2] = useState('')
+    const [canadianQuestionAnswer3, setCanadianQuestionAnswer3] = useState('')
 
     
     useEffect(() => {
@@ -28,8 +30,14 @@ function CanadianQuestion(props)  {
     },[])
 
 
-    function handleChange(e){
-        setCanadianQuestionAnswer(e.target.value)
+    function handleChange1(e){
+        setCanadianQuestionAnswer1(e.target.value)
+    }
+    function handleChange2(e){
+        setCanadianQuestionAnswer2(e.target.value)
+    }
+    function handleChange3(e){
+        setCanadianQuestionAnswer3(e.target.value)
     }
 
     const handleSubmit= (event) =>{
@@ -37,11 +45,17 @@ function CanadianQuestion(props)  {
 
         var score = 0
         //On regarde si la réponse de l'utilisateur est présent dans notre catalogue de réponse
-        if(props.answer.indexOf(canadianQuestionAnswer) > -1 ) { 
-            score = 25
+        if(props.answer[0].indexOf(canadianQuestionAnswer1.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) > -1 ) { 
+            score = score+ 25
+        }
+        if(props.answer[1].indexOf(canadianQuestionAnswer2.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) > -1 ) { 
+            score =score+ 25
+        }
+        if(props.answer[2].indexOf(canadianQuestionAnswer3.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) > -1 ) { 
+            score =score+ 25
         }
         //on renvoit le résultat au composant parent qui se charge d'ajouter les résultats.
-        props.sendDataToParent( canadianQuestionAnswer,score, cheated)
+        props.sendDataToParent( [canadianQuestionAnswer1,canadianQuestionAnswer2, canadianQuestionAnswer3],score, cheated)
     }    
     
 
@@ -49,13 +63,23 @@ return (
     <div className={classes.root}>
         <div className={classes.centered}> 
             <p>Nous allons maintenant tester votre culture générale québécoise et canadienne.
-                <br/> {props.question}
             </p> 
             <form className={classes.form} onSubmit={handleSubmit}>
-                    <div className={classes.form} >
+                <div className={classes.form} >
+                    <br/> {props.question[0]}
                     <label>
                         Réponse : <br/>
-                        <input type="text" name="canadianQuestionAnswer"  className={classes.button} value={canadianQuestionAnswer} onChange={e=> handleChange(e)}/>
+                        <input type="text" name="canadianQuestionAnswer1"  className={classes.button} value={canadianQuestionAnswer1} onChange={e=> handleChange1(e)}/>
+                    </label><br/><br/>
+                    <br/> {props.question[1]}
+                    <label>
+                        Réponse : <br/>
+                        <input type="text" name="canadianQuestionAnswer2"  className={classes.button} value={canadianQuestionAnswer2} onChange={e=> handleChange2(e)}/>
+                    </label><br/><br/>
+                    <br/> {props.question[2]}
+                    <label>
+                        Réponse : <br/>
+                        <input type="text" name="canadianQuestionAnswer3"  className={classes.button} value={canadianQuestionAnswer3} onChange={e=> handleChange3(e)}/>
                     </label><br/><br/>
                 </div>
                 <div className={classes.submitButton}>
