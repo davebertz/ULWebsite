@@ -60,6 +60,7 @@ EPResults = api.model('EPResults', {
     'taskQuestions': fields.String(required=True, description='The user results at tasks'),
     'taskAnswers': fields.String(required=True, description='The user results at tasks'),
     'taskCheats': fields.String(required=True, description='The user cheating results'),
+    'timeToAnswer': fields.String(required=True, description='The time to answer each task'),
     'secondTrial': fields.Boolean(required=True, description='Is this the second time the user is experiencing the tasks'),
     'sanctionGiven': fields.String(required=True, description='The random sanction that was given to him'),
 })
@@ -133,7 +134,7 @@ class EPResultsDAO(object):
 
     
     def create(self, data):
-        res = addEPResults(data['username'],data['taskQuestions'],data['taskAnswers'], data['taskCheats'],data['secondTrial'],data['sanctionGiven'],datetime.today().strftime('%Y-%m-%d-%H:%M:%S'))
+        res = addEPResults(data['username'],data['taskQuestions'],data['taskAnswers'], data['taskCheats'],data['timeToAnswer'],data['secondTrial'],data['sanctionGiven'],datetime.today().strftime('%Y-%m-%d-%H:%M:%S'))
         if res == 409:
             api.abort(409, "a Problem occured")
         else :

@@ -19,3 +19,7 @@ const VerticalProgress = ({ progress, color }) => {
 };
 
 export default VerticalProgress;
+
+
+
+//Le style (css) de ce composant est dans App.css

@@ -90,12 +90,12 @@ export const sendFeelingsScreenshots=(username,feeling, screenshotSource)=>{
   }
 
 //Méthode pour appeler l'ajout en base de données des résultats et de la triche de l'utilisateur pour les séries d'exercices
-export const sendEmotionsPerformancesResults=(username, taskQuestion,taskResult,taskCheat, secondTrial,sanctionGiven)=>{
+export const sendEmotionsPerformancesResults=(username, taskQuestion,taskResult,taskCheat,timeToAnswer, secondTrial,sanctionGiven)=>{
   fetch('http://127.0.0.1:5000/EPResults/', {
       //mode: 'no-cors',
       method: 'POST',
       headers: headers,
-      body:JSON.stringify({username :username, taskQuestions :taskQuestion, taskAnswers: taskResult, taskCheats:taskCheat, secondTrial:secondTrial, sanctionGiven:sanctionGiven })
+      body:JSON.stringify({username :username, taskQuestions :taskQuestion, taskAnswers: taskResult, taskCheats:taskCheat,timeToAnswer:timeToAnswer, secondTrial:secondTrial, sanctionGiven:sanctionGiven })
     })
     .then((response) => {
       if (response.ok) {

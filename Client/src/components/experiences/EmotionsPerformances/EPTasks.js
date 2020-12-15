@@ -32,10 +32,12 @@ function EmotionsPerformancesTasks(props)  {
     const [experienceStepCount, setExperienceStepCount]= useState(0); //Compteur d'étape
     const [cheat, setCheat] = useState([]) //Coefficient de triche de l'utilisateur à chaque exercice
     const [tasksResults, setTaskResults] = useState([]) //réponses de l'utilisateur à chaque exercice
+    const [timeToAnswer, setTimeToAnswer] = useState([]) //Temps de réponse à chaque tâche
+    const [timeToAnswerTask, setTimeToAnswerTask] = useState(0) //Temps de réponse à la tâche actuelle
 
     const [progressBarExampleValue, setprogressBarExampleValue]=useState(0)
     const [progressBarValue, setprogressBarValue]=useState(0)
-    const progressBarValueAverage = [0,0,25,30,32,55,62,65,68,78,94]
+    const progressBarValueAverage = [0,0,25,30,32,55,62,65,68,78,94] //Valeurs pour la progress barre de la moyenne des utilisateur
     const progressExampleValues = [5,16,24,43,66,78,98,100] //Valeurs d'exemples pour l'étape "beginning"
 
     const [startTimer, setStartTimer] = useState(false) // paramètre utilisé pour démarrer le timer dans l'exercice de vocabulaire
@@ -69,9 +71,7 @@ function EmotionsPerformancesTasks(props)  {
                 index = index +1
             }else{
                 index=0
-            }
-            
-            
+            }          
 
           }, 1000);
     },[props, history ])
@@ -85,6 +85,8 @@ function EmotionsPerformancesTasks(props)  {
             setCheat(cheat=>[...cheat, {[experienceStep] : hasCheated}])
         }
         setTaskResults(tasksResults=>[...tasksResults, {[experienceStep] : result}])
+
+        setTimeToAnswer(timeToAnswer=>[...timeToAnswer, {[experienceStep] : (Date.now() -timeToAnswerTask)/1000}])
         movingForward()
         setprogressBarValue(progressBarValue+score)
 
@@ -98,18 +100,17 @@ function EmotionsPerformancesTasks(props)  {
     //Fonction appelée soit par le bouton "question suivante" ou alors dans "addResult", càd quand l'utilisateur à valider les
     //résultats depuis le bouton du composant fils
     const movingForward= () => {
-
+        setTimeToAnswerTask(Date.now())
         //On vérifie si la série et l'expérience sont terminées 
         if(experienceStepCount+1 === testOrder.length){
             if(props.location.givenSanction !== undefined){ //On regarde si c'est la première ou la seconde série
-                sendEmotionsPerformancesResults(props.location.user.username,props.location.actualSerie["Questions"], tasksResults, cheat, true, props.location.givenSanction )
+                sendEmotionsPerformancesResults(props.location.user.username,props.location.actualSerie["Questions"], tasksResults, cheat,timeToAnswer, true, props.location.givenSanction )
                 history.push({pathname:"/experience/EmotionsPerformancesfeedback",
                                 user : props.location.user.username,
                                 sanctionGiven : props.location.givenSanction
                 })
             }else{
-                sendEmotionsPerformancesResults(props.location.user.username, props.location.actualSerie["Questions"], tasksResults, cheat, false, null )
-
+                sendEmotionsPerformancesResults(props.location.user.username, props.location.actualSerie["Questions"], tasksResults, cheat,timeToAnswer, false, null )
                 //Si la première série d'exercice est terminée, on passe à la page result avec en paramètre la seconde série d'exercice
                 //qui sera elle-même transmise à intelligenceemotionelletask pour la seconde série.
                 history.push({pathname:"/experience/EmotionsPerformancesresults",
@@ -130,6 +131,7 @@ function EmotionsPerformancesTasks(props)  {
             setMemoryCheat(1)
         }  
         setStartTimer(false)
+        setTimeToAnswerTask(Date.now())
         setExperienceStep(testOrder[experienceStepCount-1])
         setExperienceStepCount(experienceStepCount-1)
     }
@@ -315,14 +317,6 @@ const useStyles = makeStyles({
         justifyContent:'center',
         alignItems:'center',
     },
-
-    progressBar:{
-        display:'flex',
-        flex:1,
-        flexDirection:'column',
-        justifyContent:'center',
-        alignItems:'center',
-    }
 
 })
 

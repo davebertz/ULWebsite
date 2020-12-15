@@ -80,9 +80,9 @@ def addEPReactionsScreenshot( username, timer,source, dateExperience):
         connection.close()
         return returnValue
 
-def addEPResults(username, taskQuestions, taskResult,taskCheat, secondTrial, sanctionGiven,  dateExperience):
+def addEPResults(username, taskQuestions, taskResult,taskCheat,timeToAnswer, secondTrial, sanctionGiven,  dateExperience):
     connection = getConnection()
-    returnValue = username, taskQuestions, taskResult,taskCheat, secondTrial, sanctionGiven,  dateExperience
+    returnValue = username, taskQuestions, taskResult,taskCheat,timeToAnswer, secondTrial, sanctionGiven,  dateExperience
 
     #Petit bloc de refacto pour enlever les accents en BD pour éviter les /u009 au lieu de é
     print("-------------------------------------------------------------")
@@ -97,8 +97,8 @@ def addEPResults(username, taskQuestions, taskResult,taskCheat, secondTrial, san
     print(taskResult)
     try:   
         with connection.cursor() as cursor:
-            cursor.execute("INSERT INTO ei_results (username, task_questions, task_answers, task_cheats, second_trial, sanction_given, date) VALUES (%s,%s,%s,%s,%s,%s,%s);", 
-                            (username, json.dumps(taskQuestions),json.dumps(taskResult),json.dumps(taskCheat), secondTrial, sanctionGiven, dateExperience)) 
+            cursor.execute("INSERT INTO ei_results (username, task_questions, task_answers, task_cheats,time_to_answer, second_trial, sanction_given, date) VALUES (%s,%s,%s,%s,%s,%s,%s,%s);", 
+                            (username, json.dumps(taskQuestions),json.dumps(taskResult),json.dumps(taskCheat),json.dumps(timeToAnswer), secondTrial, sanctionGiven, dateExperience)) 
             connection.commit()    
             
     finally:
