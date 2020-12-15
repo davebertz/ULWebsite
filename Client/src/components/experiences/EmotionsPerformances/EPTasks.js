@@ -160,11 +160,11 @@ function EmotionsPerformancesTasks(props)  {
             </div>
             <div  className={classes.progressBarContainer}>
                 <div  className={classes.progressBar}>
-                    <VerticalProgress classType='progress-bar' progress={progressBarValue} />
+                    <VerticalProgress color='blue' progress={progressBarValue} />
                     <p>Votre score</p>
                 </div>
                 <div  className={classes.progressBar}>
-                    <VerticalProgress classType='progress-bar-bis'  progress={progressBarValueAverage[experienceStepCount]} />
+                    <VerticalProgress color='green'  progress={progressBarValueAverage[experienceStepCount]} />
                     <p>Score moyen</p>
                 </div>                
             </div>
@@ -198,11 +198,11 @@ return (
 
             <div  className={classes.progressBarContainer}>
                 <div  className={classes.progressBar}>
-                <VerticalProgress classType='progress-bar' progress={progressBarExampleValue} />
+                <VerticalProgress color='blue' progress={progressBarExampleValue} />
                     <p>Votre score</p>
                 </div>
                 <div  className={classes.progressBar}>
-                <VerticalProgress classType='progress-bar-bis' progress={progressBarExampleValue+8} />
+                <VerticalProgress color='green' progress={progressBarExampleValue+8} />
                     <p>Score moyen</p>
                 </div>                
             </div>
