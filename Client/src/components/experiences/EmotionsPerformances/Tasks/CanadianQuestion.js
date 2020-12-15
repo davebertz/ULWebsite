@@ -62,7 +62,7 @@ function CanadianQuestion(props)  {
 return (
     <div className={classes.root}>
         <div className={classes.centered}> 
-            <p>Nous allons maintenant tester votre culture générale québécoise et canadienne.
+            <p>Nous allons maintenant tester votre culture générale et notamment québécoise.
             </p> 
             <form className={classes.form} onSubmit={handleSubmit}>
                 <div className={classes.form} >

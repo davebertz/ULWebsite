@@ -166,31 +166,31 @@ function EmotionsPerformancesScreen(props)  {
     function validateForm(){
         var isValid=true
 
-        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        if(!regex.test(userEmail)){
-            isValid = false
-            setErrorMessage("Merci de rentrer un format d'adresse mail valide")
-        }
-        if(userGender === ''){
-            isValid = false
-            setErrorMessage("Merci de remplir tous les champs")
-        }
-        if(userAge === ''){
-            isValid = false
-            setErrorMessage("Merci de remplir tous les champs")
-        }
-        if(userULStudent === ''){
-            isValid = false
-            setErrorMessage("Merci de remplir tous les champs")
-        }
-        if(userInterStudent === ''){
-            isValid = false
-            setErrorMessage("Merci de remplir tous les champs")
-        }
-        if(userSchoolProgram === ''){
-            isValid = false
-            setErrorMessage("Merci de remplir tous les champs")
-        }
+        // const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        // if(!regex.test(userEmail)){
+        //     isValid = false
+        //     setErrorMessage("Merci de rentrer un format d'adresse mail valide")
+        // }
+        // if(userGender === ''){
+        //     isValid = false
+        //     setErrorMessage("Merci de remplir tous les champs")
+        // }
+        // if(userAge === ''){
+        //     isValid = false
+        //     setErrorMessage("Merci de remplir tous les champs")
+        // }
+        // if(userULStudent === ''){
+        //     isValid = false
+        //     setErrorMessage("Merci de remplir tous les champs")
+        // }
+        // if(userInterStudent === ''){
+        //     isValid = false
+        //     setErrorMessage("Merci de remplir tous les champs")
+        // }
+        // if(userSchoolProgram === ''){
+        //     isValid = false
+        //     setErrorMessage("Merci de remplir tous les champs")
+        // }
        
         
         return isValid

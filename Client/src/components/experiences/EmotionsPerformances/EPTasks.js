@@ -35,6 +35,7 @@ function EmotionsPerformancesTasks(props)  {
 
     const [progressBarExampleValue, setprogressBarExampleValue]=useState(0)
     const [progressBarValue, setprogressBarValue]=useState(0)
+    const progressBarValueAverage = [0,0,25,30,32,55,62,65,68,78,94]
     const progressExampleValues = [5,16,24,43,66,78,98,100] //Valeurs d'exemples pour l'étape "beginning"
 
     const [startTimer, setStartTimer] = useState(false) // paramètre utilisé pour démarrer le timer dans l'exercice de vocabulaire
@@ -157,9 +158,15 @@ function EmotionsPerformancesTasks(props)  {
             <div className={classes.task}>
             {taskComponent}
             </div>
-            <div  className={classes.progressBar}>
-                <VerticalProgress progress={progressBarValue} />
-                <p>Progression</p>
+            <div  className={classes.progressBarContainer}>
+                <div  className={classes.progressBar}>
+                    <VerticalProgress classType='progress-bar' progress={progressBarValue} />
+                    <p>Votre score</p>
+                </div>
+                <div  className={classes.progressBar}>
+                    <VerticalProgress classType='progress-bar-bis'  progress={progressBarValueAverage[experienceStepCount]} />
+                    <p>Score moyen</p>
+                </div>                
             </div>
         </div>
     }
@@ -171,18 +178,15 @@ return (
         { experienceStep === 'beginning' ?
         <div className={classes.taskContainer}>
             <div className={classes.centered}> 
-                <p>
+                <p >
                     Nous allons maintenant passer à la suite de l'expérience.<br/>
                     Vous allez devoir effectuer deux séries d'exercices simples qui ont pour but de tester votre mémoire et votre réflexion.
-                    Le but de l’expérience est d’accumuler des points. À la fin de l’expérience, un certain nombre de point équivaudra à une récompense. 
+                    Le but de l’expérience est d’accumuler des points. 
+                    <br/>Un tirage au sort pour gagner des cartes cadeaux Renaud-Bray d'une valeur de 10€ sera 
+                    effectuée à la fin de l'étude. Plus votre score sera élevé, plus grand sera le nombre de billets à votre nom, augmentant ainsi vos chances de gagner une des cartes cadeaux.
                     <br/><br/>
-                    0-499 points : remerciement et attestation de participation<br/>
-                    500-999 points : carte cadeau Renaud-Bray en ligne de 5$<br/>
-                    1000+ points : carte cadeau Renaud-Bray en ligne de 10$<br/>
-                    <br/><br/>
-                    Une barre de progression comme celle à droite de l'écran vous permettra de connaître à tout moment votre progression.
-                    Lorsque la barre est remplie à 50%, cela signifie que vous avez accompli le premier objectif de 500 points. 
-                    Si la barre atteint les 100%, alors vous avez atteint 1000 points ou plus.
+
+                    Une barre de progression comme celle à droite de l'écran vous permettra de connaître à tout moment vos performances par rapport à la moyenne des autres utilisateurs.
                     <br/><br/>
 
                 
@@ -191,7 +195,17 @@ return (
                 
                 <Button className={classes.button} variant="contained" color="primary"  onClick={movingForward}> Démarrer</Button>
             </div>
-            <VerticalProgress progress={progressBarExampleValue} />
+
+            <div  className={classes.progressBarContainer}>
+                <div  className={classes.progressBar}>
+                <VerticalProgress classType='progress-bar' progress={progressBarExampleValue} />
+                    <p>Votre score</p>
+                </div>
+                <div  className={classes.progressBar}>
+                <VerticalProgress classType='progress-bar-bis' progress={progressBarExampleValue+8} />
+                    <p>Score moyen</p>
+                </div>                
+            </div>
         </div>
         :null }
 
@@ -242,7 +256,7 @@ const useStyles = makeStyles({
     centered:{
         alignItems:'center',
         display:'flex',
-        flex:1,
+        flex:3,
         flexDirection:'column'
     },
     bodyContainer:{
@@ -292,6 +306,22 @@ const useStyles = makeStyles({
         flex:1,
         alignSelf:'flex-end',
         justifyContent:'flex-end'
+    },
+    progressBarContainer:{
+        display:'flex',
+        flex:1,
+        flexDirection:'row',
+        marginLeft: 20,
+        justifyContent:'center',
+        alignItems:'center',
+    },
+
+    progressBar:{
+        display:'flex',
+        flex:1,
+        flexDirection:'column',
+        justifyContent:'center',
+        alignItems:'center',
     }
 
 })

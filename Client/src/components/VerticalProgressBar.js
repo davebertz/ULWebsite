@@ -4,12 +4,12 @@ import { Spring } from "react-spring/renderprops";
 //Composant permettant de créer une barre de progression verticale.
 //Est utilisée par l'expérience Intelligence Emotionnelle pour la progression du score dans les exercices
 
-const VerticalProgress = ({ progress }) => {
+const VerticalProgress = ({ progress, classType }) => {
   return (
-    <Spring from={{ percent: 0 }} to={{ percent: progress }}>
+    <Spring from={{ percent: 0 }} to={{ percent: progress }} >
       {({ percent }) => (
         <div className="progress vertical">
-          <div style={{ height: `${percent}%` }} className="progress-bar">
+          <div style={{ height: `${percent}%`, }}className={classType}>
             <span className="sr-only">{`${progress}%`}</span>
           </div>
         </div>
