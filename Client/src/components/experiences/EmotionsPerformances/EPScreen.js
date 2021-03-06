@@ -7,9 +7,10 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { makeStyles } from '@material-ui/core/styles';
 import {sendFeelingsScreenshots, sendUserInfos} from "../../../Utils"
 import {feelings, questionNumerical, answerNumerical, questionCanadaCulture,
-    answercanadaCulture,questionLetter,tWords,fWords,questionMemory, questionDefinition,googleDefinitionForApagogie,googleDefinitionForLallation } from "./Constants"
+    answercanadaCulture,questionLetter,tWords,fWords,questionMemory, questionDefinition,googleDefinitionForApagogie,googleDefinitionForLallation, beforeTaskForm } from "./Constants"
 import { useHistory } from "react-router-dom";
 import Button from '@material-ui/core/Button';
+import LikertScale from "../../Likert";
 
 //Ceci est le premier écran de l'expérience d'Intelligence Emotionnelle.
 //On y invite l'utilisateur à se imiter des émotions et se prendre en photo.
@@ -32,9 +33,9 @@ function EmotionsPerformancesScreen(props)  {
     const [userEmail, setUserEmail]=useState('')
     const [userAge, setUserAge]= useState('')
     const [userGender, setUserGender]= useState('')
-    const [userSchoolProgram, setUserSchoolProgram]= useState('')
-    const [userInterStudent, setUserInterStudent]= useState('')
-    const [userULStudent, setUserULStudent]= useState('')
+    const [userStatus, setUserStatus]= useState('')
+    // Initialisation des réponses de l'utilisateur à 7 : moyennement important car valeur de base. 
+    const [userFormAnswers, setUserFormAnswers]= useState(new Array(beforeTaskForm.length).fill(4)) 
     const [experienceStarted,setExperienceStarted]=useState(false)
     const [screenshotSession,setScreenshotSession]=useState(false)
     const [compteurScreenshots, setCompteur]=useState(1)
@@ -157,7 +158,7 @@ function EmotionsPerformancesScreen(props)  {
         if(validateForm()){
              setExperienceStarted(true)
              setScreenshotSession(true)
-             sendUserInfos(props.location.user.username,userEmail, userGender, userAge, userULStudent, userInterStudent, userSchoolProgram )
+             sendUserInfos(props.location.user.username,userEmail, userGender, userAge, userStatus )
          }
        
     }
@@ -171,28 +172,11 @@ function EmotionsPerformancesScreen(props)  {
             isValid = false
             setErrorMessage("Merci de rentrer un format d'adresse mail valide")
         }
-        if(userGender === ''){
-            isValid = false
-            setErrorMessage("Merci de remplir tous les champs")
-        }
-        if(userAge === ''){
-            isValid = false
-            setErrorMessage("Merci de remplir tous les champs")
-        }
-        if(userULStudent === ''){
-            isValid = false
-            setErrorMessage("Merci de remplir tous les champs")
-        }
-        if(userInterStudent === ''){
-            isValid = false
-            setErrorMessage("Merci de remplir tous les champs")
-        }
-        if(userSchoolProgram === ''){
+        if(userGender === '' || userAge === '' || userStatus === ''){
             isValid = false
             setErrorMessage("Merci de remplir tous les champs")
         }
        
-        
         return isValid
 
     }
@@ -202,23 +186,15 @@ function EmotionsPerformancesScreen(props)  {
         
     }
     function handleChangeAge(e){
-        setUserAge(e.target.value.replace(/\D/,''))    //Seuls les chiffres sont acceptés  
+        setUserAge(e.target.value)  
     }
 
     function handleChangeGender(e){
         setUserGender(e.target.value)     
     }
 
-    function handleChangeULStudent(e){
-        setUserULStudent(e.target.value) 
-    }
-
-    function handleChangeInternationalStudent(e){
-        setUserInterStudent(e.target.value) 
-    }
-
-    function handleUserSchoolProgram(e){
-        setUserSchoolProgram(e.target.value)
+    function handleChangeUserStatus(e){
+        setUserStatus(e.target.value) 
     }
     
 
@@ -238,7 +214,47 @@ function EmotionsPerformancesScreen(props)  {
             })
          
     }
-    
+
+    //Fonction callback appelé par les composants LikerScale lorsqu'une nouvelle valeur est cochée.
+    //Permet de mettre à jour les résultats de l'utilisateur.
+    const handleFormAnswerChange=(id,value)=>{
+        console.log(id)
+        console.log(value)
+        let newUserAnswers = [...userFormAnswers]; 
+        newUserAnswers[id] = value
+        console.log(newUserAnswers)
+        setUserFormAnswers(newUserAnswers)
+        console.log(userFormAnswers)
+    }
+
+
+    function getAllLikertScale(){
+        var responses= [
+            { value: 1, text: "Pas du tout important" },
+            { value: 2, text: "Très peu important" },
+            { value: 3, text: "Un peu important"},
+            { value: 4, text: "Moyennement important", checked: true  },
+            { value: 5, text: "Assez important" },
+            { value: 6, text: "Important" },
+            { value: 7, text: "Très important" }
+          ]
+
+        var likertList = []
+        for (var i=0; i<beforeTaskForm.length; i++){
+            var likertOptions = {id:i,
+                                answers: responses, 
+                                question :beforeTaskForm[i],
+                                onChange:handleFormAnswerChange,
+                                }
+            likertList.push(<LikertScale key={likertOptions.id} likertOptions={likertOptions}></LikertScale>)
+
+        }
+
+        return likertList
+
+    }
+
+       
 
 return (
     <div className={classes.root}>   
@@ -259,8 +275,14 @@ return (
                         <input type="text" placeholder="Email" name="userEmail"  value={userEmail} onChange={e=> handleUserEmail(e)}/>
                     </label><br/>
                     <label>
-                        Age :<br/>
-                        <input type="text" placeholder="Age" name="userAge"  value={userAge} onChange={e=> handleChangeAge(e)}/>
+                        Tranche d'âge :<br/>
+                        <select name="userAge"  value={userAge} onChange={e=> handleChangeAge(e)}>
+                            <option value=""></option>
+                            <option value="18-21">18-21 ans</option>
+                            <option value="22-25">22-25 ans</option>
+                            <option value="26-29">26-29 ans</option>
+                            <option value="30+">30 ans et plus</option>
+                        </select>
                     </label>    <br/>
                     <label>
                         Genre :<br/>
@@ -268,28 +290,27 @@ return (
                             <option value=""></option>
                             <option value="male">Homme</option>
                             <option value="female">Femme</option>
+                            <option value="other">Autre / Je préfère ne pas répondre</option>
                         </select>
                     </label><br/>
                     <label>
-                        Etudiez-vous à l'université Laval :<br/>
-                        <select name="userULStudent"  value={userULStudent} onChange={e=> handleChangeULStudent(e)}>
+                        Je suis :<br/>
+                        <select name="userStatus"  value={userStatus} onChange={e=> handleChangeUserStatus(e)}>
                             <option value=""></option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                            <option value="quebec">Un.e étudiant.e québécois.e </option>
+                            <option value="exchange">Un.e étudiant.e en échange étudiant</option>
+                            <option value="international">Un.e étudiant.e international.e</option>
                         </select>            
-                    </label><br/>
-                    <label>
-                        Dans quelle fac et quel programme étudiez-vous ? :<br/>
-                        <input type="text" placeholder="Programme Scolaire" name="userSchoolProgram"  value={userSchoolProgram} onChange={e=> handleUserSchoolProgram(e)}/>
-                    </label><br/>
-                    <label>
-                        Etes-vous un élève international :<br/>
-                        <select name="userInterStudent"  value={userInterStudent} onChange={e=> handleChangeInternationalStudent(e)}>
-                            <option value=""></option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>            
-                    </label><br/>
+                    </label><br/><br/>
+                    
+
+                    <p>Chaque individu a des buts à long terme ou des aspirations. Il s’agit des choses que les gens
+                        souhaitent accomplir au cours de leur vie. Les items suivants présentent une liste d’objectifs de
+                        vie, indiquez jusqu’à quel point chacun d’eux est important pour vous.
+                    </p><br/>
+                    <div className={classes.form}>
+                        {getAllLikertScale()}
+                    </div>
                 </form>
             </div>
             <br/>
@@ -356,6 +377,13 @@ const useStyles = makeStyles({
         width: 500,
         height: 450,
       },
+    form:{
+        backgroundColor : '#DCDCDC',
+        padding:15,
+        border : 'solid',
+        borderColor : "#C0C0C0",
+        borderRadius: 25
+    }
 })
 
  
