@@ -211,15 +211,12 @@ return (
         </div>
         :null }
 
-        <div>
-            
-
-        </div>
         {/* Buttons précédent et suivant*/}
         { (experienceStep !== 'beginning') && (experienceStep !== 'ended') ?
         <div>
+            <div className={classes.taskContainer}>
                 {getExperienceDiv()}
-            
+            </div>
             <div className={classes.footerTask}>
                     <div className={classes.navigationButtonsContainer}>
                                         <div className={classes.backButton}>

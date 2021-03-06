@@ -96,7 +96,7 @@ const useStyles = makeStyles({
     root:{
         display:'flex',
         flex:1,
-        flexDirection:'column'
+        flexDirection:'column',
     },
     centered:{
         alignItems:'center',

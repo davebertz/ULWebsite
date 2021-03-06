@@ -3,10 +3,41 @@
 //Liste des données constantes utilisées tout du long de l'expérience de tricherie.
 export const feelings = ['visage neutre', 'joie', 'tristesse', 'colère', 'surprise', 'peur', 'dégoût','honte', 'mépris', 'satisfaction']
 
-export const questionNumerical = [['0 1 3 4 12 13 __ 40 120 121','0 4 18 48 100 ___ 294 448'],['2 2 4 12 _ 240','50 300 _ 150 200 75 400']]
+//Liste des questions pour le retour d'expérience
+export const beforeTaskForm=["Évoluer et apprendre de nouvelles choses.","Être admiré par plusieurs personnes.","Réussir financièrement.",
+                            "Être célèbre.","Rendre le monde meilleur.","Être riche.","Connaître et accepter qui je suis.","Sentir que des gens m’aiment vraiment et que je les aime aussi.",
+                            "Avoir le look que j’ai toujours recherché.","Aider les autres à améliorer leur vie.","Ne jamais être très malade.","Avoir des relations profondes et durables.",
+                            "Projeter une image que les autres trouvent attrayante.","Avoir un mode de vie actif physiquement."]
+export const afterTaskSanction=["Joyeux-se","Heureux-se","De bonne humeur","Fier-ère","Confiant-e","Stressé-e","Anxieux-se",
+                                            "Désengagé-e","Valorisé-e","Accompli-e","Honteux-se","Repentant-e","Coupable","Embarrassé-e","Étonnée",
+                                            "Ennuyé-e","Prétentieux-se","Effrayé-e","En colère","Arrogante","Irritable","Inquiet-e","Supérieur-e",
+                                            "Misérable","Troublé-e","Triste","Très enthousiaste","Malheureux-se","Dégouté-e","Humilié-e","Déshonoré-e",
+                                            "Déplorable","Surpris-e","Craintif-ve","Méprisant-e","Paniqué-e"]
+
+export const afterTaskReasons = ["Parce que c’était vraiment plaisant.","Parce que j’ai choisi de la faire pour mon bien.","Parce que j’ai senti qu'il fallait que je la fasse.",
+                                "Je ne sais pas; je ne vois pas ce que cela m’a procuré.","Parce que je me serais senti(e) mal de ne pas l’avoir fait.",
+                                "Parce que je me sentais bien en le faisant.","Parce que j’ai cru que c’était important pour moi.","Parce que j’étais supposé(e) la faire.",
+                                "Je souhaitais faire cette tâche, mais je ne suis pas sûr(e) que cela en valait la peine.","Parce que je voulais des chances au tirage des cartes-cadeaux.",
+                                "Parce que je me serais senti(e) coupable de ne pas la faire.","Parce que je trouvais que c’était intéressant.","Parce que je sentais que je voulais la faire.",
+                                "Parce que c'est quelque chose que je devais faire.","En faisant la tâche, je me demandais si je devais la faire.","Parce que je voulais éviter de me sentir coupable.",
+                                "Parce que je trouvais que c’était agréable.","Parce que je trouvais que c’était bon pour moi.", "Parce que je n'avais pas d'autres choix que de la faire.",
+                                "Il y a peut-être de bonnes raisons de faire cette tâche, mais personnellement je n’en ai pas vues.","Parce que je m’en serais voulu de ne pas l’avoir fait.",
+                                "Parce que je souhaitais gagner une somme d’argent."]
+
+export const afterTaskDuringTask = ["Je me sentais confiant(e) dans le fait que je pouvais bien faire leschoses.", "Je me sentais compétent(e) dans ce que je faisais.",
+                                    "Je sentais que j’étais capable d’atteindre mes buts.","J’avais le sentiment de pouvoir réaliser des tâches difficiles avec succès.",
+                                    "J’avais de sérieux doutes sur ma capacité à bien faire les choses.","J’ai été déçu(e) par beaucoup de mes performances.","Je n’étais pas certain(e) de mes capacités.",
+                                    "J’avais le sentiment d’être un(e) « raté(e) » à cause des erreurs que je commetais.","J’avais le sentiment d’avoir le choix et d’être libre.",
+                                    "J’avais le sentiment d’exprimer ce que je veux vraiment.","J’avais le sentiment d‘exprimer qui je suis vraiment.","J’avais le sentiment de faire ce qui m’intéresse vraiment.",
+                                    "J’avais l’impression que je devais faire ce qui était demandé.","Je me sentais forcé(e) de faire des choses que je n’aurais pas choisi de faire.",
+                                    "Je me sentais contraint(e) de faire beaucoup trop de choses.","La tâche me donnait le sentiment d’un enchaînement d’obligations."]
+
+
+                                    export const questionNumerical = [['0 1 3 4 12 13 __ 40 120 121','0 4 18 48 100 ___ 294 448'],['2 2 4 12 _ 240','50 300 _ 150 200 75 400']]
 export const answerNumerical=[['39','180'],['48','100']]
 
 
+//Données pour les tests
 export const questionCanadaCulture = ['Quelle est la province canadienne la moins peuplée?',
 'Combien y a-t-il de régions administratives au Québec?',
 'Quelle est la capitale du Canada?',
