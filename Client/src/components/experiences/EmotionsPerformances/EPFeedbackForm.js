@@ -6,8 +6,8 @@ import {updateUserFeedback} from "../../../Utils"
 import Button from '@material-ui/core/Button';
 import ReactPlayer from 'react-player'
 import {afterTaskSanction, afterTaskReasons, afterTaskDuringTask,afterTaskCheating, afterTaskTaskRelated, afterTaskSanctionFeelings } from "./Constants"
-import LikertScale from "../../Likert";
-import ContinuousLikert from "../../ContinuousLikert"
+import LikertScale from "./Likert";
+import ContinuousLikert from "./ContinuousLikert"
 
 
 //Page contenant l'annonce de la fin de l'expérience et du réel but de celle-ci.
@@ -44,7 +44,6 @@ function FeedbackForm(props)  {
 
     //Fonction appelée par les composants fils LikertScale et ContinuousLikert lors de l'ajout du réponse par l'utilisateur.
     function handleFormAnswerChange(id,value){
-        console.log(id)        
         //La 1ere et la 4eme sections sont identiques, on met donc le bon id lorsque nous sommes à la 4eme section
         if(formStep === 4){
             id = id + afterTaskSanction.length + afterTaskReasons.length +  afterTaskDuringTask.length
@@ -53,7 +52,6 @@ function FeedbackForm(props)  {
         let newUserAnswers = [...userAnswers]; 
         newUserAnswers[id] = value
         setUserAnswers(newUserAnswers)
-        console.log(userAnswers)
 
     }
 

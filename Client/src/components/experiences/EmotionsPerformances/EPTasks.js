@@ -14,7 +14,7 @@ import MemoryQuestion from "./Tasks/MemoryQuestion";
 import Definition from "./Tasks/Definition";
 import {sendEmotionsPerformancesResults} from '../../../Utils'
 import WheelOfFortune from "./Tasks/FortuneWheel/FortuneWheelTask";
-import VerticalProgress from "../../VerticalProgressBar";
+import VerticalProgress from "./VerticalProgressBar";
 
 //Seconde page de l'expérience Intelligence EMotionnelle, c'est la page contenant tous les exercices.
 //Les questions et les réponses de chaque série sont passés en paramètres de navigation (props.location)

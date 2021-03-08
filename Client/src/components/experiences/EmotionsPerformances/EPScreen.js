@@ -10,7 +10,7 @@ import {feelings, questionNumerical, answerNumerical, questionCanadaCulture,
     answercanadaCulture,questionLetter,tWords,fWords,questionMemory, questionDefinition,googleDefinitionForApagogie,googleDefinitionForLallation, beforeTaskForm } from "./Constants"
 import { useHistory } from "react-router-dom";
 import Button from '@material-ui/core/Button';
-import LikertScale from "../../Likert";
+import LikertScale from "./Likert";
 
 //Ceci est le premier écran de l'expérience d'Intelligence Emotionnelle.
 //On y invite l'utilisateur à se imiter des émotions et se prendre en photo.
@@ -219,13 +219,9 @@ function EmotionsPerformancesScreen(props)  {
     //Fonction callback appelé par les composants LikerScale lorsqu'une nouvelle valeur est cochée.
     //Permet de mettre à jour les résultats de l'utilisateur.
     const handleFormAnswerChange=(id,value)=>{
-        console.log(id)
-        console.log(value)
         let newUserAnswers = [...userFormAnswers]; 
         newUserAnswers[id] = value
-        console.log(newUserAnswers)
         setUserFormAnswers(newUserAnswers)
-        console.log(userFormAnswers)
     }
 
 
