@@ -11,7 +11,6 @@ const railOuterStyle = {
   transform: 'translate(0%, -50%)',
   borderRadius: 7,
   cursor: 'pointer',
-  // border: '1px solid white',
 }
 
 const railInnerStyle = {
@@ -77,7 +76,7 @@ export function Handle({
           height: 24,
           borderRadius: '50%',
           boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.3)',
-          backgroundColor: disabled ? '#666' : '#ffc400',
+          backgroundColor: disabled ? '#666' : '#0024b2',
         }}
       />
     </Fragment>
@@ -124,7 +123,7 @@ export function KeyboardHandle({
         height: 24,
         borderRadius: '50%',
         boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.3)',
-        backgroundColor: disabled ? '#666' : '#ffc400',
+        backgroundColor: disabled ? '#666' : '#0024b2',
       }}
       {...getHandleProps(id)}
     />
@@ -157,7 +156,7 @@ export function Track({ source, target, getTrackProps, disabled }) {
         transform: 'translate(0%, -50%)',
         height: 14,
         zIndex: 1,
-        backgroundColor: disabled ? '#999' : '#b28900',
+        backgroundColor: disabled ? '#999' : '#1089e0',
         borderRadius: 7,
         cursor: 'pointer',
         left: `${source.percent}%`,
@@ -185,51 +184,4 @@ Track.propTypes = {
 
 Track.defaultProps = {
   disabled: false,
-}
-
-// *******************************************************
-// TICK COMPONENT
-// *******************************************************
-export function Tick({ tick, count, format }) {
-  return (
-    <div>
-      <div
-        style={{
-          position: 'absolute',
-          marginTop: 14,
-          width: 1,
-          height: 5,
-          backgroundColor: 'rgb(200,200,200)',
-          left: `${tick.percent}%`,
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          marginTop: 22,
-          fontSize: 10,
-          textAlign: 'center',
-          marginLeft: `${-(100 / count) / 2}%`,
-          width: `${100 / count}%`,
-          left: `${tick.percent}%`,
-        }}
-      >
-        {format(tick.value)}
-      </div>
-    </div>
-  )
-}
-
-Tick.propTypes = {
-  tick: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    value: PropTypes.number.isRequired,
-    percent: PropTypes.number.isRequired,
-  }).isRequired,
-  count: PropTypes.number.isRequired,
-  format: PropTypes.func.isRequired,
-}
-
-Tick.defaultProps = {
-  format: d => d,
 }

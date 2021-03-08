@@ -42,7 +42,7 @@ function FeedbackForm(props)  {
     ]
 
 
-    //Fonction appelée par les composants fils LikertScale lors de l'ajout du réponse par l'utilisateur.
+    //Fonction appelée par les composants fils LikertScale et ContinuousLikert lors de l'ajout du réponse par l'utilisateur.
     function handleFormAnswerChange(id,value){
         console.log(id)        
         //La 1ere et la 4eme sections sont identiques, on met donc le bon id lorsque nous sommes à la 4eme section
