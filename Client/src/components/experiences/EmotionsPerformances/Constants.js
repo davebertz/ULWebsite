@@ -24,6 +24,32 @@ export const afterTaskReasons = ["Parce que c’était vraiment plaisant.","Parc
                                 "Il y a peut-être de bonnes raisons de faire cette tâche, mais personnellement je n’en ai pas vues.","Parce que je m’en serais voulu de ne pas l’avoir fait.",
                                 "Parce que je souhaitais gagner une somme d’argent."]
 
+export const afterTaskCheating = {"« Vous êtes étudiant-e et décidez de consulter des notes cachées pendant un examen. »": 
+                                    ["Quelle est la probabilité que vous vous sentiez coupable face à votre geste?","Quelle est la probabilité que vous vous sentiez comme une mauvaise personne?" ],
+                                "« Vous décidez de regarder la copie de votre voisin-e pendant un examen. »":
+                                [   "Quelle est la probabilité que vous vous sentiez coupable face à votre geste?","Quelle est la probabilité que vous vous sentiez comme une mauvaise personne?"],
+                                "« Vous décidez de ne pas signaler une erreur à votre avantage dans la correction au professeur ou à la professeure (ex. : vous avez répondu une mauvaise réponse et la correction indique qu’elle est bonne). »":
+                                ["Quelle est la probabilité que vous vous sentiez coupable face à votre geste?","Quelle est la probabilité que vous vous sentiez comme une mauvaise personne?"],
+                                "« Vous demandez les questions d’examen à une personne qui a déjà fait le même examen. »":
+                                ["Quelle est la probabilité que vous vous sentiez coupable face à votre geste?","Quelle est la probabilité que vous vous sentiez comme une mauvaise personne?"],
+                                "« Vous consultez une copie d’examen de l’an passé. »":
+                                ["Quelle est la probabilité que vous vous sentiez coupable face à votre geste?","Quelle est la probabilité que vous vous sentiez comme une mauvaise personne?"],
+                                "« Vous inventez une excuse pour avoir une faveur (ex. : vous faites semblant d’être malade pour avoir un délai supplémentaire). »":
+                                ["Quelle est la probabilité que vous vous sentiez coupable face à votre geste?","Quelle est la probabilité que vous vous sentiez comme une mauvaise personne?"],
+                                "« Vous vous faites prendre à consulter des notes cachées. » (attention, les énoncés changent)":
+                                ["Quelle est la probabilité que vous considériez cela comme une erreur à ne plus refaire?","Quelle est la probabilité que vous considériez quitter votre programme?"],
+                                "« Vous vous faites prendre à regarder la copie de votre voisin-e pendant un examen. » (attention, les énoncés changent)":
+                                ["Quelle est la probabilité que vous considériez cela comme une erreur à ne plus refaire?","Quelle est la probabilité que vous considériez quitter votre programme?"],
+                                "« Le ou la professeur.e se rend compte de son erreur dans la correction et vous mentionne que vous ne lui avez pas signalée. »(attention, les énoncés changent)":
+                                ["Quelle est la probabilité que vous vous sentiez coupable face à votre geste?","Quelle est la probabilité que vous vous sentiez comme une mauvaise personne?"],
+                                "« Vous vous faites prendre à demander les questions d’examen à une personne qui a déjà fait l’examen. »(attention, les énoncés changent)":
+                                ["Quelle est la probabilité que vous vous sentiez coupable face à votre geste?","Quelle est la probabilité que vous vous sentiez comme une mauvaise personne?"],
+                                "« Vous vous faites prendre à consulter une copie d’examen de l’an passé. »(attention, les énoncés changent)":
+                                ["Quelle est la probabilité que vous vous sentiez coupable face à votre geste?","Quelle est la probabilité que vous vous sentiez comme une mauvaise personne?"],
+                                "« Vous vous faires prendre à avoir inventé une excuse pour obtenir une faveur (ex. : vous faites semblant d’être malade pour avoir un délai supplémentaire). »":
+                                ["Quelle est la probabilité que vous vous sentiez coupable face à votre geste?","Quelle est la probabilité que vous vous sentiez comme une mauvaise personne?"],
+                                }
+
 export const afterTaskDuringTask = ["Je me sentais confiant(e) dans le fait que je pouvais bien faire leschoses.", "Je me sentais compétent(e) dans ce que je faisais.",
                                     "Je sentais que j’étais capable d’atteindre mes buts.","J’avais le sentiment de pouvoir réaliser des tâches difficiles avec succès.",
                                     "J’avais de sérieux doutes sur ma capacité à bien faire les choses.","J’ai été déçu(e) par beaucoup de mes performances.","Je n’étais pas certain(e) de mes capacités.",
@@ -32,12 +58,21 @@ export const afterTaskDuringTask = ["Je me sentais confiant(e) dans le fait que 
                                     "J’avais l’impression que je devais faire ce qui était demandé.","Je me sentais forcé(e) de faire des choses que je n’aurais pas choisi de faire.",
                                     "Je me sentais contraint(e) de faire beaucoup trop de choses.","La tâche me donnait le sentiment d’un enchaînement d’obligations."]
 
+export const afterTaskTaskRelated = ["J’ai entièrement respecté l’ensemble des consignes des questions du début à la fin.","J’ai bien pris connaissance de toutes les consignes des questions du début à la fin",
+                                    "Il y a au moins une question pour laquelle je n’ai pas entièrement respecté les consignes.", "J’ai triché à au moins une question de la tâche.",
+                                    "Si je devais refaire la tâche, j’essaierais de mieux me concentrer à respecter les consignes","Si je devais refaire la tâche, je lirais davantage les consignes pour chaque question.",
+                                    "Si je devais refaire la tâche, je ferais bien attention à ne pas tricher.","Si je devais refaire la tâche, je ne tricherais pas."]
 
-                                    export const questionNumerical = [['0 1 3 4 12 13 __ 40 120 121','0 4 18 48 100 ___ 294 448'],['2 2 4 12 _ 240','50 300 _ 150 200 75 400']]
-export const answerNumerical=[['39','180'],['48','100']]
+export const afterTaskSanctionFeelings = ["Méritée","Injuste","Humiliante","Encourageante","Rédemptrice","Troublante","Infantilisante","Vexante","Frustrante",
+                                        "Surprenante","Culpabilisante","Honteuse","Déplorable","Cohérente","Embarrassante","Justifiée","Étonnante",
+                                        "Irritante","Dégradante","Attristante","Déshonorante","Adéquate","Scandaleuse"]
+
+
 
 
 //Données pour les tests
+export const questionNumerical = [['0 1 3 4 12 13 __ 40 120 121','0 4 18 48 100 ___ 294 448'],['2 2 4 12 _ 240','50 300 _ 150 200 75 400']]
+export const answerNumerical=[['39','180'],['48','100']]
 export const questionCanadaCulture = ['Quelle est la province canadienne la moins peuplée?',
 'Combien y a-t-il de régions administratives au Québec?',
 'Quelle est la capitale du Canada?',

@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restx import Api, Resource, fields
-from database_utils import addUser, addEPFeelingsScreenshot,addEPReactionsScreenshot, addKahayaraResult, addEPResults, addEPFeedback
+from database_utils import addUser, addEPFeelingsScreenshot,addEPReactionsScreenshot, addKahayaraResult, addEPResults, addEPFeedback, updateEPFeedback
 from utils import sendEmailRecap
 from flask_cors import CORS
 from datetime import datetime
@@ -68,10 +68,8 @@ EPResults = api.model('EPResults', {
 EPFeedback = api.model('EPFeedback', {
     'username': fields.String(required=True, description='The user username'),
     'sanctionGiven': fields.String(required=True, description='The random sanction that was given to him'),
-    'feedbackGlobalFeeling': fields.String(required=True, description='The user global feeling about this experience'),
-    'feedbackCheatingFeeling': fields.String(required=True, description='Did the user felt like he was cheating during this test'),
-    'feedbackFairSanction': fields.String(required=True, description='Did the user thought that the sanction was appropriate'),
-    'feedbackOtherSanction': fields.String(required=True, description='What other sanction could the user have thought of'),
+    'pretaskForm': fields.String(required=True, description='User answers of pre-task questions'),
+    'posttaskForm': fields.String(required=True, description='User answers of post-task questions'),
 })
 
 
@@ -81,7 +79,7 @@ class UsersDAO(object):
         self.counter = 0
 
     def create(self, data):
-        res = addUser(data['username'],data['email'],data['gender'],data['age'],data['ULStudent'],data['interStudent'],data['schoolProgram'])
+        res = addUser(data['username'],data['email'],data['gender'],data['age'],data['userStatus'])
         if res == 409:
             api.abort(409, "a Problem occured")
         else :
@@ -150,8 +148,17 @@ class EPFeedbacksDAO(object):
 # L'appel de cette fonction signifie que l'utilisateur à totalement terminé l'expérience. Nous en profitons donc pour récupérer 
 # toutes les données et des les envoyer par message à Julien Voisin (sous la forme d'un fichier crypté)
     def create(self, data):
-        res = addEPFeedback(data['username'],data['sanctionGiven'],data['feedbackGlobalFeeling'],data['feedbackCheatingFeeling'],data['feedbackFairSanction'],data['feedbackOtherSanction'])
-        sendEmailRecap(data['username'])
+        res = addEPFeedback(data['username'],data['pretaskForm'])
+        if res == 409:
+            api.abort(409, "a Problem occured")
+        else :
+            print(res)
+            return res
+
+    def update(self, data):
+        print(data)
+        res = updateEPFeedback(data['username'],data['sanctionGiven'],data['posttaskForm'])
+        #sendEmailRecap(data['username'])
         if res == 409:
             api.abort(409, "a Problem occured")
         else :
@@ -199,13 +206,22 @@ class ReactionsScreenshots(Resource):
     def post(self):
         return DAOReactionsEP.create(api.payload), 201
 
-@nsEPFeedback.route('/')
+@nsEPFeedback.route('/create')
 class Feedback(Resource):
     @nsEPFeedback.doc('add_ie_feedback')
     @nsEPFeedback.expect(EPFeedback)
     @nsEPFeedback.marshal_with(EPFeedback, code=201)
     def post(self):
         return DAOFeedbacksEP.create(api.payload), 201
+
+@nsEPFeedback.route('/update')
+class Feedback(Resource):
+    @nsEPFeedback.doc('upd_ie_feedback')
+    @nsEPFeedback.expect(EPFeedback)
+    @nsEPFeedback.marshal_with(EPFeedback, code=201)
+    def post(self):
+        return DAOFeedbacksEP.update(api.payload), 201
+
 
 
 @nsKayaharaResults.route('/')

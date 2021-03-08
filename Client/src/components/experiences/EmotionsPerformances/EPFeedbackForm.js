@@ -2,21 +2,24 @@ import React, { useState } from "react";
 import { withRouter } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
-import {sendEPFeedback} from "../../../Utils"
+import {updateUserFeedback} from "../../../Utils"
 import Button from '@material-ui/core/Button';
 import ReactPlayer from 'react-player'
-import {afterTaskSanction, afterTaskReasons, afterTaskDuringTask } from "./Constants"
+import {afterTaskSanction, afterTaskReasons, afterTaskDuringTask,afterTaskCheating, afterTaskTaskRelated, afterTaskSanctionFeelings } from "./Constants"
 import LikertScale from "../../Likert";
+import ContinuousLikert from "../../ContinuousLikert"
 
 
 //Page contenant l'annonce de la fin de l'expérience et du réel but de celle-ci.
 //Cette page contient également le formulaire de retour d'expérience de l'utilisateur.
-//Ce formulaire est découpé en 5 sections :
+//Ce formulaire est découpé en 7 sections :
 // - Ressenti avant l'annonce de la sanction (afterTaskSanction)
 // - Raisons pour lesquelles l'utilisateur à décidé de faire cette expérience (afterTaskReasons)
 // - Ressenti durant l'éxecution de la tâche (afterTaskDuring)
 // - Ressenti après l'annonce de la sanction (afterTaskSanction)
 // - Ressenti sur la notion de triche
+// - Ressenti sur la tâche (afterTaskTaskRelated)
+// - Ressenti sur la sanction donnée (afterTaskSanctionFeelings)
 
 function FeedbackForm(props)  {
     
@@ -25,8 +28,8 @@ function FeedbackForm(props)  {
     const history = useHistory();
     const [showForm, setShowForm] = useState(false)
     //On initialise une liste de réponses neutres pour toutes les questions du questionnaire.
-    const [userAnswers, setUserAnswers] = useState(new Array((afterTaskSanction.length*2 +afterTaskReasons.length+ afterTaskDuringTask.length))
-    .fill(4))
+    const [userAnswers, setUserAnswers] = useState(new Array((afterTaskSanction.length*2 +afterTaskReasons.length+ afterTaskDuringTask.length + 
+                                                    Object.values(afterTaskCheating).length*2 + afterTaskTaskRelated.length + afterTaskSanctionFeelings.length)).fill(4))
     const [formStep, setFormStep] = useState(0)
     const responses= [
         { value: 1, text: "Pas du tout en accord" },
@@ -41,7 +44,7 @@ function FeedbackForm(props)  {
 
     //Fonction appelée par les composants fils LikertScale lors de l'ajout du réponse par l'utilisateur.
     function handleFormAnswerChange(id,value){
-        
+        console.log(id)        
         //La 1ere et la 4eme sections sont identiques, on met donc le bon id lorsque nous sommes à la 4eme section
         if(formStep === 4){
             id = id + afterTaskSanction.length + afterTaskReasons.length +  afterTaskDuringTask.length
@@ -50,6 +53,7 @@ function FeedbackForm(props)  {
         let newUserAnswers = [...userAnswers]; 
         newUserAnswers[id] = value
         setUserAnswers(newUserAnswers)
+        console.log(userAnswers)
 
     }
 
@@ -107,24 +111,83 @@ function FeedbackForm(props)  {
         return likertList
     }
 
+    //On crée une liste de Likerts pour la troisième section de questions.
+    const getLikertsCheating=()=>{
+
+        var counter = afterTaskSanction.length*2 + afterTaskReasons.length + afterTaskDuringTask.length 
+        var likertList = []
+
+        for (var z=0; z<Object.keys(afterTaskCheating).length; z++){
+            for (var e=0; e<afterTaskCheating[Object.keys(afterTaskCheating)[z]].length; e++){
+                likertList.push(<ContinuousLikert onChange={handleFormAnswerChange} 
+                                                key={counter} 
+                                                id={counter}
+                                                title={Object.keys(afterTaskCheating)[z]} 
+                                                question={afterTaskCheating[Object.keys(afterTaskCheating)[z]][e]}>
+                                                
+                                                </ContinuousLikert>)
+                counter= counter+1
+            }
+        }
+        return likertList
+    }
+
+    //On crée une liste de Likerts pour la troisième section de questions.
+    const getLikertsTaskRelated=()=>{
+
+        var counter = afterTaskSanction.length*2 + afterTaskReasons.length + afterTaskDuringTask.length +  Object.values(afterTaskCheating).length*2
+        var likertList = []
+
+        for (var z=0; z<afterTaskTaskRelated.length; z++){
+            var likertOptions4 = {id:counter,
+                                answers: responses, 
+                                question :afterTaskTaskRelated[z],
+                                onChange:handleFormAnswerChange,
+                                }
+            likertList.push(<LikertScale key={counter} likertOptions={likertOptions4}></LikertScale>)
+            counter= counter+1
+        }
+
+        return likertList
+    }
+
+    //On crée une liste de Likerts pour la troisième section de questions.
+    const getLikertsSanctionFeeling=()=>{
+
+        var counter = afterTaskSanction.length*2 + afterTaskReasons.length + afterTaskDuringTask.length + afterTaskCheating.length + afterTaskTaskRelated.length
+        var likertList = []
+
+        for (var z=0; z<afterTaskSanctionFeelings.length; z++){
+            var likertOptions5 = {id:counter,
+                                answers: responses, 
+                                question :afterTaskSanctionFeelings[z],
+                                onChange:handleFormAnswerChange,
+                                }
+            likertList.push(<LikertScale key={counter} likertOptions={likertOptions5}></LikertScale>)
+            counter= counter+1
+        }
+
+        return likertList
+    }
+
+
     //On passe au questionnaire puis ensuite à chacune des sections de questions
     const handleNextStep=()=>{   
         if(formStep===0){
             setShowForm(true)
         }   
+        if(formStep===8){ 
+            handleSubmit()
+        }
         setFormStep(formStep+1)
         window.scrollTo(0, 0)
-        console.log(userAnswers)
         
     }
 
-    // const handleSubmit=(event)=>{
-    //     event.preventDefault();
-
-    //     sendEPFeedback(props.location.user,  props.location.sanctionGiven)
-
-    //     history.push('/experiences')
-    // }
+    const handleSubmit=()=>{
+        updateUserFeedback(props.location.user,  props.location.sanctionGiven, userAnswers)
+        history.push('/experiences')
+    }
 
 
 return (
@@ -192,7 +255,6 @@ return (
                         <p>Lors de la tâche d'aujourd'hui ...</p><br/>
 
                         {getLikertsDuring()}
-                        <p> Merci d'avoir participé !</p>
                     </div>
                 :null}
 
@@ -203,8 +265,42 @@ return (
                         {getLikertsSanction()}
                     </div>
                 :null}
+
+                {formStep === 5?
+                    <div className={classes.form}>
+                        <p>Répondez aux mises en situation suivantes par rapport à la tricherie
+                            en indiquant à quelles probabilités vous émettriez les réponses suggérées.</p><br/>
+
+                        {getLikertsCheating()}
+                    </div>
+                :null}
+
+                {formStep === 6?
+                    <div className={classes.form}>
+                        <p>Répondez aux mises en situation suivantes par rapport à la tricherie
+                            en indiquant à quelles probabilités vous émettriez les réponses suggérées.</p><br/>
+
+                        {getLikertsTaskRelated()}
+                    </div>
+                :null}
+
+                {formStep === 7?
+                    <div className={classes.form}>
+                        <p>Répondez aux mises en situation suivantes par rapport à la tricherie
+                            en indiquant à quelles probabilités vous émettriez les réponses suggérées.</p><br/>
+
+                        {getLikertsSanctionFeeling()}
+                        <p> Merci d'avoir participé !</p>
+                    </div>
+                :null}
+
+                {formStep === 8?
+                    <div className={classes.form}>
+                        <p> Merci d'avoir participé !</p>
+                    </div>
+                :null}
                 <br/><br/>
-                <Button variant="contained" color="primary" onClick={handleNextStep}> Suivant </Button>                
+                <Button variant="contained" color="primary" onClick={handleNextStep}> Suivant </Button> <p>{formStep}/7</p>                
             </div>
         :null}  
     </div>)

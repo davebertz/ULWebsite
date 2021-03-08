@@ -89,6 +89,7 @@ export const sendFeelingsScreenshots=(username,feeling, screenshotSource)=>{
     });
   }
 
+
 //Méthode pour appeler l'ajout en base de données des résultats et de la triche de l'utilisateur pour les séries d'exercices
 export const sendEmotionsPerformancesResults=(username, taskQuestion,taskResult,taskCheat,timeToAnswer, secondTrial,sanctionGiven)=>{
   fetch('http://127.0.0.1:5000/EPResults/', {
@@ -131,12 +132,12 @@ export const sendReactionScreenshots=(username,seconds , imageSrc )=>{
  }
 
  //Méthode pour appeler l'ajout en base de données des réponses de l'utilisateur au formulaire de retour sur expérience
- export const sendEPFeedback=(username,sanctionGiven,fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction )=>{
-  fetch('http://127.0.0.1:5000/EPFeedback/', {
+ export const createUserFeedbackEntry=(username,pretaskForm)=>{
+  fetch('http://127.0.0.1:5000/EPFeedback/create', {
     //mode: 'no-cors',
     method: 'POST',
     headers: headers,
-    body:JSON.stringify({username :username, sanctionGiven: sanctionGiven, feedbackGlobalFeeling :fbGlobalFeeling,feedbackCheatingFeeling: fbCheatingFeeling,feedbackFairSanction: fbFairSanction, feedbackOtherSanction :fbOtherSanction, })
+    body:JSON.stringify({username :username, pretaskForm: pretaskForm })
   })
   .then((response) => {
     if (response.ok) {
@@ -149,3 +150,25 @@ export const sendReactionScreenshots=(username,seconds , imageSrc )=>{
     console.log(error)
   });
  }
+
+  //Méthode pour mettre à jour en base de données les réponses de l'utilisateur au formulaire de retour sur expérience
+  export const updateUserFeedback=(username,sanctionGiven, posttaskForm)=>{
+    fetch('http://127.0.0.1:5000/EPFeedback/update', {
+      //mode: 'no-cors',
+      method: 'POST',
+      headers: headers,
+      body:JSON.stringify({username :username, sanctionGiven: sanctionGiven, posttaskForm:posttaskForm })
+    })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+          throw new Error('Something went wrong');
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+   }
+
+ 

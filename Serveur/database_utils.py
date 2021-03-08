@@ -1,5 +1,6 @@
 import pymysql.cursors 
 import unidecode
+import mysql.connector
 import json
 from emotion_recognition import detect_emotion
 
@@ -24,32 +25,38 @@ def getConnection():
 
     
 # ----------------------Users---------------------------
-def addUser( username,email, gender, age, ULStudent, interStudent, schoolProgram):
+def addUser( username,email, gender, age, userStatus):
     connection = getConnection()
     returnValue = username, email
-    try:   
-        with connection.cursor() as cursor:
-                    
-            cursor.execute("INSERT INTO users (username, email, age,gender,UL_student,school_program, international_student) VALUES (%s,%s,%s,%s,%s,%s,%s);", (username,email,age, gender,  ULStudent, interStudent, schoolProgram) )
-            connection.commit()    
-            
-    finally:
-        connection.close()
-        return returnValue
+    
+    with connection.cursor() as cursor:
+        try:                       
+                cursor.execute("INSERT INTO users (username, email, gender, age, userStatus) VALUES (%s,%s,%s,%s,%s);", (username,email,gender,age,userStatus) )
+                connection.commit()   
+                
+        except mysql.connector.Error as err:
+            print("Something went wrong: {}".format(err))
+        finally:
+            cursor.close()
+            connection.close()
+    return returnValue
 
 # ----------------------Kayahara---------------------------
 def addKahayaraResult( username, videoname,videotype, inputs, dateExperience):
     connection = getConnection()
     returnValue = username, videoname, inputs, dateExperience
-    try:   
-        with connection.cursor() as cursor:
+    with connection.cursor() as cursor:
+        try:   
                     
             cursor.execute("INSERT INTO KayaharaResults (username, videoname,videotype, input, dateExperience) VALUES (%s,%s,%s,%s,%s);", (username, videoname, videotype, json.dumps(inputs), dateExperience)) 
             connection.commit()    
             
-    finally:
-        connection.close()
-        return returnValue
+        except mysql.connector.Error as err:
+            print("Something went wrong: {}".format(err))
+        finally:
+            cursor.close()
+            connection.close()
+    return returnValue
 
 #-------------------Emotions et performances (EP)---------------
 
@@ -58,66 +65,93 @@ def addEPFeelingsScreenshot( username, feeling,source, dateExperience):
     returnValue = username, feeling, source, dateExperience
     emotion_detected = detect_emotion(source, feeling) #Détection d'émotions
 
-    try:   
-        with connection.cursor() as cursor:
+    with connection.cursor() as cursor:
+        try:  
             cursor.execute("INSERT INTO ei_feelings_screenshots (username, feeling, source, emotion_detected, date) VALUES (%s,%s,%s,%s,%s);", (username, feeling, source,json.dumps(emotion_detected), dateExperience)) 
             connection.commit()    
             
-    finally:
-        connection.close()
-        return returnValue
+        except mysql.connector.Error as err:
+            print("Something went wrong: {}".format(err))
+        finally:
+            cursor.close()
+            connection.close()
+    return returnValue
 
 def addEPReactionsScreenshot( username, timer,source, dateExperience):
     connection = getConnection()
     returnValue = username, timer, source, dateExperience
     emotion_detected = detect_emotion(source) #Détection d'émotions
-    try:   
-        with connection.cursor() as cursor:
+    with connection.cursor() as cursor:
+        try:          
             cursor.execute("INSERT INTO ei_reactions_screenshots (username, seconds_after_reveal, source, emotion_detected, date) VALUES (%s,%s,%s,%s,%s);", (username, timer, source, json.dumps(emotion_detected), dateExperience)) 
             connection.commit()    
             
-    finally:
-        connection.close()
-        return returnValue
+        except mysql.connector.Error as err:
+            print("Something went wrong: {}".format(err))
+        finally:
+            cursor.close()
+            connection.close()
+    return returnValue
 
 def addEPResults(username, taskQuestions, taskResult,taskCheat,timeToAnswer, secondTrial, sanctionGiven,  dateExperience):
     connection = getConnection()
     returnValue = username, taskQuestions, taskResult,taskCheat,timeToAnswer, secondTrial, sanctionGiven,  dateExperience
 
     #Petit bloc de refacto pour enlever les accents en BD pour éviter les /u009 au lieu de é
-    print("-------------------------------------------------------------")
-    print(taskResult)
+
     taskQuestions["canadaCulture"] = [unidecode.unidecode(x) for x in taskQuestions["canadaCulture"]]
     if(secondTrial):
         taskResult[2] = {"CanadianQuestion" : [unidecode.unidecode(x) for x in taskResult[2]['CanadianQuestion']]}
     else:
         taskResult[3] = {"CanadianQuestion" : [unidecode.unidecode(x) for x in taskResult[3]['CanadianQuestion']]}
-    
+    with connection.cursor() as cursor:
+        try:   
 
-    print(taskResult)
-    try:   
-        with connection.cursor() as cursor:
-            cursor.execute("INSERT INTO ei_results (username, task_questions, task_answers, task_cheats,time_to_answer, second_trial, sanction_given, date) VALUES (%s,%s,%s,%s,%s,%s,%s,%s);", 
-                            (username, json.dumps(taskQuestions),json.dumps(taskResult),json.dumps(taskCheat),json.dumps(timeToAnswer), secondTrial, sanctionGiven, dateExperience)) 
-            connection.commit()    
-            
-    finally:
-        connection.close()
-        return returnValue
+                
+                affected_count = cursor.execute("INSERT INTO ei_results (username, task_questions, task_answers, task_cheats,time_to_answer, second_trial, sanction_given, date) VALUES (%s,%s,%s,%s,%s,%s,%s,%s);", 
+                                (username, json.dumps(taskQuestions),json.dumps(taskResult),json.dumps(taskCheat),json.dumps(timeToAnswer), secondTrial, sanctionGiven, dateExperience)) 
 
-#todo : tout changer les feedbacks
-def addEPFeedback(username, sanctionGiven, fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction):
+                connection.commit()
+
+        except mysql.connector.Error as err:
+            print("Something went wrong: {}".format(err))
+        finally:
+            cursor.close()
+            connection.close()
+    return returnValue
+
+
+def addEPFeedback(username, pretaskForm):
     connection = getConnection()
-    returnValue = username, sanctionGiven, fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction
-    try:   
-        with connection.cursor() as cursor:
-            cursor.execute("INSERT INTO ei_feedback (username, sanction_given, fb_global_feeling, fb_cheating_feeling, fb_fair_sanction, fb_other_sanction) VALUES (%s,%s,%s,%s,%s,%s);", 
-                            (username, sanctionGiven, fbGlobalFeeling, fbCheatingFeeling, fbFairSanction, fbOtherSanction)) 
+    returnValue = username, pretaskForm
+    with connection.cursor() as cursor:
+        try:   
+            cursor.execute("INSERT INTO ei_feedback (username, pretask_form) VALUES (%s,%s);", 
+                            (username,json.dumps(pretaskForm))) 
             connection.commit()    
             
-    finally:
-        connection.close()
-        return returnValue
+        except mysql.connector.Error as err:
+            print("Something went wrong: {}".format(err))
+        finally:
+            cursor.close()
+            connection.close()
+    return returnValue
+
+def updateEPFeedback(username, sanctionGiven, posttaskForm):
+    connection = getConnection()
+    returnValue = username, sanctionGiven,posttaskForm
+    with connection.cursor() as cursor:
+        try:   
+            cursor.execute("UPDATE ei_feedback SET sanction_given =%s, posttask_forms = %s WHERE username = %s;", 
+                            (sanctionGiven,json.dumps(posttaskForm), username)) 
+            connection.commit()    
+            
+        except mysql.connector.Error as err:
+            print("Something went wrong: {}".format(err))
+        finally:
+            cursor.close()
+            connection.close()
+    return returnValue
 
 
 # -------------------------Data Retrieve for Email ------------------------
@@ -125,8 +159,8 @@ def getUserResultAndWriteFile(username, filename):
     #On récupère les données de chaque table pour cet utilisateur puis on écrit tout dans un fichier.
     connection = getConnection()
     with open(filename, "w") as file:
-        try:   
-            with connection.cursor() as cursor:
+        with connection.cursor() as cursor:
+            try:   
                 cursor.execute("SELECT * from ei_feelings_screenshots where username = %s", 
                                 (username)) 
                 result = cursor.fetchall()
@@ -146,6 +180,9 @@ def getUserResultAndWriteFile(username, filename):
                         (username)) 
                 result = cursor.fetchall()
                 file.write(json.dumps(result,indent=4, sort_keys=True, default=str))
-        finally:
-            connection.close()
+            except mysql.connector.Error as err:
+                print("Something went wrong: {}".format(err))
+            finally:
+                cursor.close()
+                connection.close()
 

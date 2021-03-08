@@ -5,7 +5,7 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { makeStyles } from '@material-ui/core/styles';
-import {sendFeelingsScreenshots, sendUserInfos} from "../../../Utils"
+import {sendFeelingsScreenshots,createUserFeedbackEntry, sendUserInfos} from "../../../Utils"
 import {feelings, questionNumerical, answerNumerical, questionCanadaCulture,
     answercanadaCulture,questionLetter,tWords,fWords,questionMemory, questionDefinition,googleDefinitionForApagogie,googleDefinitionForLallation, beforeTaskForm } from "./Constants"
 import { useHistory } from "react-router-dom";
@@ -159,6 +159,7 @@ function EmotionsPerformancesScreen(props)  {
              setExperienceStarted(true)
              setScreenshotSession(true)
              sendUserInfos(props.location.user.username,userEmail, userGender, userAge, userStatus )
+             createUserFeedbackEntry(props.location.user.username,userFormAnswers )
          }
        
     }
