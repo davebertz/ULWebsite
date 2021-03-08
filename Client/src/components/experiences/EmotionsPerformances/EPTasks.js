@@ -213,7 +213,7 @@ return (
 
         {/* Buttons précédent et suivant*/}
         { (experienceStep !== 'beginning') && (experienceStep !== 'ended') ?
-        <div>
+        <div className={classes.allTaskContainer}>
             <div className={classes.taskContainer}>
                 {getExperienceDiv()}
             </div>
@@ -256,13 +256,18 @@ const useStyles = makeStyles({
         alignItems:'center',
         display:'flex',
         flex:3,
-        flexDirection:'column'
+        flexDirection:'column',
     },
     bodyContainer:{
         alignItems:'center',
         display:'flex',
         flex:1,
         flexDirection:'row',
+    },
+    allTaskContainer:{
+        display:'flex',
+        flex:1,
+        flexDirection:'column',
     },
     taskContainer:{
         alignItems:'center',
