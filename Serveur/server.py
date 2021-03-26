@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_restx import Api, Resource, fields
 from database_utils import addUser, addEPFeelingsScreenshot,addEPReactionsScreenshot, addKahayaraResult, addEPResults, addEPFeedback, updateEPFeedback
-from utils import sendEmailRecap
 from flask_cors import CORS
 from datetime import datetime
 
@@ -158,7 +157,6 @@ class EPFeedbacksDAO(object):
     def update(self, data):
         print(data)
         res = updateEPFeedback(data['username'],data['sanctionGiven'],data['posttaskForm'])
-        #sendEmailRecap(data['username'])
         if res == 409:
             api.abort(409, "a Problem occured")
         else :

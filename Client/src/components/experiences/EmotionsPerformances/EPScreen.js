@@ -34,10 +34,9 @@ function EmotionsPerformancesScreen(props)  {
     const [userAge, setUserAge]= useState('')
     const [userGender, setUserGender]= useState('')
     const [userStatus, setUserStatus]= useState('')
+    const [step,setStep] = useState('infos')
     // Initialisation des réponses de l'utilisateur à 7 : moyennement important car valeur de base. 
     const [userFormAnswers, setUserFormAnswers]= useState(new Array(beforeTaskForm.length).fill(4)) 
-    const [experienceStarted,setExperienceStarted]=useState(false)
-    const [screenshotSession,setScreenshotSession]=useState(false)
     const [compteurScreenshots, setCompteur]=useState(1)
     const [currentFeeling,setCurrentFeeling]=useState(feelings[compteurScreenshots-1])
 
@@ -148,19 +147,28 @@ function EmotionsPerformancesScreen(props)  {
             setTileData(tileData => [...tileData, {img : imageSrc, title:feelings[compteurScreenshots-1]}])
             setCompteur(compteurScreenshots+1)
             if(compteurScreenshots === feelings.length){
-                setScreenshotSession(false)
+                setStep('next')
             }
         },
         [webcamRef, compteurScreenshots ]
     );
 
     const startExpe= () => {
-        if(validateForm()){
-             setExperienceStarted(true)
-             setScreenshotSession(true)
-             sendUserInfos(props.location.user.username,userEmail, userGender, userAge, userStatus )
-             createUserFeedbackEntry(props.location.user.username,userFormAnswers )
-         }
+
+        if(step === "infos"){
+            if(validateForm()){
+                setStep("likerts")
+                sendUserInfos(props.location.user.username,userEmail, userGender, userAge, userStatus )
+                createUserFeedbackEntry(props.location.user.username,userFormAnswers )
+                setErrorMessage('')
+            }
+        }
+
+        if(step === "likerts"){
+                setStep("screens")
+                createUserFeedbackEntry(props.location.user.username,userFormAnswers )
+
+        }
        
     }
 
@@ -255,7 +263,7 @@ function EmotionsPerformancesScreen(props)  {
 
 return (
     <div className={classes.root}>   
-        { experienceStarted === false ? <div>
+        { step === 'infos' ? <div>
             <p>
             Bienvenue dans l'expérience portant sur la logique et les émotions. Attention, ce test peut vous faire vivre des émotions négatives.<br/> 
             Nous allons dans un premier temps vous demandez d'accéder à votre webcam 
@@ -299,8 +307,10 @@ return (
                             <option value="international">Un.e étudiant.e international.e</option>
                         </select>            
                     </label><br/><br/>
-                    
-
+                    </form>
+                    </div>
+        </div> :null }            
+        { step === 'likerts' ? <div>
                     <p>Chaque individu a des buts à long terme ou des aspirations. Il s’agit des choses que les gens
                         souhaitent accomplir au cours de leur vie. Les items suivants présentent une liste d’objectifs de
                         vie, indiquez jusqu’à quel point chacun d’eux est important pour vous.
@@ -308,19 +318,17 @@ return (
                     <div className={classes.form}>
                         {getAllLikertScale()}
                     </div>
-                </form>
-            </div>
-            <br/>
-        </div> :null }
-        { experienceStarted === false ? <div>
-            <p style={{ color: 'red' }}>{errorMessage}</p>
-            <Button variant="contained"  color="primary" className={classes.startButton} onClick={startExpe}> Démarrer</Button> 
+                
             
-            </div>
-            : null}
-
+        <br/>       
+       
+        </div> :null }
+        { (step === 'likerts') || (step === 'infos') ? <div>
+        <p style={{ color: 'red' }}>{errorMessage}</p>
+        <Button variant="contained"  color="primary" className={classes.startButton} onClick={startExpe}> Suivant</Button> 
+        </div> :null}
         
-        { screenshotSession === true ? 
+        { step === "screens" ? 
         <div>
             <p> Veuillez vous prendre en photo à l'aide du bouton "capture image" en réalisant une expression représentant :</p>
             <p> <b>{currentFeeling}</b></p>
@@ -333,7 +341,7 @@ return (
             width={640}
             videoConstraints={videoConstraints}
       /></div>: null }
-      { screenshotSession === true ? <div><Button variant="contained" color="primary" onClick={capture}>Capture photo</Button> </div>: null }
+      { step === "screens" ? <div><Button variant="contained" color="primary" onClick={capture}>Capture photo</Button> </div>: null }
       
       <GridList className={classes.grid} cellHeight={150} cols={4} >
         {tileData.map((tile) => (
@@ -346,7 +354,7 @@ return (
         ))}
       </GridList>
 
-      { (screenshotSession === false) && (experienceStarted === true)? <div><Button variant="contained" color="primary" onClick={sendResult}>Passer à la suite</Button> </div>: null }
+      { step === "next"? <div><Button variant="contained" color="primary" onClick={sendResult}>Passer à la suite</Button> </div>: null }
 
     </div>
     )
@@ -375,7 +383,7 @@ const useStyles = makeStyles({
         height: 450,
       },
     form:{
-        backgroundColor : '#DCDCDC',
+        backgroundColor : '#ECE8E7',
         padding:15,
         border : 'solid',
         borderColor : "#C0C0C0",

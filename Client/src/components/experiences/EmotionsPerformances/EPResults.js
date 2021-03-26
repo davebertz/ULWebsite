@@ -27,17 +27,18 @@ function EmotionsPerformancesResults(props)  {
 
         var timer = 0
         const intervalId = setInterval(() => {
+            if(timer===0){ // Screenshot avant annonce pour photo de base.
+                capture(timer)
+            }
             timer = timer +1
             if ( timer === 1){
-                var audio = new Audio(require("../../../audio/buzzer.mp3"))//Doux bruit n'est-ce pas ?
                 setResultStage('triche')
-                audio.play()
             }
-            if( timer < 12){
-                capture(timer/2)//Prise de photo toutes les demies-secondes
+            if( timer < 10){
+                capture(timer/2)
             }
 
-        }, 500);
+        }, 500);//Prise de photo toutes les demies-secondes
 
         setSanction(getRandomSanction())//Choisit aléatoirement une sanction parmi les trois
 
@@ -78,6 +79,7 @@ function EmotionsPerformancesResults(props)  {
     const capture = useCallback(
         (timer) => {
             const imageSrc = webcamRef.current.getScreenshot({width: 550, height: 360});
+            console.log(timer)
             if(imageSrc !== null){
                 sendReactionScreenshots(props.location.user.username, timer, imageSrc )
             }
@@ -107,7 +109,7 @@ return (
 
     {(resultStage === "triche" || resultStage === "sanction")? 
         <div>
-            <span className={classes.tricheText}><b>TRICHE DETECTEE</b></span>
+            <span className={classes.tricheText}><b>TRICHERIE DETECTEE</b></span>
             <br/><br/>
             Suite à l'analyse de vos résultats, nous avons détecté une ou plusieurs tentatives de triche durant la première partie de ce test.
         

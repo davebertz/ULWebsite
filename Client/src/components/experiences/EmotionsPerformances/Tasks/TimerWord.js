@@ -24,10 +24,6 @@ function TimerWord(props)  {
             if(timeLeft>0 && props.startTimer){ //c'est le props.startTimer issu du composant parent
                 setTimeLeft(timeLeft - 1);
             }
-            if (timeLeft===1 ){ //Il y a un petit décalage dans le son, on le fait donc commencer plus tôt 
-                var audio = new Audio(require("../../../../audio/timeup.mp3"))
-                audio.play()
-            }
         }, 1000);
     
         return () => clearInterval(intervalId);

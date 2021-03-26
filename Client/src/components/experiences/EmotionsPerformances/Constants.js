@@ -14,6 +14,7 @@ export const afterTaskSanction=["Joyeux-se","Heureux-se","De bonne humeur","Fier
                                             "Misérable","Troublé-e","Triste","Très enthousiaste","Malheureux-se","Dégouté-e","Humilié-e","Déshonoré-e",
                                             "Déplorable","Surpris-e","Craintif-ve","Méprisant-e","Paniqué-e"]
 
+
 export const afterTaskReasons = ["Parce que c’était vraiment plaisant.","Parce que j’ai choisi de la faire pour mon bien.","Parce que j’ai senti qu'il fallait que je la fasse.",
                                 "Je ne sais pas; je ne vois pas ce que cela m’a procuré.","Parce que je me serais senti(e) mal de ne pas l’avoir fait.",
                                 "Parce que je me sentais bien en le faisant.","Parce que j’ai cru que c’était important pour moi.","Parce que j’étais supposé(e) la faire.",
@@ -23,6 +24,15 @@ export const afterTaskReasons = ["Parce que c’était vraiment plaisant.","Parc
                                 "Parce que je trouvais que c’était agréable.","Parce que je trouvais que c’était bon pour moi.", "Parce que je n'avais pas d'autres choix que de la faire.",
                                 "Il y a peut-être de bonnes raisons de faire cette tâche, mais personnellement je n’en ai pas vues.","Parce que je m’en serais voulu de ne pas l’avoir fait.",
                                 "Parce que je souhaitais gagner une somme d’argent."]
+
+export const afterTaskDuringTask = ["Je me sentais confiant(e) dans le fait que je pouvais bien faire leschoses.", "Je me sentais compétent(e) dans ce que je faisais.",
+                                    "Je sentais que j’étais capable d’atteindre mes buts.","J’avais le sentiment de pouvoir réaliser des tâches difficiles avec succès.",
+                                    "J’avais de sérieux doutes sur ma capacité à bien faire les choses.","J’ai été déçu(e) par beaucoup de mes performances.","Je n’étais pas certain(e) de mes capacités.",
+                                    "J’avais le sentiment d’être un(e) « raté(e) » à cause des erreurs que je commetais.","J’avais le sentiment d’avoir le choix et d’être libre.",
+                                    "J’avais le sentiment d’exprimer ce que je veux vraiment.","J’avais le sentiment d‘exprimer qui je suis vraiment.","J’avais le sentiment de faire ce qui m’intéresse vraiment.",
+                                    "J’avais l’impression que je devais faire ce qui était demandé.","Je me sentais forcé(e) de faire des choses que je n’aurais pas choisi de faire.",
+                                    "Je me sentais contraint(e) de faire beaucoup trop de choses.","La tâche me donnait le sentiment d’un enchaînement d’obligations."]
+
 
 export const afterTaskCheating = {"« Vous êtes étudiant-e et décidez de consulter des notes cachées pendant un examen. »": 
                                     ["Quelle est la probabilité que vous vous sentiez coupable face à votre geste?","Quelle est la probabilité que vous vous sentiez comme une mauvaise personne?" ],
@@ -50,13 +60,6 @@ export const afterTaskCheating = {"« Vous êtes étudiant-e et décidez de cons
                                 ["Quelle est la probabilité que vous vous sentiez coupable face à votre geste?","Quelle est la probabilité que vous vous sentiez comme une mauvaise personne?"],
                                 }
 
-export const afterTaskDuringTask = ["Je me sentais confiant(e) dans le fait que je pouvais bien faire leschoses.", "Je me sentais compétent(e) dans ce que je faisais.",
-                                    "Je sentais que j’étais capable d’atteindre mes buts.","J’avais le sentiment de pouvoir réaliser des tâches difficiles avec succès.",
-                                    "J’avais de sérieux doutes sur ma capacité à bien faire les choses.","J’ai été déçu(e) par beaucoup de mes performances.","Je n’étais pas certain(e) de mes capacités.",
-                                    "J’avais le sentiment d’être un(e) « raté(e) » à cause des erreurs que je commetais.","J’avais le sentiment d’avoir le choix et d’être libre.",
-                                    "J’avais le sentiment d’exprimer ce que je veux vraiment.","J’avais le sentiment d‘exprimer qui je suis vraiment.","J’avais le sentiment de faire ce qui m’intéresse vraiment.",
-                                    "J’avais l’impression que je devais faire ce qui était demandé.","Je me sentais forcé(e) de faire des choses que je n’aurais pas choisi de faire.",
-                                    "Je me sentais contraint(e) de faire beaucoup trop de choses.","La tâche me donnait le sentiment d’un enchaînement d’obligations."]
 
 export const afterTaskTaskRelated = ["J’ai entièrement respecté l’ensemble des consignes des questions du début à la fin.","J’ai bien pris connaissance de toutes les consignes des questions du début à la fin",
                                     "Il y a au moins une question pour laquelle je n’ai pas entièrement respecté les consignes.", "J’ai triché à au moins une question de la tâche.",
