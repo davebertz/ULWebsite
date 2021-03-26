@@ -46,13 +46,23 @@ Une fois le serveur lancé, vous pourrez retrouver le Swagger de l’API à l’
  http://127.0.0.1:5000/
 
 
-Vous aurez également besoin pour faire fonctionner les mails crypté d'avoir un fichier key.key dans le dossier Serveur. 
-Ce fichier étant plus sensible il ne sera pas communiqué publiquement. Merci de m'envoyer à mail à jules.civel@gmail.com pour que
-je vous envoie ce fichier.
-
 ### Installation BDD
 
-Installez MySQL Workbench.
-Créez une base de données nommée lavalexperiencedb
+Sous Windows :
+Installez MySQL Workbench depuis [ le site officiel](https://dev.mysql.com/downloads/windows/installer/8.0.html), prenez le premier fichier, le plus léger.
+Suivez l'installation classique sans rien modifier.
+Une fois l'installation finie, relancer l'installateur afin de modifier l'installation (Reconfigure de MySQL Server) et mettez choississez un nouveau mdp (suivre les screenshot dans la 2ème réponse de [ce lien](https://superuser.com/questions/1607391/mysql-doesnt-ask-for-root-password-when-installing) si vous rencontrez des difficultés)
+Depuis un terminal, exécutez les commandes suivantes : 
+    cd C:\Program Files\MySQL\MySQL Server 8.0\bin
+    mysqld --install
+    mysqld --initialize
 
-Faites Data import du fichier database.sql dans le dossier BD
+Faites windows + R et recherchez 'services.msc'. Trouvez MySQL et démarrer le serveur.
+
+Ouvrez Workbench, créez une connexion nommée LavalExperienceDB. Ne modifiez rien hormis le champ Default Schema et écrivez lavalexperiencedb.
+
+Connectez vous puis allez dans l'onglet Server -> Data Import.
+Cochez "Import from Self-contained File" et récupérez le fichier dans ULWebsite/BD/database.sql
+Choississez lavalexperiencedb comme Default Target Schema.
+
+Cela devrait être bon.
