@@ -8,9 +8,10 @@ export const beforeTaskForm=["Évoluer et apprendre de nouvelles choses.","Être
                             "Être célèbre.","Rendre le monde meilleur.","Être riche.","Connaître et accepter qui je suis.","Sentir que des gens m’aiment vraiment et que je les aime aussi.",
                             "Avoir le look que j’ai toujours recherché.","Aider les autres à améliorer leur vie.","Ne jamais être très malade.","Avoir des relations profondes et durables.",
                             "Projeter une image que les autres trouvent attrayante.","Avoir un mode de vie actif physiquement."]
+
 export const afterTaskSanction=["Joyeux-se","Heureux-se","De bonne humeur","Fier-ère","Confiant-e","Stressé-e","Anxieux-se",
-                                            "Désengagé-e","Valorisé-e","Accompli-e","Honteux-se","Repentant-e","Coupable","Embarrassé-e","Étonnée",
-                                            "Ennuyé-e","Prétentieux-se","Effrayé-e","En colère","Arrogante","Irritable","Inquiet-e","Supérieur-e",
+                                            "Désengagé-e","Valorisé-e","Accompli-e","Honteux-se","Repentant-e","Coupable","Embarrassé-e","Étonné-e",
+                                            "Ennuyé-e","Prétentieux-se","Effrayé-e","En colère","Arrogant-e","Irritable","Inquiet-e","Supérieur-e",
                                             "Misérable","Troublé-e","Triste","Très enthousiaste","Malheureux-se","Dégouté-e","Humilié-e","Déshonoré-e",
                                             "Déplorable","Surpris-e","Craintif-ve","Méprisant-e","Paniqué-e"]
 
@@ -25,10 +26,10 @@ export const afterTaskReasons = ["Parce que c’était vraiment plaisant.","Parc
                                 "Il y a peut-être de bonnes raisons de faire cette tâche, mais personnellement je n’en ai pas vues.","Parce que je m’en serais voulu de ne pas l’avoir fait.",
                                 "Parce que je souhaitais gagner une somme d’argent."]
 
-export const afterTaskDuringTask = ["Je me sentais confiant(e) dans le fait que je pouvais bien faire leschoses.", "Je me sentais compétent(e) dans ce que je faisais.",
+export const afterTaskDuringTask = ["Je me sentais confiant(e) dans le fait que je pouvais bien faire les choses.", "Je me sentais compétent(e) dans ce que je faisais.",
                                     "Je sentais que j’étais capable d’atteindre mes buts.","J’avais le sentiment de pouvoir réaliser des tâches difficiles avec succès.",
                                     "J’avais de sérieux doutes sur ma capacité à bien faire les choses.","J’ai été déçu(e) par beaucoup de mes performances.","Je n’étais pas certain(e) de mes capacités.",
-                                    "J’avais le sentiment d’être un(e) « raté(e) » à cause des erreurs que je commetais.","J’avais le sentiment d’avoir le choix et d’être libre.",
+                                    "J’avais le sentiment d’être un(e) « raté(e) » à cause des erreurs que je commettais.","J’avais le sentiment d’avoir le choix et d’être libre.",
                                     "J’avais le sentiment d’exprimer ce que je veux vraiment.","J’avais le sentiment d‘exprimer qui je suis vraiment.","J’avais le sentiment de faire ce qui m’intéresse vraiment.",
                                     "J’avais l’impression que je devais faire ce qui était demandé.","Je me sentais forcé(e) de faire des choses que je n’aurais pas choisi de faire.",
                                     "Je me sentais contraint(e) de faire beaucoup trop de choses.","La tâche me donnait le sentiment d’un enchaînement d’obligations."]

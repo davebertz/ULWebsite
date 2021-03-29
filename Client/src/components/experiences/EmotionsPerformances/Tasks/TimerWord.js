@@ -73,7 +73,7 @@ function TimerWord(props)  {
 return (
     <div  className={classes.root}>
         <div className={classes.centered}>
-            <p>Ecrivez un maximum de mots commençant par la lettre "{props.letter}" en moins de 30 secondes. Vous recevrez un signal sonore à la fin du temps imparti.</p>
+            <p>Ecrivez un maximum de mots commençant par la lettre "{props.letter}" en moins de 30 secondes.</p>
              
              <div className={classes.horizontalContainer}>
                 <div className={classes.verticalContainer}>

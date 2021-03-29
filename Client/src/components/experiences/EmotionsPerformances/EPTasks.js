@@ -184,11 +184,11 @@ return (
                     Nous allons maintenant passer à la suite de l'expérience.<br/>
                     Vous allez devoir effectuer deux séries d'exercices simples qui ont pour but de tester votre mémoire et votre réflexion.
                     Le but de l’expérience est d’accumuler des points. 
-                    <br/>Un tirage au sort pour gagner des cartes cadeaux Renaud-Bray d'une valeur de 10€ sera 
+                    <br/>Un tirage au sort pour gagner l'une des 10 cartes prépayées de 100$ sera 
                     effectuée à la fin de l'étude. Plus votre score sera élevé, plus grand sera le nombre de billets à votre nom, augmentant ainsi vos chances de gagner une des cartes cadeaux.
                     <br/><br/>
 
-                    Une barre de progression comme celle à droite de l'écran vous permettra de connaître à tout moment vos performances par rapport à la moyenne des autres utilisateurs.
+                    Une barre de progression comme celle à droite de l'écran vous permettra de connaître à tout moment votre performance par rapport à la moyenne des autres utilisateurs.
                     <br/><br/>
 
                 

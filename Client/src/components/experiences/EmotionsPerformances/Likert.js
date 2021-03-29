@@ -15,8 +15,8 @@ export default function LikertScale(props){
       return (
           <main>
             
-            <Likert key={likertOptions.id} question={likertOptions.question} responses={likertOptions.answers} 
-                    onChange={handleChange} flexible={false}/>
+            <Likert key={likertOptions.id}  question={likertOptions.question} responses={likertOptions.answers} 
+                    onChange={handleChange} layout='stacked'/> <br/><br/>
           </main>
       );
       

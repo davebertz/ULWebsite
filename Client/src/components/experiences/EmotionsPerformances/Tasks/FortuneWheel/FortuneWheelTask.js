@@ -148,7 +148,7 @@ return (
             <div className={classes.hotContainer}> 
                 <p> Avez-vous le goût du risque ? <br/>
                     Voici face à vous 2 roulettes de casino, l'une risquée et l'autre plus raisonnable. Le but du jeu ici est de faire un choix
-                    entre ces deux roulettes, attention cependant, le résultat de la roulette sélectionnée impactera votre score.<br/>
+                    entre ces deux roulettes. <br/>Attention cependant, le résultat de la roulette sélectionnée impactera votre score.<br/>
                     Vous avez 4 essais pour augmenter au maximum votre résultat.
 
                     <br/><br/>

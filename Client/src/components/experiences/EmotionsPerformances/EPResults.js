@@ -111,7 +111,7 @@ return (
         <div>
             <span className={classes.tricheText}><b>TRICHERIE DETECTEE</b></span>
             <br/><br/>
-            Suite à l'analyse de vos résultats, nous avons détecté une ou plusieurs tentatives de triche durant la première partie de ce test.
+            À la suite de l'analyse de vos résultats, nous avons détecté une ou plusieurs tentatives de tricherie durant la première partie de ce test.
         
             <br/>
             <br/>
@@ -126,7 +126,7 @@ return (
             <br/><br/>
             {sanction === "avertissement"?
                 <div>
-                    <p><b>Vous pouvez poursuivre vers la suite et la fin du test en conservant votre score accumulé dans la section précédente.
+                    <p><b>Vous pouvez poursuivre le test en conservant votre score accumulé dans la section précédente.
                             Cependant, sachez que tricher à nouveau invalidera complètement votre participation au test. </b>
                     </p>
                 </div>
@@ -134,7 +134,7 @@ return (
             {sanction === "suite score nul"?
                 <div>
                     <p><b>
-                    Vous pouvez poursuivre vers la suite et la fin du test, mais votre résultat de la section précédente a été ramené à 0. Sachez que tricher à nouveau invalidera complètement votre participation au test.
+                    Vous pouvez poursuivre le test, mais votre résultat de la section précédente a été ramené à 0. Sachez que tricher à nouveau invalidera complètement votre participation au test.
                     </b>
                     </p>
                 </div>

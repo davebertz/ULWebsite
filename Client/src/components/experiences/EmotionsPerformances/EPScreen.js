@@ -36,7 +36,7 @@ function EmotionsPerformancesScreen(props)  {
     const [userStatus, setUserStatus]= useState('')
     const [step,setStep] = useState('infos')
     // Initialisation des réponses de l'utilisateur à 7 : moyennement important car valeur de base. 
-    const [userFormAnswers, setUserFormAnswers]= useState(new Array(beforeTaskForm.length).fill(4)) 
+    const [userFormAnswers, setUserFormAnswers]= useState(new Array(beforeTaskForm.length).fill(8)) 
     const [compteurScreenshots, setCompteur]=useState(1)
     const [currentFeeling,setCurrentFeeling]=useState(feelings[compteurScreenshots-1])
 
@@ -165,8 +165,14 @@ function EmotionsPerformancesScreen(props)  {
         }
 
         if(step === "likerts"){
+            if(userFormAnswers.includes(-1)){
+                setErrorMessage("Merci de remplir tous les champs")
+            }else{
                 setStep("screens")
+                setErrorMessage("")
                 createUserFeedbackEntry(props.location.user.username,userFormAnswers )
+            }
+
 
         }
        
@@ -238,10 +244,11 @@ function EmotionsPerformancesScreen(props)  {
             { value: 1, text: "Pas du tout important" },
             { value: 2, text: "Très peu important" },
             { value: 3, text: "Un peu important"},
-            { value: 4, text: "Moyennement important", checked: true  },
+            { value: 4, text: "Moyennement important"},
             { value: 5, text: "Assez important" },
             { value: 6, text: "Important" },
-            { value: 7, text: "Très important" }
+            { value: 7, text: "Très important" },
+            { value: 8, text: "Ne veux pas répondre", checked:'true' },
           ]
 
         var likertList = []
@@ -267,12 +274,12 @@ return (
             <p>
             Bienvenue dans l'expérience portant sur la logique et les émotions. Attention, ce test peut vous faire vivre des émotions négatives.<br/> 
             Nous allons dans un premier temps vous demandez d'accéder à votre webcam 
-            afin de prendre une photo de vous exprimant plusieures expressions faciales. 
+            afin de prendre une photo de vous exprimant plusieurs expressions faciales. 
             Merci de ne pas exagérer vos émotions et de les rendre le plus réaliste possible.<br/>
-            Si vous ne possédez pas de webcam sur cet ordinateur ou si vous n’êtes pas disposés à nous en donner l’accès, l'expérience ne sera pas possible.
+            Si vous ne possédez pas de webcam sur cet ordinateur ou si vous n’êtes pas disposé.e à nous en donner l’accès, l'expérience ne sera pas possible.
             Merci tout de même pour votre intérêt.<br/><br/><br/>
-            Nous allons maintenant vous demander de renseigner quelques informations démographiques utiles pour les statistiques
-            des personnes testées. Un mail avec l'accès au test vous sera ensuite envoyé.<br/><br/></p>
+            Nous allons maintenant vous demander quelques renseignements sociodémographiques utiles pour les statistiques
+            des personnes testées. Un courrier électronique avec l'accès au test vous sera ensuite envoyé.<br/><br/></p>
             <div>
                 <form>
                     <label>

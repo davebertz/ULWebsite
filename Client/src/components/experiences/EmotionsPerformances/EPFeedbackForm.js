@@ -28,17 +28,17 @@ function FeedbackForm(props)  {
     const [showForm, setShowForm] = useState(false)
     //On initialise une liste de réponses neutres pour toutes les questions du questionnaire.
     const [userAnswers, setUserAnswers] = useState(new Array((afterTaskSanction.length*2 +afterTaskReasons.length+ afterTaskDuringTask.length + 
-                                                    Object.values(afterTaskCheating).length*2 + afterTaskTaskRelated.length + afterTaskSanctionFeelings.length)).fill(4))
+                                                    Object.values(afterTaskCheating).length*2 + afterTaskTaskRelated.length + afterTaskSanctionFeelings.length)).fill(8))
     const [formStep, setFormStep] = useState(0)
     const responses= [
         { value: 1, text: "Pas du tout en accord" },
         { value: 2, },
         { value: 3, },
-        { value: 4, text: "Moyennement en accord", checked: true  },
+        { value: 4, text: "Moyennement en accord" },
         { value: 5,  },
         { value: 6, },
         { value: 7, text: "Très fortement en accord" },
-        { value: 8, text: "Ne veux pas répondre" }
+        { value: 8, text: "Ne veux pas répondre", checked:'true' }
 
     ]
 
@@ -118,13 +118,13 @@ function FeedbackForm(props)  {
 
         for (var z=0; z<Object.keys(afterTaskCheating).length; z++){
             for (var e=0; e<afterTaskCheating[Object.keys(afterTaskCheating)[z]].length; e++){
-                likertList.push(<ContinuousLikert onChange={handleFormAnswerChange} 
+                likertList.push(<div><ContinuousLikert onChange={handleFormAnswerChange} 
                                                 key={counter} 
                                                 id={counter}
                                                 title={Object.keys(afterTaskCheating)[z]} 
                                                 question={afterTaskCheating[Object.keys(afterTaskCheating)[z]][e]}>
                                                 
-                                                </ContinuousLikert>)
+                                                </ContinuousLikert><br/></div>)
                 counter= counter+1
             }
         }
@@ -184,8 +184,11 @@ function FeedbackForm(props)  {
     }
 
     const handleSubmit=()=>{
+
         updateUserFeedback(props.location.user,  props.location.sanctionGiven, userAnswers)
         history.push('/experiences')
+        
+
     }
 
 
@@ -206,14 +209,14 @@ return (
 
                     <br/><br/><br/>
                     Le but de cette expérience est de voir comment vous réagissez face à l’annonce de détection de tricherie, 
-                    et face à une sanction relative au fait d’avoir tricher.
+                    et face à une sanction relative au fait d’avoir triché.
                     <br/><br/><br/><br/>
 
                     Les exercices ont été volontairement conçus de manière à laisser la place à la tricherie afin de nous permettre 
                     d’étudier ce comportement. Une fois la première série d’exercices terminée, on annonçait que de la tricherie avait 
-                    été détectée, puis vous receviez une parmi trois types de sanctions possibles. Soit ce n’était qu’un avertissement, 
+                    été détectée, puis vous receviez une sanction parmi trois types de sanctions possibles. Soit ce n’était qu’un avertissement, 
                     soit vous recommenciez tout, soit vous poursuiviez mais perdiez vos points. Lors de la seconde série d’exercices, 
-                    la récidive était évaluée. Tel qu’indiqué pris quelques photos de la caméra de votre 
+                    la récidive était évaluée. Tel qu'indiqué, nous avons pris quelques photos de la caméra de votre 
                     ordinateur dans le but d'analyser les émotions de votre visage lors de l'annonce que la tricherie a été détectée.
                     Les photos de vos expressions faciales seront converties en une série de chiffres
                     décrivant l'intensité des émotions ressenties. Ce n’est donc pas directement votre visage qui
@@ -221,9 +224,9 @@ return (
                     ne permettront pas de vous identifier.</span>
                     <br/><br/><br/><br/>
                     Maintenant que vous êtes au courant de la procédure,<span style={{ color: 'red' }}> nous avons besoin de recevoir votre
-                    consentement éclairé pour utiliser les données issues de votre participation.</span> Nous vous
+                    consentement éclairé pour utiliser les données issues de votre participation.</span> 
                     <br/><br/>
-                    rappelons que personne outre l’équipe de recherche n’aura accès aux données, et que les
+                    Nous vous rappelons que personne outre l’équipe de recherche n’aura accès aux données, et que les
                     captures de caméra ne seront jamais utilisées pour d’autres fins que l’analyse des émotions
                     faciales.
                     <br/>
@@ -231,7 +234,7 @@ return (
                 </div>
                 <br/><br/>
 
-                <Button variant="contained" color="primary" onClick={handleNextStep}> Passer au questionnaire </Button>
+                <Button variant="contained" color="primary" onClick={handleNextStep}> J'accepte que mes données soient utilisées pour la présente recherche, passer au questionnaire</Button>
             </div>
         :null}
         {showForm === true ?
@@ -274,7 +277,7 @@ return (
                 {formStep === 5?
                     <div className={classes.form}>
                         <p>Répondez aux mises en situation suivantes par rapport à la tricherie
-                            en indiquant à quelles probabilités vous émettriez les réponses suggérées.</p><br/>
+                            en indiquant à quelle probabilité vous émettriez les réponses suggérées.</p><br/>
 
                         {getLikertsCheating()}
                     </div>
@@ -283,7 +286,7 @@ return (
                 {formStep === 6?
                     <div className={classes.form}>
                         <p>Répondez aux mises en situation suivantes par rapport à la tricherie
-                            en indiquant à quelles probabilités vous émettriez les réponses suggérées.</p><br/>
+                            en indiquant à quelle probabilité vous émettriez les réponses suggérées.</p><br/>
 
                         {getLikertsTaskRelated()}
                     </div>
@@ -291,11 +294,9 @@ return (
 
                 {formStep === 7?
                     <div className={classes.form}>
-                        <p>Répondez aux mises en situation suivantes par rapport à la tricherie
-                            en indiquant à quelles probabilités vous émettriez les réponses suggérées.</p><br/>
+                        <p>Répondez aux mises en situation suivantes par rapport à la sanction donnée en indiquant à quelle probabilité vous émettriez les réponses suggérées</p><br/>
 
                         {getLikertsSanctionFeeling()}
-                        <p> Merci d'avoir participé !</p>
                     </div>
                 :null}
 

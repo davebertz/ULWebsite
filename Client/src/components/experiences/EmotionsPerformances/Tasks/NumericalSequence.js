@@ -59,7 +59,7 @@ return (
         <div className={classes.centered}> 
             <p>
                 Voici deux suites numériques.
-                Pour chacune des deux, écrivez dans le champ correspond le chiffre manquant sans vous aider d'internet.
+                Pour chacune des deux, écrivez dans le champ correspondant le chiffre manquant sans vous aider d'internet.
             </p> 
             <form className={classes.form} onSubmit={handleSubmitNumericalSequences}>
                 <div className={classes.form}>
