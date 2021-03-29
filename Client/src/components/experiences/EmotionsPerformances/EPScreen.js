@@ -159,7 +159,6 @@ function EmotionsPerformancesScreen(props)  {
             if(validateForm()){
                 setStep("likerts")
                 sendUserInfos(props.location.user.username,userEmail, userGender, userAge, userStatus )
-                createUserFeedbackEntry(props.location.user.username,userFormAnswers )
                 setErrorMessage('')
             }
         }

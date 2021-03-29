@@ -45,10 +45,7 @@ function FeedbackForm(props)  {
 
     //Fonction appelée par les composants fils LikertScale et ContinuousLikert lors de l'ajout du réponse par l'utilisateur.
     function handleFormAnswerChange(id,value){
-        //La 1ere et la 4eme sections sont identiques, on met donc le bon id lorsque nous sommes à la 4eme section
-        if(formStep === 4){
-            id = id + afterTaskSanction.length + afterTaskReasons.length +  afterTaskDuringTask.length
-        }
+
         //Mise à jour de la liste des réponses de l'utilisateur
         let newUserAnswers = [...userAnswers]; 
         newUserAnswers[id] = value
@@ -57,9 +54,13 @@ function FeedbackForm(props)  {
     }
 
     //On crée une liste de Likerts pour la première section de questions (qui est identique à la 4ème.)
-    const getLikertsSanction=()=>{
-
+    const getLikertsSanction=(first)=>{
         var counter = 0
+        if(first){
+            counter = 0
+        }else{
+            counter = afterTaskSanction.length + afterTaskReasons.length + afterTaskDuringTask.length
+        }
         var likertList = []
 
         for(var m=0;m<afterTaskSanction.length; m++){
@@ -115,7 +116,6 @@ function FeedbackForm(props)  {
 
         var counter = afterTaskSanction.length*2 + afterTaskReasons.length + afterTaskDuringTask.length 
         var likertList = []
-
         for (var z=0; z<Object.keys(afterTaskCheating).length; z++){
             for (var e=0; e<afterTaskCheating[Object.keys(afterTaskCheating)[z]].length; e++){
                 likertList.push(<div><ContinuousLikert onChange={handleFormAnswerChange} 
@@ -128,12 +128,12 @@ function FeedbackForm(props)  {
                 counter= counter+1
             }
         }
+        
         return likertList
     }
 
     //On crée une liste de Likerts pour la troisième section de questions.
     const getLikertsTaskRelated=()=>{
-
         var counter = afterTaskSanction.length*2 + afterTaskReasons.length + afterTaskDuringTask.length +  Object.values(afterTaskCheating).length*2
         var likertList = []
 
@@ -152,8 +152,7 @@ function FeedbackForm(props)  {
 
     //On crée une liste de Likerts pour la troisième section de questions.
     const getLikertsSanctionFeeling=()=>{
-
-        var counter = afterTaskSanction.length*2 + afterTaskReasons.length + afterTaskDuringTask.length + afterTaskCheating.length + afterTaskTaskRelated.length
+        var counter = afterTaskSanction.length*2 + afterTaskReasons.length + afterTaskDuringTask.length +  Object.values(afterTaskCheating).length*2 + afterTaskTaskRelated.length
         var likertList = []
 
         for (var z=0; z<afterTaskSanctionFeelings.length; z++){
@@ -246,7 +245,7 @@ return (
                         <div className={classes.form}>
                             <p><b>AVANT</b> l'annonce de la sanction, je me suis senti.e ...</p><br/>
 
-                            {getLikertsSanction()}
+                            {getLikertsSanction(true)}
                         </div>
                     </div>
                 :null}
@@ -270,7 +269,7 @@ return (
                     <div className={classes.form}>
                         <p><b>APRES</b> l'annonce de la sanction, je me suis senti.e ...</p><br/>
 
-                        {getLikertsSanction()}
+                        {getLikertsSanction(false)}
                     </div>
                 :null}
 
@@ -306,8 +305,11 @@ return (
                     </div>
                 :null}
                 <br/><br/>
-                <Button variant="contained" color="primary" onClick={handleNextStep}> Suivant </Button> <p>{formStep}/7</p>                
-            </div>
+                <Button variant="contained" color="primary" onClick={handleNextStep}> Suivant </Button> 
+                {formStep !== 8?
+                    <p>{formStep}/7</p>                
+                :null}
+                </div>
         :null}  
     </div>)
 }

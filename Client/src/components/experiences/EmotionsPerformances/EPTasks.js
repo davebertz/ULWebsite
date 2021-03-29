@@ -89,7 +89,7 @@ function EmotionsPerformancesTasks(props)  {
         setTimeToAnswer(timeToAnswer=>[...timeToAnswer, {[experienceStep] : (Date.now() -timeToAnswerTask)/1000}])
         movingForward()
         setprogressBarValue(progressBarValue+score)
-
+        console.log(tasksResults)
     }
 
     const goTimer=()=>{
@@ -103,7 +103,9 @@ function EmotionsPerformancesTasks(props)  {
         setTimeToAnswerTask(Date.now())
         //On vérifie si la série et l'expérience sont terminées 
         if(experienceStepCount+1 === testOrder.length){
+            console.log(tasksResults)
             if(props.location.givenSanction !== undefined){ //On regarde si c'est la première ou la seconde série
+                
                 sendEmotionsPerformancesResults(props.location.user.username,props.location.actualSerie["Questions"], tasksResults, cheat,timeToAnswer, true, props.location.givenSanction )
                 history.push({pathname:"/experience/EmotionsPerformancesfeedback",
                                 user : props.location.user.username,

@@ -100,10 +100,6 @@ def addEPResults(username, taskQuestions, taskResult,taskCheat,timeToAnswer, sec
     #Petit bloc de refacto pour enlever les accents en BD pour éviter les /u009 au lieu de é
 
     taskQuestions["canadaCulture"] = [unidecode.unidecode(x) for x in taskQuestions["canadaCulture"]]
-    if(secondTrial):
-        taskResult[2] = {"CanadianQuestion" : [unidecode.unidecode(x) for x in taskResult[2]['CanadianQuestion']]}
-    else:
-        taskResult[3] = {"CanadianQuestion" : [unidecode.unidecode(x) for x in taskResult[3]['CanadianQuestion']]}
     with connection.cursor() as cursor:
         try:   
 
@@ -119,7 +115,6 @@ def addEPResults(username, taskQuestions, taskResult,taskCheat,timeToAnswer, sec
             cursor.close()
             connection.close()
     return returnValue
-
 
 def addEPFeedback(username, pretaskForm):
     connection = getConnection()
