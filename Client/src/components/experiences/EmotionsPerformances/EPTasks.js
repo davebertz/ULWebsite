@@ -15,6 +15,7 @@ import Definition from "./Tasks/Definition";
 import {sendEmotionsPerformancesResults} from '../../../Utils'
 import WheelOfFortune from "./Tasks/FortuneWheel/FortuneWheelTask";
 import VerticalProgress from "./VerticalProgressBar";
+import NextStep from "./NextStep";
 
 //Seconde page de l'expérience Intelligence EMotionnelle, c'est la page contenant tous les exercices.
 //Les questions et les réponses de chaque série sont passés en paramètres de navigation (props.location)
@@ -54,9 +55,9 @@ function EmotionsPerformancesTasks(props)  {
         //On regarde si l'utilisateur est à sa première ou sa deuxième série à travers l'existence ou non d'une sanction en props.
         if(props.location.givenSanction === undefined){
             setTestOrder(['beginning','headOrTail','numericalSequences','fortuneWheel','CanadianQuestion','timerWord',
-                            'memoryQuestion','definition'])
+                            'memoryQuestion','definition','fin'])
         }else{
-            var questions = ['beginning','numericalSequences','definition','CanadianQuestion','memoryQuestion','headOrTail','fortuneWheel','timerWord']
+            var questions = ['beginning','numericalSequences','definition','CanadianQuestion','memoryQuestion','headOrTail','fortuneWheel','timerWord', 'fin']
             setTestOrder(questions)
             //on passe l'étape "beginning" (index 0) qui correspond à l'étape d'explication car l'utilisateur à déjà été mis au courant
             //des règles.
@@ -89,7 +90,6 @@ function EmotionsPerformancesTasks(props)  {
         setTimeToAnswer(timeToAnswer=>[...timeToAnswer, {[experienceStep] : (Date.now() -timeToAnswerTask)/1000}])
         movingForward()
         setprogressBarValue(progressBarValue+score)
-        console.log(tasksResults)
     }
 
     const goTimer=()=>{
@@ -103,7 +103,6 @@ function EmotionsPerformancesTasks(props)  {
         setTimeToAnswerTask(Date.now())
         //On vérifie si la série et l'expérience sont terminées 
         if(experienceStepCount+1 === testOrder.length){
-            console.log(tasksResults)
             if(props.location.givenSanction !== undefined){ //On regarde si c'est la première ou la seconde série
                 
                 sendEmotionsPerformancesResults(props.location.user.username,props.location.actualSerie["Questions"], tasksResults, cheat,timeToAnswer, true, props.location.givenSanction )
@@ -155,6 +154,9 @@ function EmotionsPerformancesTasks(props)  {
             taskComponent = <Definition  word={props.location.actualSerie["Questions"]["definition"]} answer={props.location.actualSerie["Answers"]["definition"]} sendDataToParent={addResult}></Definition>
         }else if(experienceStep==="fortuneWheel"){        
             taskComponent = <WheelOfFortune   sendDataToParent={addResult}></WheelOfFortune>
+        }else if(experienceStep==='fin'){
+            taskComponent = <NextStep   movingForward={movingForward}></NextStep>
+                            
         }
 
 
@@ -222,14 +224,14 @@ return (
             <div className={classes.footerTask}>
                     <div className={classes.navigationButtonsContainer}>
                                         <div className={classes.backButton}>
-                            {experienceStep !== testOrder[1]? 
+                            {(experienceStep !== testOrder[1]) && (experienceStep !== testOrder[8])? 
                             <IconButton variant="contained" aria-label="arrow-back" onClick={movingBackward}>
                                     <ArrowBackIcon />
                                 </IconButton>
                                 :null}
                             </div>
                             <div className={classes.forwardButton}>
-                            { experienceStep !== testOrder[7]?
+                            { (experienceStep !== testOrder[7]) && (experienceStep !== testOrder[8])?
                                 <IconButton variant="contained" aria-label="arrow-forward" onClick={movingForward}>
                                     <ArrowForwardIcon />
                                 </IconButton>
@@ -321,6 +323,10 @@ const useStyles = makeStyles({
         justifyContent:'center',
         alignItems:'center',
     },
+    finalText:{
+        justifyContent:'center',
+        alignItems:'center',
+    }
 
 })
 
