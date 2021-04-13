@@ -3,6 +3,8 @@ import unidecode
 import mysql.connector
 import json
 from emotion_recognition import detect_emotion
+import os
+from dotenv import load_dotenv
 
 # Ce fichier correspond aux fonctions appelées par l'API. Dans notre cas, les fonctions ici sont utilisées pour allez ajouter des lignes en BD
 # On effectue quelques traitements logiques (detection d'émotions) pour ajouter quelques infos avant ajout en BD dans certaines fonctions
@@ -13,17 +15,15 @@ from emotion_recognition import detect_emotion
 
 # config PyMySQL pour connexion à la base de données
 def getConnection():
-    connection = pymysql.connect(host='localhost',
-                        user='root',
-                        password='root',                             
-                        db='LavalExperienceDB',
+    load_dotenv()
+    connection = pymysql.connect(host=os.getenv('DB_HOST'),
+                        user=os.getenv('DB_USER'),
+                        password=os.getenv('DB_PASSWORD'),                             
+                        db=os.getenv('DB_NAME'),
                         charset='utf8mb4',
                         cursorclass=pymysql.cursors.DictCursor)
     print ("connect successful")
     return connection
-
-
-    
 # ----------------------Users---------------------------
 def addUser( username,email, gender, age, userStatus):
     connection = getConnection()

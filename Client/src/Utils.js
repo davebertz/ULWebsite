@@ -5,12 +5,11 @@
 const headers = new Headers();
 headers.append('Content-Type', 'application/json');
 headers.append('Accept', 'application/json');      
-headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');      
+headers.append('Access-Control-Allow-Origin', process.env.REACT_APP_PUBLIC_URL);      
 headers.append('GET', 'POST', 'OPTIONS');
-
 // --------------------------Kayahara------------------------------
 export const sendIntermittentResults=(username, videoname, intermittentPress)=>{
-    fetch('http://127.0.0.1:5000/KayaharaResults/', {
+    fetch('http://localhost:5000/KayaharaResults/', {
       //mode: 'no-cors',
       method: 'POST',
       headers: headers,
@@ -29,7 +28,7 @@ export const sendIntermittentResults=(username, videoname, intermittentPress)=>{
   }
 
 export const sendContinuousResults=(username,videoname,keyPressValues)=>{
-    fetch('http://127.0.0.1:5000/KayaharaResults/', {
+    fetch('http://localhost:5000/KayaharaResults/', {
       //mode: 'no-cors',
       method: 'POST',
       headers: headers,
@@ -52,7 +51,7 @@ export const sendContinuousResults=(username,videoname,keyPressValues)=>{
 
 //Méthode pour appeler l'ajout en base de données des captures d'écrans de l'utilisateur imitant des expressions faciales.
 export const sendFeelingsScreenshots=(username,feeling, screenshotSource)=>{
-    fetch('http://127.0.0.1:5000/EPFeelingsScreenshots/', {
+    fetch('http://localhost:5000/EPFeelingsScreenshots/', {
       //mode: 'no-cors',
       method: 'POST',
       headers: headers,
@@ -71,7 +70,7 @@ export const sendFeelingsScreenshots=(username,feeling, screenshotSource)=>{
   }
 
   export const sendUserInfos=(username,email, gender, age, userStatus)=>{
-    fetch('http://127.0.0.1:5000/Users/', {
+    fetch('http://localhost:5000/Users/', {
       //mode: 'no-cors',
       method: 'POST',
       headers: headers,
@@ -92,7 +91,7 @@ export const sendFeelingsScreenshots=(username,feeling, screenshotSource)=>{
 
 //Méthode pour appeler l'ajout en base de données des résultats et de la triche de l'utilisateur pour les séries d'exercices
 export const sendEmotionsPerformancesResults=(username, taskQuestion,taskResult,taskCheat,timeToAnswer, secondTrial,sanctionGiven)=>{
-  fetch('http://127.0.0.1:5000/EPResults/', {
+  fetch('http://localhost:5000/EPResults/', {
       //mode: 'no-cors',
       method: 'POST',
       headers: headers,
@@ -113,7 +112,7 @@ export const sendEmotionsPerformancesResults=(username, taskQuestion,taskResult,
 //Méthode pour appeler l'ajout en base de données des captures d'écrans de l'utilisateur prise à son insu 
 //lors de la révélation de la détection de triche
 export const sendReactionScreenshots=(username,seconds , imageSrc )=>{
-  fetch('http://127.0.0.1:5000/EPReactionsScreenshots/', {
+  fetch('http://localhost:5000/EPReactionsScreenshots/', {
     //mode: 'no-cors',
     method: 'POST',
     headers: headers,
@@ -133,7 +132,7 @@ export const sendReactionScreenshots=(username,seconds , imageSrc )=>{
 
  //Méthode pour appeler l'ajout en base de données des réponses de l'utilisateur au formulaire de retour sur expérience
  export const createUserFeedbackEntry=(username,pretaskForm)=>{
-  fetch('http://127.0.0.1:5000/EPFeedback/create', {
+  fetch('http://localhost:5000/EPFeedback/create', {
     //mode: 'no-cors',
     method: 'POST',
     headers: headers,
@@ -153,7 +152,7 @@ export const sendReactionScreenshots=(username,seconds , imageSrc )=>{
 
   //Méthode pour mettre à jour en base de données les réponses de l'utilisateur au formulaire de retour sur expérience
   export const updateUserFeedback=(username,sanctionGiven, posttaskForm)=>{
-    fetch('http://127.0.0.1:5000/EPFeedback/update', {
+    fetch('http://localhost:5000/EPFeedback/update', {
       //mode: 'no-cors',
       method: 'POST',
       headers: headers,
