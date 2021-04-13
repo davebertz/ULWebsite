@@ -79,7 +79,6 @@ class UsersDAO(object):
 
     def create(self, data):
         res = addUser(data['username'],data['email'],data['gender'],data['age'],data['userStatus'])
-        res.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
         if res == 409:
             api.abort(409, "a Problem occured")
         else :
@@ -94,7 +93,6 @@ class KaharayaDAO(object):
 
     def create(self, data):
         res = addKahayaraResult(data['username'],data['videoname'], data['videotype'],data['input'], datetime.today().strftime('%Y-%m-%d-%H:%M:%S'))
-        res.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
         if res == 409:
             api.abort(409, "a Problem occured")
         else :
@@ -107,7 +105,6 @@ class EPFeelingsScreenshotsDAO(object):
 
     def create(self, data):
         res = addEPFeelingsScreenshot(data['username'],data['feeling'], data['source'], datetime.today().strftime('%Y-%m-%d-%H:%M:%S'))
-        res.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
         if res == 409:
             api.abort(409, "a Problem occured")
         else :
@@ -121,7 +118,6 @@ class EPReactionsScreenshotsDAO(object):
 
     def create(self, data):
         res = addEPReactionsScreenshot(data['username'],data['secondAfterReveal'], data['source'], datetime.today().strftime('%Y-%m-%d-%H:%M:%S'))
-        res.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
         if res == 409:
             api.abort(409, "a Problem occured")
         else :
@@ -136,7 +132,6 @@ class EPResultsDAO(object):
     
     def create(self, data):
         res = addEPResults(data['username'],data['taskQuestions'],data['taskAnswers'], data['taskCheats'],data['timeToAnswer'],data['secondTrial'],data['sanctionGiven'],datetime.today().strftime('%Y-%m-%d-%H:%M:%S'))
-        res.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
         if res == 409:
             api.abort(409, "a Problem occured")
         else :
@@ -153,7 +148,6 @@ class EPFeedbacksDAO(object):
 # toutes les données et des les envoyer par message à Julien Voisin (sous la forme d'un fichier crypté)
     def create(self, data):
         res = addEPFeedback(data['username'],data['pretaskForm'])
-        res.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
         if res == 409:
             api.abort(409, "a Problem occured")
         else :
@@ -163,7 +157,6 @@ class EPFeedbacksDAO(object):
     def update(self, data):
         print(data)
         res = updateEPFeedback(data['username'],data['sanctionGiven'],data['posttaskForm'])
-        res.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
         if res == 409:
             api.abort(409, "a Problem occured")
         else :
