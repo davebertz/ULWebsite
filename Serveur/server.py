@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restx import Api, Resource, fields
 from database_utils import addUser, addEPFeelingsScreenshot,addEPReactionsScreenshot, addKahayaraResult, addEPResults, addEPFeedback, updateEPFeedback
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from datetime import datetime
 
 
@@ -15,6 +15,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 api = Api(app, version='1.0', title='LavalExperiencesAPI',
     description='A simple API for experience website',
 )
@@ -177,6 +178,7 @@ class Users(Resource):
     @nsUsers.doc('add_user')
     @nsUsers.expect(users)
     @nsUsers.marshal_with(users, code=201)
+    @cross_origin()
     def post(self):
         return DAOUsers.create(api.payload), 201
 
