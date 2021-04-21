@@ -89,7 +89,12 @@ function EmotionsPerformancesTasks(props)  {
 
         setTimeToAnswer(timeToAnswer=>[...timeToAnswer, {[experienceStep] : (Date.now() -timeToAnswerTask)/1000}])
         movingForward()
-        setprogressBarValue(progressBarValue+score)
+        if(progressBarValue+score > progressBarValueAverage[experienceStepCount]){
+            setprogressBarValue(progressBarValueAverage[experienceStepCount+1]-6)
+        }else{
+            setprogressBarValue(progressBarValue+score)
+        }
+
     }
 
     const goTimer=()=>{
