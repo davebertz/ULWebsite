@@ -27,7 +27,7 @@ def getConnection():
 # ----------------------Users---------------------------
 def addUser( username,email, gender, age, userStatus):
     connection = getConnection()
-    returnValue = username, email
+    returnValue = username, email, gender, age, userStatus
     
     with connection.cursor() as cursor:
         try:                       
@@ -39,7 +39,14 @@ def addUser( username,email, gender, age, userStatus):
         finally:
             cursor.close()
             connection.close()
-    return returnValue
+    return "200"
+    # This is a workaround. The normal line would be the one below. Unfortunately, it raise an error that doesn't make much sense : 
+    # --------- 
+    # The view function did not return a valid response. The return type must be a string, dict, tuple, Response instance, or WSGI callable, but it was a tuple.
+    # ---------
+    # Flask is asking for a tuple and is upset that he got a tuple .. ? couldn't find the bug, went for the workaround because this data isn't used anyway 
+    # (at least for the moment). 
+    #return returnValue
 
 # ----------------------Kayahara---------------------------
 def addKahayaraResult( username, videoname,videotype, inputs, dateExperience):
