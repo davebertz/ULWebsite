@@ -185,7 +185,7 @@ function FeedbackForm(props)  {
     const handleSubmit=()=>{
 
         updateUserFeedback(props.location.user,  props.location.sanctionGiven, userAnswers)
-        history.push('/experiences')
+        history.push('/')
         
 
     }

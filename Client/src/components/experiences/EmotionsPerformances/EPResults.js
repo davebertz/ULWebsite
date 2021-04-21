@@ -22,7 +22,7 @@ function EmotionsPerformancesResults(props)  {
 
     useEffect(() => {
         if(props === undefined || props.location.user === undefined){
-            history.push("/experiences")
+            history.push("/")
         }
 
         var timer = 0
@@ -81,7 +81,7 @@ function EmotionsPerformancesResults(props)  {
             const imageSrc = webcamRef.current.getScreenshot({width: 550, height: 360});
             console.log(timer)
             if(imageSrc !== null){
-                sendReactionScreenshots(props.location.user.username, timer, imageSrc )
+                sendReactionScreenshots(props.location.user, timer, imageSrc )
             }
             
             

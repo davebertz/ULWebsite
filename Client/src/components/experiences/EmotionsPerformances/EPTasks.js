@@ -49,7 +49,7 @@ function EmotionsPerformancesTasks(props)  {
         var index = 0
         setStartTimer(false)
         if(props === undefined || props.location.user === undefined){
-            history.push("/experiences")
+            history.push("/")
         }
 
         //On regarde si l'utilisateur est à sa première ou sa deuxième série à travers l'existence ou non d'une sanction en props.
