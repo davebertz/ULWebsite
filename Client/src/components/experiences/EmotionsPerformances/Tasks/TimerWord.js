@@ -11,6 +11,7 @@ function TimerWord(props)  {
     const [cheated, setCheated] = useState(0)
     const [wordWritten, setWordWritten] = useState('')
     const [listWord, setListWord] = useState('')
+    const [errorWord, setErrorWord] = useState('')
     const [endingWord, setEndingWord] = useState(true)
 
     // initialize timeLeft with the seconds prop
@@ -33,6 +34,7 @@ function TimerWord(props)  {
 
     function handleChangeWord(e){
         setWordWritten(e.target.value)
+        setErrorWord('')
     }
 
     const startTimer=()=>{
@@ -59,6 +61,8 @@ function TimerWord(props)  {
             if(props.startTimer === false){
                 setCheated(2)
             }
+        }else{
+            setErrorWord(' Ce mot n\'existe pas dans notre dictionnaire.')
         }
         setWordWritten('')//reset du champs d'input 
     }    
@@ -89,7 +93,12 @@ return (
                     <div className={classes.wordsFound}>
                         <p> Mots commençant par "{props.letter}" déjà trouvés : {listWord}</p>
                     </div>
+
+
                 
+            </div>
+            <div >
+                <p style={{ color:'red'}} >{errorWord}</p>
             </div>
             
             <p>Compte à rebours : <b>{timeLeft}</b> secondes restantes</p>
@@ -149,6 +158,9 @@ const useStyles = makeStyles({
         justifyContent:'center',
         alignItems:'center',
     },
+    errorWord:{
+        color:'red'
+    }
 })
 
  
