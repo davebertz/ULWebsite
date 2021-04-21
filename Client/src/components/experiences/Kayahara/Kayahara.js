@@ -167,8 +167,8 @@ function Kayahara(props)  {
     }else if(expeMode === 'continuous'){
       setExpeMode('done')
       setIsPlaying(false)
-      sendContinuousResults(props.location.user.username,continuousVideoName, continuousPress)          
-      sendIntermittentResults(props.location.user.username,intermittentVideoName, intermittentPress )
+      sendContinuousResults(props.location.user,continuousVideoName, continuousPress)          
+      sendIntermittentResults(props.location.user,intermittentVideoName, intermittentPress )
     }
   }
 

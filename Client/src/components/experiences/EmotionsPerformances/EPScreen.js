@@ -19,12 +19,19 @@ import LikertScale from "./Likert";
 
 function EmotionsPerformancesScreen(props)  {
 
-    useEffect(() => {
-        if(props === undefined || props.location.user === undefined){
-            history.push("/experiences")
-        }
+    const [username, setUsername] = useState('')
 
-    })
+    //Création d'un username lors de l'accès à une expérience.
+      useEffect( ()=>{
+        var userpseudo = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < 8; i++ ) {
+            userpseudo += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        console.log(userpseudo)
+        setUsername(userpseudo)
+      },[]);
 
     const classes = useStyles();
     const history = useHistory();
@@ -158,7 +165,7 @@ function EmotionsPerformancesScreen(props)  {
         if(step === "infos"){
             if(validateForm()){
                 setStep("likerts")
-                sendUserInfos(props.location.user.username,userEmail, userGender, userAge, userStatus )
+                sendUserInfos(username,userEmail, userGender, userAge, userStatus )
                 setErrorMessage('')
             }
         }
@@ -169,7 +176,7 @@ function EmotionsPerformancesScreen(props)  {
             }else{
                 setStep("screens")
                 setErrorMessage("")
-                createUserFeedbackEntry(props.location.user.username,userFormAnswers )
+                createUserFeedbackEntry(username,userFormAnswers )
             }
 
 
@@ -217,12 +224,12 @@ function EmotionsPerformancesScreen(props)  {
     //Ensuite on passe à la suite de l'expérience en renseignant les questions réponses pour les 2 séries
     const sendResult=()=>{
         for (var i=0; i<tileData.length; i++){
-            sendFeelingsScreenshots(props.location.user.username, tileData[i]['title'],tileData[i]['img'] )
+            sendFeelingsScreenshots(username, tileData[i]['title'],tileData[i]['img'] )
         }
         
         var series = defineQuestions()
         history.push({pathname:"/experience/EmotionsPerformances",
-            user : props.location.user,
+            user : username,
             actualSerie : series[0],
             nextSerie : series[1]
             })

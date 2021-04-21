@@ -110,13 +110,13 @@ function EmotionsPerformancesTasks(props)  {
         if(experienceStepCount+1 === testOrder.length){
             if(props.location.givenSanction !== undefined){ //On regarde si c'est la première ou la seconde série
                 
-                sendEmotionsPerformancesResults(props.location.user.username,props.location.actualSerie["Questions"], tasksResults, cheat,timeToAnswer, true, props.location.givenSanction )
+                sendEmotionsPerformancesResults(props.location.user,props.location.actualSerie["Questions"], tasksResults, cheat,timeToAnswer, true, props.location.givenSanction )
                 history.push({pathname:"/experience/EmotionsPerformancesfeedback",
-                                user : props.location.user.username,
+                                user : props.location.user,
                                 sanctionGiven : props.location.givenSanction
                 })
             }else{
-                sendEmotionsPerformancesResults(props.location.user.username, props.location.actualSerie["Questions"], tasksResults, cheat,timeToAnswer, false, null )
+                sendEmotionsPerformancesResults(props.location.user, props.location.actualSerie["Questions"], tasksResults, cheat,timeToAnswer, false, null )
                 //Si la première série d'exercice est terminée, on passe à la page result avec en paramètre la seconde série d'exercice
                 //qui sera elle-même transmise à intelligenceemotionelletask pour la seconde série.
                 history.push({pathname:"/experience/EmotionsPerformancesresults",
