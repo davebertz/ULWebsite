@@ -36,7 +36,7 @@ function Kayahara(props)  {
   //Hook permettant de vérifier si l'utilisateur à appuyé sur une des touches directionnelles
   useEffect(() => {
     if(props === undefined || props.location.user === undefined){
-        history.push("/experiences")
+        history.push("/")
     }
     const handleKeyPress = (event) => {
       if(event.keyCode === 37 || event.keyCode===39 ){        
@@ -167,8 +167,8 @@ function Kayahara(props)  {
     }else if(expeMode === 'continuous'){
       setExpeMode('done')
       setIsPlaying(false)
-      sendContinuousResults(props.location.user.username,continuousVideoName, continuousPress)          
-      sendIntermittentResults(props.location.user.username,intermittentVideoName, intermittentPress )
+      sendContinuousResults(props.location.user,continuousVideoName, continuousPress)          
+      sendIntermittentResults(props.location.user,intermittentVideoName, intermittentPress )
     }
   }
 

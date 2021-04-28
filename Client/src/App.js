@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -16,11 +16,14 @@ import './App.css';
 //Navigations Tabs
 const sections = [
   { title: 'Accueil', url: '/' },
-  { title: 'Experiences', url: '/experiences' },
+  { title: 'Experiences', url: '/experience/EmotionsPerformancesscreen' },
   { title: 'Informations', url: '/informations' },
 ];
+
+  
   
 function App() {
+
   return (
       <Router >
       <div className='App'>
@@ -34,7 +37,7 @@ function App() {
                 path='/experiences'
                 render={(props)=>
                   <Fragment>                
-                    <Experiences/>                  
+                    <Experiences />                  
                   </Fragment>}/>
               <Route
                 exact
@@ -55,7 +58,7 @@ function App() {
                 path='/experience/EmotionsPerformancesscreen'
                 render={(props)=>
                   <Fragment>                
-                    <EmotionsPerformancesScreen/>                  
+                    <EmotionsPerformancesScreen />                  
                   </Fragment>}/>
               <Route
                 exact

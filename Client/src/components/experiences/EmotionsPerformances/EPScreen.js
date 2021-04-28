@@ -19,12 +19,19 @@ import LikertScale from "./Likert";
 
 function EmotionsPerformancesScreen(props)  {
 
-    useEffect(() => {
-        if(props === undefined || props.location.user === undefined){
-            history.push("/experiences")
-        }
+    const [username, setUsername] = useState('')
 
-    })
+    //Création d'un username lors de l'accès à une expérience.
+      useEffect( ()=>{
+        var userpseudo = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < 8; i++ ) {
+            userpseudo += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        console.log(userpseudo)
+        setUsername(userpseudo)
+      },[]);
 
     const classes = useStyles();
     const history = useHistory();
@@ -158,7 +165,7 @@ function EmotionsPerformancesScreen(props)  {
         if(step === "infos"){
             if(validateForm()){
                 setStep("likerts")
-                sendUserInfos(props.location.user.username,userEmail, userGender, userAge, userStatus )
+                sendUserInfos(username,userEmail, userGender, userAge, userStatus )
                 setErrorMessage('')
             }
         }
@@ -169,7 +176,7 @@ function EmotionsPerformancesScreen(props)  {
             }else{
                 setStep("screens")
                 setErrorMessage("")
-                createUserFeedbackEntry(props.location.user.username,userFormAnswers )
+                createUserFeedbackEntry(username,userFormAnswers )
             }
 
 
@@ -217,12 +224,12 @@ function EmotionsPerformancesScreen(props)  {
     //Ensuite on passe à la suite de l'expérience en renseignant les questions réponses pour les 2 séries
     const sendResult=()=>{
         for (var i=0; i<tileData.length; i++){
-            sendFeelingsScreenshots(props.location.user.username, tileData[i]['title'],tileData[i]['img'] )
+            sendFeelingsScreenshots(username, tileData[i]['title'],tileData[i]['img'] )
         }
         
         var series = defineQuestions()
         history.push({pathname:"/experience/EmotionsPerformances",
-            user : props.location.user,
+            user : username,
             actualSerie : series[0],
             nextSerie : series[1]
             })
@@ -257,7 +264,7 @@ function EmotionsPerformancesScreen(props)  {
                                 question :beforeTaskForm[i],
                                 onChange:handleFormAnswerChange,
                                 }
-            likertList.push(<LikertScale key={likertOptions.id} likertOptions={likertOptions}></LikertScale>)
+            likertList.push(<LikertScale key={likertOptions.id} likertOptions={likertOptions} className={classes.likert}></LikertScale>)
 
         }
 
@@ -276,7 +283,8 @@ return (
             afin de prendre une photo de vous exprimant plusieurs expressions faciales. 
             Merci de ne pas exagérer vos émotions et de les rendre le plus réaliste possible.<br/>
             Si vous ne possédez pas de webcam sur cet ordinateur ou si vous n’êtes pas disposé.e à nous en donner l’accès, l'expérience ne sera pas possible.
-            Merci tout de même pour votre intérêt.<br/><br/><br/>
+            Merci tout de même pour votre intérêt. Si vous avez des logiciels pouvant accéder à votre caméra (ex: zoom), 
+            assurez-vous s'il vous plaît qu'ils soient complètement fermés avant de commencer l'expérience.<br/><br/><br/>
             Nous allons maintenant vous demander quelques renseignements sociodémographiques utiles pour les statistiques
             des personnes testées. Un courrier électronique avec l'accès au test vous sera ensuite envoyé.<br/><br/></p>
             <div>
@@ -317,7 +325,7 @@ return (
                     </div>
         </div> :null }            
         { step === 'likerts' ? <div>
-                    <p>Chaque individu a des buts à long terme ou des aspirations. Il s’agit des choses que les gens
+                    <p style={{ fontSize: 20}} >Chaque individu a des buts à long terme ou des aspirations. Il s’agit des choses que les gens
                         souhaitent accomplir au cours de leur vie. Les items suivants présentent une liste d’objectifs de
                         vie, indiquez jusqu’à quel point chacun d’eux est important pour vous.
                     </p><br/>
@@ -394,6 +402,9 @@ const useStyles = makeStyles({
         border : 'solid',
         borderColor : "#C0C0C0",
         borderRadius: 25
+    },
+    likert:{
+        fontSize:200
     }
 })
 
