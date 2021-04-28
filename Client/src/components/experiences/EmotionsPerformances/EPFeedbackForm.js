@@ -161,7 +161,7 @@ function FeedbackForm(props)  {
                                 question :afterTaskSanctionFeelings[z],
                                 onChange:handleFormAnswerChange,
                                 }
-            likertList.push(<LikertScale key={counter} likertOptions={likertOptions5}></LikertScale>)
+            likertList.push(<LikertScale key={counter} likertOptions={likertOptions5} className={classes.likert}></LikertScale>)
             counter= counter+1
         }
 
@@ -267,7 +267,7 @@ return (
 
                 {formStep === 4?
                     <div className={classes.form}>
-                        <p><b>APRES</b> l'annonce de la sanction, je me suis senti.e ...</p><br/>
+                        <p><b>APRES</b> l'annonce de la <b>sanction</b>, je me suis senti.e ...</p><br/>
 
                         {getLikertsSanction(false)}
                     </div>
@@ -275,7 +275,7 @@ return (
 
                 {formStep === 5?
                     <div className={classes.form}>
-                        <p>Répondez aux mises en situation suivantes par rapport à la tricherie
+                        <p>Répondez aux mises en situation suivantes par rapport à la <b>tricherie</b>
                             en indiquant à quelle probabilité vous émettriez les réponses suggérées.</p><br/>
 
                         {getLikertsCheating()}
@@ -284,7 +284,7 @@ return (
 
                 {formStep === 6?
                     <div className={classes.form}>
-                        <p>Répondez aux mises en situation suivantes par rapport à la tricherie
+                        <p>Répondez aux mises en situation suivantes par rapport à la <b>tricherie</b>
                             en indiquant à quelle probabilité vous émettriez les réponses suggérées.</p><br/>
 
                         {getLikertsTaskRelated()}
@@ -293,7 +293,7 @@ return (
 
                 {formStep === 7?
                     <div className={classes.form}>
-                        <p>Répondez aux mises en situation suivantes par rapport à la sanction donnée en indiquant à quelle probabilité vous émettriez les réponses suggérées</p><br/>
+                        <p>Répondez aux mises en situation suivantes par rapport à la <b>sanction</b> donnée en indiquant à quelle probabilité vous émettriez les réponses suggérées</p><br/>
 
                         {getLikertsSanctionFeeling()}
                     </div>
@@ -347,6 +347,9 @@ const useStyles = makeStyles({
         marginLeft:'200px',
         marginRight : '200px'
         
+    },
+    likert:{
+        fontSize:200
     }
 })
 

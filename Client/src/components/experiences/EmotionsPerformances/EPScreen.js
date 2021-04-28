@@ -264,7 +264,7 @@ function EmotionsPerformancesScreen(props)  {
                                 question :beforeTaskForm[i],
                                 onChange:handleFormAnswerChange,
                                 }
-            likertList.push(<LikertScale key={likertOptions.id} likertOptions={likertOptions}></LikertScale>)
+            likertList.push(<LikertScale key={likertOptions.id} likertOptions={likertOptions} className={classes.likert}></LikertScale>)
 
         }
 
@@ -283,7 +283,8 @@ return (
             afin de prendre une photo de vous exprimant plusieurs expressions faciales. 
             Merci de ne pas exagérer vos émotions et de les rendre le plus réaliste possible.<br/>
             Si vous ne possédez pas de webcam sur cet ordinateur ou si vous n’êtes pas disposé.e à nous en donner l’accès, l'expérience ne sera pas possible.
-            Merci tout de même pour votre intérêt.<br/><br/><br/>
+            Merci tout de même pour votre intérêt. Si vous avez des logiciels pouvant accéder à votre caméra (ex: zoom), 
+            assurez-vous s'il vous plaît qu'ils soient complètement fermés avant de commencer l'expérience.<br/><br/><br/>
             Nous allons maintenant vous demander quelques renseignements sociodémographiques utiles pour les statistiques
             des personnes testées. Un courrier électronique avec l'accès au test vous sera ensuite envoyé.<br/><br/></p>
             <div>
@@ -324,7 +325,7 @@ return (
                     </div>
         </div> :null }            
         { step === 'likerts' ? <div>
-                    <p>Chaque individu a des buts à long terme ou des aspirations. Il s’agit des choses que les gens
+                    <p style={{ fontSize: 20}} >Chaque individu a des buts à long terme ou des aspirations. Il s’agit des choses que les gens
                         souhaitent accomplir au cours de leur vie. Les items suivants présentent une liste d’objectifs de
                         vie, indiquez jusqu’à quel point chacun d’eux est important pour vous.
                     </p><br/>
@@ -401,6 +402,9 @@ const useStyles = makeStyles({
         border : 'solid',
         borderColor : "#C0C0C0",
         borderRadius: 25
+    },
+    likert:{
+        fontSize:200
     }
 })
 

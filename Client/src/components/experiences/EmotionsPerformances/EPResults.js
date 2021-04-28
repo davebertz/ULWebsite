@@ -123,7 +123,9 @@ return (
     :null}
     
     {resultStage === "sanction" ?  <div>
-            <br/><br/>
+    <br/><br/>
+        <p style={{ color: 'red', fontSize:30 }}> VOICI VOTRE SANCTION </p>
+            
             {sanction === "avertissement"?
                 <div>
                     <p><b>Vous pouvez poursuivre le test en conservant votre score accumulé dans la section précédente.
